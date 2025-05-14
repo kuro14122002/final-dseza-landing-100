@@ -17,19 +17,20 @@ const LogoSearchBar: React.FC = () => {
   const hoverColor = theme === "dark" ? "hover:text-dseza-dark-primary-accent" : "hover:text-dseza-light-primary-accent";
   const focusBorderColor = theme === "dark" ? "focus:border-dseza-dark-primary-accent" : "focus:border-dseza-light-primary-accent";
   const focusShadow = theme === "dark" ? "focus:shadow-[0_0_0_2px_rgba(25,219,207,0.2)]" : "focus:shadow-[0_0_0_2px_rgba(65,102,40,0.2)]";
-
+  const logoSrc = theme === "dark" ? "media/darklogo3.png" : "media/lightlogo3.png";
   return (
     <div className="absolute top-12 left-0 right-0 z-10 h-24">
       <div className="container mx-auto h-full px-8 flex justify-between items-center">
         {/* Logo */}
-        <a href="/" className="h-14">
-          <div className="text-3xl font-bold tracking-tight font-montserrat">
-            <span className={theme === "dark" ? "text-white" : "text-black"}>DSEZA</span>
-            <span className={theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent"}>.</span>
-          </div>
-          <div className={`text-sm ${theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text"}`}>
-            Da Nang High-Tech Park and Industrial Zones Authority
-          </div>
+        <a href="media/lightlogo3.png" className="flex items-center"> {/* Đảm bảo logo là một link đến trang chủ */}
+          <img
+            src={logoSrc}
+            alt="DSEZA Logo"
+            // Điều chỉnh kích thước logo nếu cần. Ví dụ:
+            className="h-auto md:h-24 w-auto" // Điều chỉnh chiều cao và chiều rộng tự động
+            // Hoặc đặt kích thước cố định nếu bạn biết chính xác:
+            // className="h-10" // (ví dụ: 40px)
+          />
         </a>
         
         {/* Search Bar */}

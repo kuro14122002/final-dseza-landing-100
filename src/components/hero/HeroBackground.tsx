@@ -12,12 +12,12 @@ const tabsData = [
     title: "Khu công nghệ cao Đà Nẵng",
     images: {
       light: {
-        main: "https://via.placeholder.com/1920x1080/ADD8E6/000000?text=KCNC+Light+Main",
-        thumbnail: "https://via.placeholder.com/320x180/E0F2FE/0EA5E9?text=KCNC+Light+16:9"
+        main: "media/khucongnghecaolight.jpg",
+        thumbnail: "media/khucongnghecaothumb.jpg"
       },
       dark: {
-        main: "https://via.placeholder.com/1920x1080/082F49/93C5FD?text=KCNC+Dark+Main",
-        thumbnail: "https://via.placeholder.com/320x180/082F49/93C5FD?text=KCNC+Dark+16:9"
+        main: "media/khucongnghecaodark.jpg",
+        thumbnail: "media/khucongnghecaothumb.jpg"
       }
     }
   },
@@ -26,12 +26,12 @@ const tabsData = [
     title: "Khu thương mại tự do Đà Nẵng",
     images: {
       light: {
-        main: "https://via.placeholder.com/1920x1080/D1FAE5/000000?text=KTTTD+Light+Main",
-        thumbnail: "https://via.placeholder.com/320x180/D1FAE5/10B981?text=KTTTD+Light+16:9"
+        main: "media/khuthuongmaitdlight.jpg",
+        thumbnail: "media/khuthuongmaitdthumb.jpg"
       },
       dark: {
-        main: "https://via.placeholder.com/1920x1080/064E3B/A7F3D0?text=KTTTD+Dark+Main",
-        thumbnail: "https://via.placeholder.com/320x180/064E3B/A7F3D0?text=KTTTD+Dark+16:9"
+        main: "media/khuthuongmaitddark.jpg",
+        thumbnail: "media/khuthuongmaitdthumb.jpg"
       }
     }
   },
@@ -40,12 +40,12 @@ const tabsData = [
     title: "Khu công nghệ thông tin tập trung",
     images: {
       light: {
-        main: "https://via.placeholder.com/1920x1080/FEF3C7/000000?text=KCNTT+Light+Main",
-        thumbnail: "https://via.placeholder.com/320x180/FEF3C7/F59E0B?text=KCNTT+Light+16:9"
+        main: "media/khucongnghethongtinlight.jpg",
+        thumbnail: "media/khucongnghethongtinthumb.jpg"
       },
       dark: {
-        main: "https://via.placeholder.com/1920x1080/78350F/FDE68A?text=KCNTT+Dark+Main",
-        thumbnail: "https://via.placeholder.com/320x180/78350F/FDE68A?text=KCNTT+Dark+16:9"
+        main: "media/khucongnghethongtindark.jpg",
+        thumbnail: "media/khucongnghethongtinthumb.jpg"
       }
     }
   },
@@ -54,12 +54,12 @@ const tabsData = [
     title: "Các Khu công nghiệp Đà Nẵng",
     images: {
       light: {
-        main: "https://via.placeholder.com/1920x1080/FEE2E2/000000?text=KCN+Light+Main",
-        thumbnail: "https://via.placeholder.com/320x180/FEE2E2/EF4444?text=KCN+Light+16:9"
+        main: "media/khucongnghieplight.jpg",
+        thumbnail: "media/khucongnghiepthumb.jpg"
       },
       dark: {
-        main: "https://via.placeholder.com/1920x1080/7F1D1D/FECACA?text=KCN+Dark+Main",
-        thumbnail: "https://via.placeholder.com/320x180/7F1D1D/FECACA?text=KCN+Dark+16:9"
+        main: "media/khucongnghiephdark.jpg",
+        thumbnail: "media/khucongnghiepthumb.jpg"
       }
     }
   }

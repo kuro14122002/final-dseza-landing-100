@@ -1,4 +1,5 @@
-import { MenuItem } from '../types/megaMenu';
+// src/components/hero/navigation/menuData.tsx
+import { MenuItem } from '../types/megaMenu'; // Đảm bảo import đúng MenuItem cho thanh điều hướng
 
 export const getNavigationMenuItems = (): MenuItem[] => {
   return [
@@ -22,23 +23,22 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               },
               {
                 title: "Tổng quan về Ban Quản lý",
-                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",
-                iconName: "business-development"
-              },
-              {
-                title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý",
-                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/",
-                iconName: "chief-financial-officer"
-              },
-              {
-                title: "Các phòng ban",
-                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/",
-                iconName: "investor-relations"
-              },
-              {
-                title: "Đơn vị trực thuộc",
-                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/",
-                iconName: "family-offices"
+                iconName: "business-development",
+                // url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/", // URL có thể bỏ nếu mục này chỉ để mở dropdown
+                items: [
+                  {
+                    title: "Chức năng, nhiệm vụ",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/"
+                  },
+                  {
+                    title: "Các phòng ban",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/"
+                  },
+                  {
+                    title: "Đơn vị trực thuộc",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/"
+                  },
+                ]
               },
             ]
           },
@@ -62,13 +62,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               },
               {
                 title: "Các Khu công nghiệp Đà Nẵng",
-                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/",
                 iconName: "private-debt",
+                // url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/", // URL có thể bỏ nếu mục này chỉ để mở dropdown
                 items: [
-                  {
-                    title: "Khu công nghiệp Hòa ninh",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-ninh/"
-                  },
                   {
                     title: "Khu công nghiệp Hòa Khánh",
                     url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-khanh/"
@@ -76,6 +72,14 @@ export const getNavigationMenuItems = (): MenuItem[] => {
                   {
                     title: "Khu công nghiệp Hòa Khánh mở rộng",
                     url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-khanh-mo-rong/"
+                  },
+                  {
+                    title: "Khu công nghiệp Đà Nẵng",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-da-nang/"
+                  },
+                  {
+                    title: "Khu công nghiệp Dịch vụ Thủy sản Đà Nẵng",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-dich-vu-thuy-san-da-nang/"
                   },
                   {
                     title: "Khu công nghiệp Hòa Cầm",
@@ -86,12 +90,8 @@ export const getNavigationMenuItems = (): MenuItem[] => {
                     url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-lien-chieu/"
                   },
                   {
-                    title: "Khu công nghiệp Dịch vụ Thủy sản Đà Nẵng",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-dich-vu-thuy-san-da-nang/"
-                  },
-                  {
-                    title: "Khu công nghiệp Đà Nẵng",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-da-nang/"
+                    title: "Khu công nghiệp Hòa Ninh",
+                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghiep-hoa-ninh/"
                   }
                 ]
               }
@@ -117,6 +117,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
         ]
       }
     },
+    // ... (Các mục menu khác giữ nguyên như bạn đã cung cấp)
     {
       title: "Tin tức",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/",
@@ -182,9 +183,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             contents: [],
             specialContent: (
               <div className="bg-dseza-light-secondary dark:bg-dseza-dark-secondary rounded-lg overflow-hidden">
-                <img 
-                  src="https://picsum.photos/400/200" 
-                  alt="Featured news" 
+                <img
+                  src="https://picsum.photos/400/200"
+                  alt="Featured news"
                   className="w-full h-32 object-cover"
                 />
                 <div className="p-4">
@@ -260,7 +261,6 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     {
       title: "Cẩm nang đầu tư",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/",
-      // Thay đổi ở đây: Đã xóa thuộc tính megaMenuConfig
     },
     {
       title: "Văn bản",
@@ -319,8 +319,8 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             specialContent: (
               <div className="mt-4 p-4 border rounded-lg">
                 <h5 className="font-semibold mb-2">Tra cứu văn bản nhanh</h5>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Nhập từ khóa tìm kiếm..."
                   className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-dseza-dark-secondary dark:border-dseza-dark-hover"
                 />
@@ -400,8 +400,8 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               <div className="mt-4 p-4 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white rounded-lg">
                 <h5 className="font-semibold mb-2">Dịch vụ công nổi bật</h5>
                 <p className="text-sm mb-3">Trải nghiệm dịch vụ công trực tuyến tại Ban quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng</p>
-                <a 
-                  href="https://dichvucong.danang.gov.vn/" 
+                <a
+                  href="https://dichvucong.danang.gov.vn/"
                   className="inline-block bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-4 rounded text-sm font-medium"
                 >
                   Truy cập ngay
@@ -415,7 +415,6 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     {
       title: "Liên hệ",
       url: "https://dseza.danang.gov.vn/lien-he/",
-      // No mega menu for this item
     }
   ];
 };
