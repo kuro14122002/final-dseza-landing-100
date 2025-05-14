@@ -1,13 +1,28 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React from "react";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { LanguageProvider } from "@/context/LanguageContext";
+import HeroSection from "@/components/hero/HeroSection";
+import QuickAccessButtons from "@/components/QuickAccessButtons";
+
+const Index: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <ThemeProvider>
+      <LanguageProvider>
+        <main className="min-h-screen">
+          {/* Hero Section */}
+          <HeroSection />
+          
+          {/* Content Sections */}
+          <div className="bg-background">
+            {/* Quick Access Buttons */}
+            <QuickAccessButtons />
+            
+            {/* More sections will be added in future iterations */}
+          </div>
+        </main>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 };
 
