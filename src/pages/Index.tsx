@@ -9,6 +9,9 @@ import NewsSection from "@/components/NewsSection";
 import FunctionalZones from "@/components/FunctionalZones";
 import InvestmentInformation from "@/components/InvestmentInformation";
 import LocationSection from "@/components/LocationSection";
+import ResourcesSection from "@/components/ResourcesSection";
+import BusinessesAndPartners from "@/components/BusinessesAndPartners";
+import Footer from "@/components/Footer";
 
 const Index: React.FC = () => {
   return (
@@ -37,7 +40,16 @@ const Index: React.FC = () => {
             
             {/* Location Map Section */}
             <LocationSection />
+            
+            {/* Resources Section */}
+            <ResourcesSection />
+            
+            {/* Businesses and Partners Section */}
+            <BusinessesAndPartners />
           </div>
+          
+          {/* Footer */}
+          <Footer />
         </main>
       </LanguageProvider>
     </ThemeProvider>
