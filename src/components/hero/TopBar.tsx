@@ -23,15 +23,13 @@ const TopBar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Xác định màu chữ dựa trên theme và trạng thái cuộn
-  // Màu chữ cho trạng thái chưa cuộn (isScrolled = false) -> glass-nav-initial
-  const initialTextColor = theme === "dark" ? "text-white/80 hover:text-dseza-dark-primary" : "text-gray-700 hover:text-dseza-light-primary"; // Hoặc "text-black/70" nếu nền sáng
+  // Màu chữ cho trạng thái chưa cuộn (isScrolled = false) -> glass-initial
+  const initialTextColor = theme === "dark" ? "text-white/80 hover:text-dseza-dark-primary" : "text-gray-700 hover:text-dseza-light-primary";
   const initialLangActiveColor = theme === "dark" ? "text-dseza-dark-primary" : "text-dseza-light-primary";
   const initialLangInactiveColor = theme === "dark" ? "text-white/70 hover:text-dseza-dark-primary" : "text-gray-600 hover:text-dseza-light-primary";
   const initialSeparatorColor = theme === "dark" ? "text-white/50" : "text-gray-500/70";
 
-
-  // Màu chữ cho trạng thái đã cuộn (isScrolled = true) -> glass-nav-sticky
+  // Màu chữ cho trạng thái đã cuộn (isScrolled = true) -> glass-sticky
   const scrolledTextColor = theme === "dark" ? "text-gray-200 hover:text-dseza-dark-primary" : "text-gray-700 hover:text-dseza-light-primary";
   const scrolledLangActiveColor = theme === "dark" ? "text-dseza-dark-primary" : "text-dseza-light-primary";
   const scrolledLangInactiveColor = theme === "dark" ? "text-gray-300 hover:text-dseza-dark-primary" : "text-gray-600 hover:text-dseza-light-primary";
@@ -39,13 +37,13 @@ const TopBar: React.FC = () => {
 
   const dateTextColor = isScrolled
     ? (theme === "dark" ? "text-gray-300" : "text-gray-600")
-    : (theme === "dark" ? "text-white/90" : "text-neutral-700"); // Ví dụ: text-neutral-700 cho nền sáng, trong suốt
+    : (theme === "dark" ? "text-white/90" : "text-neutral-700");
 
   return (
     <div
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 h-12 transition-all duration-300 ease-in-out",
-        isScrolled ? "glass-nav-sticky" : "glass-nav-initial"
+        "fixed top-0 left-0 right-0 z-40 h-12", // Bỏ các lớp transition-all duration-300 ease-in-out vì đã có trong .glass-base
+        isScrolled ? "glass-sticky" : "glass-initial" // Sử dụng lớp CSS đã chuẩn hóa
       )}
     >
       <div className="container mx-auto h-full flex items-center justify-between px-8">

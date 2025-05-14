@@ -118,16 +118,19 @@
   .text-shadow-lg {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
   }
-
   /* Glass nav styling */
-  .glass-nav-initial {
-    @apply bg-white/20 dark:bg-black/20 backdrop-blur-sm border-b border-transparent dark:border-transparent shadow-none;
+  .glass-base {
+    @apply transition-all duration-300 ease-in-out;
   }
-  .glass-nav-sticky {
-    @apply bg-white/70 dark:bg-dseza-dark-secondary/70 backdrop-blur-md border-b border-white/20 dark:border-dseza-dark-border/30 shadow-sm;
+  .glass-initial {
+    @apply glass-base bg-white/20 dark:bg-black/25 backdrop-blur-sm shadow-none;
+    /* Border dưới trong suốt để giữ layout nếu cần, nhưng không hiển thị */
+    @apply border-b border-transparent dark:border-transparent;
   }
-  .glass-nav {
-    @apply bg-white/20 dark:bg-black/20 backdrop-blur-sm border-b border-white/20 dark:border-dseza-dark-border/30 shadow-sm;
+  .glass-sticky {
+    @apply glass-base bg-white/80 dark:bg-dseza-dark-secondary/80 backdrop-blur-md shadow-lg;
+    /* Border dưới mờ để phân tách khi sticky */
+    @apply border-b border-white/30 dark:border-dseza-dark-border/50;
   }
 }
 

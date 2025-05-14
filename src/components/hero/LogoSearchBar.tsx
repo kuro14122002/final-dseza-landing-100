@@ -15,24 +15,23 @@ const LogoSearchBar: React.FC = () => {
   
   const logoSrc = theme === "dark" ? "/media/darklogo3.png" : "/media/lightlogo3.png";
 
-  // Các class cho hiệu ứng glassmorphism của LogoSearchBar
-  const logoSearchBarGlassClasses = cn(
-    "absolute top-12 left-0 right-0 z-10 h-24",
-    // Áp dụng kiểu giống TopBar khi chưa cuộn
-    "bg-white/20 dark:bg-black/20",
-    "backdrop-blur-sm",
-    // Bạn có thể thêm border và shadow nếu muốn, ví dụ:
-    "border-b border-white/20 dark:border-black/20", // Viền mờ
-    "shadow-sm" // Bóng đổ nhẹ
+  // Sử dụng lớp glass-initial đã chuẩn hóa
+  // z-index được đặt là 20 để nằm dưới TopBar (z-40) và trên NavigationBar ban đầu (nếu Nav có z-index thấp hơn khi chưa sticky)
+  // Tuy nhiên, NavigationBar hiện tại là z-30, nên LogoSearchBar cần z-index cao hơn Nav nếu muốn nằm trên.
+  // Hiện tại, Nav (top-36) nằm dưới LogoSearchBar (top-12, height h-24).
+  // LogoSearchBar sẽ bị Nav (khi sticky) che phủ. Nếu đây là ý muốn thì giữ nguyên.
+  // Để đảm bảo hiệu ứng glass nhất quán, ta dùng glass-initial.
+  const logoSearchBarClasses = cn(
+    "absolute top-12 left-0 right-0 z-20 h-24", // Điều chỉnh z-index nếu cần thiết so với NavigationBar
+    "glass-initial" // Áp dụng hiệu ứng glass đã chuẩn hóa
+    // Lớp glass-initial đã bao gồm border-b-transparent và shadow-none
   );
 
-  // Màu nền và viền cho ô input để nó nổi bật hoặc phù hợp
   const inputSpecificBg = theme === "dark" ? "bg-dseza-dark-secondary-bg/60" : "bg-white/60";
   const inputSpecificBorder = theme === "dark" ? "border-dseza-dark-border/50" : "border-gray-300/50";
 
-
   return (
-    <div className={logoSearchBarGlassClasses}>
+    <div className={logoSearchBarClasses}>
       <div className="container mx-auto h-full px-8 flex justify-between items-center">
         <a href="/" className="flex items-center">
           <img
@@ -51,9 +50,9 @@ const LogoSearchBar: React.FC = () => {
             placeholder="Tìm kiếm..."
             className={cn(
               "w-full py-3 pl-10 pr-4 rounded-lg transition-all duration-300 outline-none",
-              inputSpecificBg, // Nền riêng cho input
-              inputSpecificBorder, // Viền riêng cho input
-              "border", // Để viền có hiệu lực
+              inputSpecificBg, 
+              inputSpecificBorder, 
+              "border", 
               textColor,
               placeholderColor,
               focusBorderColor,
