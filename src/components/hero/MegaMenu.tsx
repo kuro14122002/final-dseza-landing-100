@@ -72,10 +72,10 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
     <div
       className={cn(
         "mega-menu-container w-full border-t",
-        "bg-white/30 dark:bg-dseza-dark-secondary/50", 
-        "backdrop-blur-lg", 
-        "border-white/20 dark:border-dseza-dark-hover/30", 
-        "shadow-2xl" 
+        "bg-white/30 dark:bg-dseza-dark-secondary/50", // Reduced background opacity
+        "backdrop-blur-lg", // Increased blur for glassmorphism effect
+        "border-white/20 dark:border-dseza-dark-hover/30", // Softer borders
+        "shadow-2xl" // Strong shadow for depth
       )}
     >
       <div className="max-w-6xl mx-auto p-8">
