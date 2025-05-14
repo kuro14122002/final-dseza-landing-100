@@ -1,6 +1,6 @@
 
 import { useRef, useState, useEffect } from 'react';
-import { ChevronDown, ChevronUp, User, Building, Clock, Book, FileText, Library, BookOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import MegaMenu from './MegaMenu';
 
@@ -54,7 +54,7 @@ const NavigationBar = () => {
     setActiveMenuIndex(activeMenuIndex === index ? null : index);
   };
 
-  // Menu data structure based on the requirements and images provided
+  // Menu data structure based on the requirements
   const menuItems: MenuItem[] = [
     {
       title: "Giới thiệu",
@@ -77,22 +77,22 @@ const NavigationBar = () => {
               {
                 title: "Tổng quan về Ban Quản lý",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",
-                iconName: "building"
+                iconName: "business-development"
               },
               {
                 title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý",
                 url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/",
-                iconName: "file-text"
+                iconName: "chief-financial-officer"
               },
               {
                 title: "Các phòng ban",
                 url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/",
-                iconName: "customer-relationship-management"
+                iconName: "investor-relations"
               },
               {
                 title: "Đơn vị trực thuộc",
                 url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/",
-                iconName: "user-square"
+                iconName: "family-offices"
               },
             ]
           },
@@ -107,17 +107,17 @@ const NavigationBar = () => {
               {
                 title: "Khu thương mại tự do Đà Nẵng",
                 url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-thuong-mai-tu-do-da-nang/",
-                iconName: "business-development"
+                iconName: "private-equity"
               },
               {
                 title: "Khu CNTT tập trung",
                 url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/khu-cong-nghe-thong-tin-tap-trung/",
-                iconName: "file-spreadsheet"
+                iconName: "corporate-venture-capital"
               },
               {
                 title: "Các Khu công nghiệp Đà Nẵng",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/",
-                iconName: "building",
+                iconName: "private-debt",
                 items: [
                   {
                     title: "Khu công nghiệp Hòa ninh",
@@ -157,14 +157,14 @@ const NavigationBar = () => {
               {
                 title: "Thành tựu nổi bật của Đà Nẵng",
                 url: "#",
-                iconName: "chart"
+                iconName: "hedge-fund"
               }
             ],
             specialContent: (
-              <div className="p-4 rounded-lg bg-green-600 text-white mt-4">
+              <div className="p-4 rounded-lg bg-dseza-light-primary dark:bg-dseza-dark-primary text-white mt-4">
                 <h5 className="font-semibold mb-2">Thành tựu đã đạt được</h5>
                 <p className="text-sm">Khu Công nghệ cao và các Khu Công nghiệp Đà Nẵng đã trở thành động lực quan trọng cho sự phát triển của thành phố.</p>
-                <button className="mt-3 bg-white text-green-600 py-2 px-3 rounded text-sm font-medium">Tìm hiểu thêm</button>
+                <button className="mt-3 bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-3 rounded text-sm font-medium">Tìm hiểu thêm</button>
               </div>
             )
           }
@@ -182,32 +182,32 @@ const NavigationBar = () => {
               {
                 title: "Đầu tư - Hợp tác Quốc tế",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dau-tu-hop-tac-quoc-te/",
-                iconName: "file-spreadsheet"
+                iconName: "business-development"
               },
               {
                 title: "Doanh nghiệp",
                 url: "#",
-                iconName: "business-development"
+                iconName: "wealth-management"
               },
               {
                 title: "Chuyển đổi số",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/chuyen-doi-so/",
-                iconName: "file-pie"
+                iconName: "ria"
               },
               {
                 title: "Đào tạo, Ươm tạo Khởi nghiệp",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/dao-tao-uom-tao-khoi-nghiep/",
-                iconName: "customer-relationship-management"
+                iconName: "investor-relations"
               },
               {
                 title: "Hoạt động Ban Quản lý",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/hoat-dong-ban-quan-ly/",
-                iconName: "user-square"
+                iconName: "chief-financial-officer"
               },
               {
                 title: "Tin khác",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/tin-khac/",
-                iconName: "newspaper"
+                iconName: "real-estate"
               }
             ]
           },
@@ -217,17 +217,17 @@ const NavigationBar = () => {
               {
                 title: "Lịch công tác",
                 url: "https://dseza.danang.gov.vn/lich-cong-tac/",
-                iconName: "calendar"
+                iconName: "family-offices"
               },
               {
                 title: "Thông báo",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/thong-bao/",
-                iconName: "bell"
+                iconName: "venture-capital"
               },
               {
                 title: "Thông tin báo chí",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/thong-tin-bao-chi/",
-                iconName: "newspaper"
+                iconName: "corporate-venture-capital"
               }
             ]
           },
@@ -235,7 +235,7 @@ const NavigationBar = () => {
             title: "Tin nổi bật",
             contents: [],
             specialContent: (
-              <div className="bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden">
+              <div className="bg-dseza-light-secondary dark:bg-dseza-dark-secondary rounded-lg overflow-hidden">
                 <img 
                   src="https://picsum.photos/400/200" 
                   alt="Featured news" 
@@ -244,7 +244,7 @@ const NavigationBar = () => {
                 <div className="p-4">
                   <h5 className="font-semibold text-sm mb-2 line-clamp-2">Tin tức mới nhất về hoạt động của Ban quản lý</h5>
                   <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.</p>
-                  <a href="#" className="text-green-600 dark:text-green-500 text-xs font-medium">Xem thêm →</a>
+                  <a href="#" className="text-dseza-light-primary dark:text-dseza-dark-primary text-xs font-medium">Xem thêm →</a>
                 </div>
               </div>
             )
@@ -263,17 +263,17 @@ const NavigationBar = () => {
               {
                 title: "Báo cáo trực tuyến về DSEZA",
                 url: "https://maps.dhpiza.vn/login?ReturnUrl=%2Fadmin%2Fbaocaonhadautu%2Fyeucaubaocao",
-                iconName: "file-pie"
+                iconName: "ria"
               },
               {
                 title: "Báo cáo giám sát và đánh giá đầu tư",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/bao-cao-giam-sat-va-danh-gia-dau-tu/",
-                iconName: "file-spreadsheet"
+                iconName: "business-development"
               },
               {
                 title: "Mẫu | Bảng biểu báo cáo",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/mau-bang-bieu-bao-cao/",
-                iconName: "file-text"
+                iconName: "wealth-management"
               }
             ]
           },
@@ -283,17 +283,17 @@ const NavigationBar = () => {
               {
                 title: "Thủ tục | Hồ sơ | Dữ liệu môi trường",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/thu-tuc-ho-so-du-lieu-moi-truong/",
-                iconName: "file-search"
+                iconName: "venture-capital"
               },
               {
                 title: "Thống kê doanh nghiệp",
                 url: "https://dseza.danang.gov.vn/thong-ke-doanh-nghiep/",
-                iconName: "chart"
+                iconName: "private-debt"
               },
               {
                 title: "Tuyển dụng",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/tuyen-dung/",
-                iconName: "user-square"
+                iconName: "private-equity"
               }
             ]
           },
@@ -301,10 +301,10 @@ const NavigationBar = () => {
             title: "Hỗ trợ doanh nghiệp",
             contents: [],
             specialContent: (
-              <div className="p-4 rounded-lg bg-green-600/10 dark:bg-green-600/20 mt-4">
-                <h5 className="font-semibold mb-2 text-green-600 dark:text-green-500">Dịch vụ hỗ trợ</h5>
+              <div className="p-4 rounded-lg bg-dseza-light-primary/10 dark:bg-dseza-dark-primary/20 mt-4">
+                <h5 className="font-semibold mb-2 text-dseza-light-primary dark:text-dseza-dark-primary">Dịch vụ hỗ trợ</h5>
                 <p className="text-sm">Chúng tôi cung cấp nhiều dịch vụ hỗ trợ cho doanh nghiệp trong các Khu công nghiệp.</p>
-                <button className="mt-3 bg-green-600 text-white py-2 px-3 rounded text-sm font-medium">Liên hệ hỗ trợ</button>
+                <button className="mt-3 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 px-3 rounded text-sm font-medium">Liên hệ hỗ trợ</button>
               </div>
             )
           }
@@ -322,7 +322,7 @@ const NavigationBar = () => {
               {
                 title: "Hướng dẫn đầu tư",
                 url: "#",
-                iconName: "customer-relationship-management"
+                iconName: "investor-relations"
               },
               {
                 title: "Chính sách ưu đãi",
@@ -332,12 +332,12 @@ const NavigationBar = () => {
               {
                 title: "Quy trình đầu tư",
                 url: "#",
-                iconName: "file-text"
+                iconName: "business-development"
               },
               {
                 title: "Các mô hình đầu tư",
                 url: "#",
-                iconName: "business-development"
+                iconName: "private-equity"
               }
             ]
           },
@@ -347,17 +347,17 @@ const NavigationBar = () => {
               {
                 title: "Báo cáo thường niên",
                 url: "#",
-                iconName: "file-spreadsheet"
+                iconName: "real-estate"
               },
               {
                 title: "Tài liệu thu hút đầu tư",
                 url: "#",
-                iconName: "chart"
+                iconName: "hedge-fund"
               },
               {
                 title: "Thông tin thị trường",
                 url: "#",
-                iconName: "hedge-fund"
+                iconName: "family-offices"
               }
             ]
           }
@@ -375,7 +375,7 @@ const NavigationBar = () => {
               {
                 title: "Văn bản pháp quy trung ương",
                 url: "https://dseza.danang.gov.vn/van-ban/van-ban-phap-quy-tw/",
-                iconName: "user-square"
+                iconName: "general-partner"
               },
               {
                 title: "Văn bản pháp quy địa phương",
@@ -385,12 +385,12 @@ const NavigationBar = () => {
               {
                 title: "Văn bản chỉ đạo điều hành",
                 url: "https://dseza.danang.gov.vn/van-ban/van-ban-chi-dao-dieu-hanh/",
-                iconName: "file-text"
+                iconName: "chief-financial-officer"
               },
               {
                 title: "Văn bản CCHC",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-cai-cach-hanh-chinh/",
-                iconName: "scroll"
+                iconName: "business-development"
               }
             ]
           },
@@ -400,12 +400,12 @@ const NavigationBar = () => {
               {
                 title: "Văn bản hướng dẫn",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-huong-dan/",
-                iconName: "customer-relationship-management"
+                iconName: "investor-relations"
               },
               {
                 title: "Góp ý dự thảo văn bản",
                 url: "https://dseza.danang.gov.vn/gop-y-du-thao-van-ban/",
-                iconName: "user-square"
+                iconName: "family-offices"
               }
             ]
           },
@@ -415,7 +415,7 @@ const NavigationBar = () => {
               {
                 title: "Hệ thống tra cứu văn bản",
                 url: "#",
-                iconName: "file-search"
+                iconName: "venture-capital"
               }
             ],
             specialContent: (
@@ -424,9 +424,9 @@ const NavigationBar = () => {
                 <input 
                   type="text" 
                   placeholder="Nhập từ khóa tìm kiếm..."
-                  className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-gray-800 dark:border-gray-700"
+                  className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-dseza-dark-secondary dark:border-dseza-dark-hover"
                 />
-                <button className="w-full bg-green-600 text-white py-2 rounded text-sm font-medium">
+                <button className="w-full bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 rounded text-sm font-medium">
                   Tìm kiếm
                 </button>
               </div>
@@ -446,27 +446,27 @@ const NavigationBar = () => {
               {
                 title: "Dịch vụ công trực tuyến",
                 url: "https://dichvucong.danang.gov.vn/",
-                iconName: "file-pie"
+                iconName: "ria"
               },
               {
                 title: "Bưu chính công ích",
                 url: "https://egov.danang.gov.vn/dailyDVc",
-                iconName: "business-development"
+                iconName: "wealth-management"
               },
               {
                 title: "Tra cứu hồ sơ",
                 url: "https://dichvucong.danang.gov.vn/web/guest/tra-cuu-ho-so",
-                iconName: "file-search"
+                iconName: "venture-capital"
               },
               {
                 title: "Đặt lịch hẹn giao dịch trực tuyến",
                 url: "http://49.156.54.87/index.php?option=com_hengio&view=hengioonline&task=formdangkyonline&tmpl=widget",
-                iconName: "clock"
+                iconName: "private-equity"
               },
               {
                 title: "Đánh giá chất lượng dịch vụ HCC",
                 url: "https://dichvucong.danang.gov.vn/web/guest/-anh-gia",
-                iconName: "gauge"
+                iconName: "private-debt"
               }
             ]
           },
@@ -476,22 +476,22 @@ const NavigationBar = () => {
               {
                 title: "Thủ tục hành chính",
                 url: "https://dichvucong.danang.gov.vn/",
-                iconName: "file-spreadsheet"
+                iconName: "corporate-venture-capital"
               },
               {
                 title: "Quy trình thực hiện thủ tục hành chính",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-thuc-hien-thu-tuc-hanh-chinh/",
-                iconName: "chart"
+                iconName: "hedge-fund"
               },
               {
                 title: "Quy trình lĩnh vực đầu tư",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/",
-                iconName: "user-square"
+                iconName: "family-offices"
               },
               {
                 title: "Văn bản cải cách hành chính",
                 url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-cai-cach-hanh-chinh/",
-                iconName: "scroll"
+                iconName: "general-partner"
               }
             ]
           },
@@ -499,12 +499,12 @@ const NavigationBar = () => {
             title: "Dịch vụ công nổi bật",
             contents: [],
             specialContent: (
-              <div className="mt-4 p-4 bg-green-600 text-white rounded-lg">
+              <div className="mt-4 p-4 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white rounded-lg">
                 <h5 className="font-semibold mb-2">Dịch vụ công nổi bật</h5>
                 <p className="text-sm mb-3">Trải nghiệm dịch vụ công trực tuyến tại Ban quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng</p>
                 <a 
                   href="https://dichvucong.danang.gov.vn/" 
-                  className="inline-block bg-white text-green-600 py-2 px-4 rounded text-sm font-medium"
+                  className="inline-block bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-4 rounded text-sm font-medium"
                 >
                   Truy cập ngay
                 </a>
@@ -522,17 +522,17 @@ const NavigationBar = () => {
   ];
 
   return (
-    <nav ref={navRef} className="sticky top-0 z-30 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm border-b border-gray-200 dark:border-gray-800">
+    <nav ref={navRef} className="glass-nav sticky top-0 z-30">
       <div className="container mx-auto px-6">
-        <ul className="flex justify-center gap-x-8">
+        <ul className="flex gap-x-8">
           {menuItems.map((item, index) => (
-            <li key={index} className="relative py-3">
+            <li key={index} className="py-4">
               <button 
                 className={cn(
                   "flex items-center font-medium text-base transition-colors",
                   activeMenuIndex === index 
-                    ? "text-green-600 dark:text-green-500" 
-                    : "hover:text-green-600 dark:hover:text-green-500"
+                    ? "text-dseza-light-primary-hover dark:text-dseza-dark-primary" 
+                    : "hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary"
                 )}
                 onClick={() => handleMenuClick(index)}
               >
@@ -547,9 +547,6 @@ const NavigationBar = () => {
                   </span>
                 )}
               </button>
-              {activeMenuIndex === index && (
-                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600 dark:bg-green-500"></span>
-              )}
             </li>
           ))}
         </ul>
