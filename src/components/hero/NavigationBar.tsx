@@ -2,163 +2,302 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
+import MegaMenu from "./MegaMenu";
+import { 
+  User, 
+  Building2, 
+  FileText, 
+  BookOpen, 
+  GraduationCap 
+} from "lucide-react";
 
-// Define the mega menu structure
-interface MenuLink {
-  title: string;
-  url: string;
-  subLinks?: MenuLink[];
-}
-
-interface MenuColumn {
-  heading: string;
-  links: MenuLink[];
-}
-
-interface MegaMenu {
-  id: string;
-  title: string;
-  columns: MenuColumn[];
-}
-
-// Define all mega menus
-const megaMenus: MegaMenu[] = [
-  {
-    id: "gioi-thieu",
-    title: "Giới thiệu",
-    columns: [
-      {
-        heading: "Giới thiệu",
-        links: [
-          { title: "Thư ngỏ", url: "/chi-tiet-tin-tuc/thu-ngo/" },
-          { title: "Tổng quan về Đà Nẵng", url: "/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/" },
-          { 
-            title: "Tổng quan về Ban Quản lý", 
-            url: "/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",
-            subLinks: [
-              { title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý", url: "/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/" },
-              { title: "Các phòng ban", url: "/chi-tiet-tin-tuc/cac-phong-ban/" },
-              { title: "Đơn vị trực thuộc", url: "/chi-tiet-tin-tuc/don-vi-truc-thuoc/" }
+// Convert the existing megaMenus data to the new MegaMenu format
+const createMegaMenuConfig = (menuId: string) => {
+  switch(menuId) {
+    case "gioi-thieu":
+      return {
+        columns: [
+          {
+            title: "Giới thiệu",
+            contents: [
+              {
+                title: "Thư ngỏ",
+                url: "/chi-tiet-tin-tuc/thu-ngo/",
+                iconName: "general-partner"
+              },
+              {
+                title: "Tổng quan về Đà Nẵng",
+                url: "/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/",
+                iconName: "business-development"
+              },
+              {
+                title: "Tổng quan về Ban Quản lý",
+                url: "/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",
+                iconName: "customer-relationship-management",
+                items: [
+                  {
+                    title: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý",
+                    url: "/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/"
+                  },
+                  {
+                    title: "Các phòng ban",
+                    url: "/chi-tiet-tin-tuc/cac-phong-ban/"
+                  },
+                  {
+                    title: "Đơn vị trực thuộc",
+                    url: "/chi-tiet-tin-tuc/don-vi-truc-thuoc/"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            title: "Khu hành chính",
+            contents: [
+              {
+                title: "Khu công nghệ cao Đà Nẵng",
+                url: "/chi-tiet-tin-tuc/khu-cong-nghe-cao-da-nang/",
+                iconName: "real-estate"
+              },
+              {
+                title: "Khu thương mại tự do Đà Nẵng",
+                url: "/chi-tiet-tin-tuc/khu-thuong-mai-tu-do-da-nang/",
+                iconName: "private-equity"
+              },
+              {
+                title: "Khu CNTT tập trung",
+                url: "/chi-tiet-tin-tuc/khu-cong-nghe-thong-tin-tap-trung/",
+                iconName: "venture-capital"
+              },
+              {
+                title: "Các Khu công nghiệp Đà Nẵng",
+                url: "/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/",
+                iconName: "corporate-venture-capital",
+                items: [
+                  {
+                    title: "KCN Hòa Khánh",
+                    url: "/chi-tiet-tin-tuc/kcn-hoa-khanh/"
+                  },
+                  {
+                    title: "KCN Liên Chiểu",
+                    url: "/chi-tiet-tin-tuc/kcn-lien-chieu/"
+                  },
+                  {
+                    title: "KCN Hòa Cầm",
+                    url: "/chi-tiet-tin-tuc/kcn-hoa-cam/"
+                  }
+                ]
+              }
             ]
           }
         ]
-      },
-      {
-        heading: "Khu hành chính",
-        links: [
-          { title: "Khu công nghệ cao Đà Nẵng", url: "/chi-tiet-tin-tuc/khu-cong-nghe-cao-da-nang/" },
-          { title: "Khu thương mại tự do Đà Nẵng", url: "/chi-tiet-tin-tuc/khu-thuong-mai-tu-do-da-nang/" },
-          { title: "Khu CNTT tập trung", url: "/chi-tiet-tin-tuc/khu-cong-nghe-thong-tin-tap-trung/" },
-          { 
-            title: "Các Khu công nghiệp Đà Nẵng", 
-            url: "/danh-sach-tin-tuc/gioi-thieu/khu-hanh-chinh/cac-khu-cong-nghiep-da-nang/",
-            subLinks: [
-              { title: "KCN Hòa Khánh", url: "/chi-tiet-tin-tuc/kcn-hoa-khanh/" },
-              { title: "KCN Liên Chiểu", url: "/chi-tiet-tin-tuc/kcn-lien-chieu/" },
-              { title: "KCN Hòa Cầm", url: "/chi-tiet-tin-tuc/kcn-hoa-cam/" }
+      };
+    case "tin-tuc":
+      return {
+        columns: [
+          {
+            title: "Tin tức | Sự kiện",
+            contents: [
+              {
+                title: "Đầu tư - Hợp tác Quốc tế",
+                url: "/danh-sach-tin-tuc/tin-tuc/dau-tu-hop-tac-quoc-te/",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Doanh nghiệp",
+                url: "/danh-sach-tin-tuc/doanh-nghiep/",
+                iconName: "business-development"
+              },
+              {
+                title: "Chuyển đổi số",
+                url: "/danh-sach-tin-tuc/tin-tuc/chuyen-doi-so/",
+                iconName: "corporate-venture-capital"
+              }
+            ]
+          },
+          {
+            title: "Xem thêm:",
+            contents: [
+              {
+                title: "Lịch công tác",
+                url: "/lich-cong-tac/",
+                iconName: "chief-financial-officer"
+              },
+              {
+                title: "Thông báo",
+                url: "/danh-sach-tin-tuc/thong-bao/",
+                iconName: "private-debt"
+              }
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    id: "tin-tuc",
-    title: "Tin tức",
-    columns: [
-      {
-        heading: "Tin tức | Sự kiện",
-        links: [
-          { title: "Đầu tư - Hợp tác Quốc tế", url: "/danh-sach-tin-tuc/tin-tuc/dau-tu-hop-tac-quoc-te/" },
-          { title: "Doanh nghiệp", url: "/danh-sach-tin-tuc/doanh-nghiep/" },
-          { title: "Chuyển đổi số", url: "/danh-sach-tin-tuc/tin-tuc/chuyen-doi-so/" }
+      };
+    case "doanh-nghiep":
+      return {
+        columns: [
+          {
+            title: "Báo cáo",
+            contents: [
+              {
+                title: "Báo cáo trực tuyến về DSEZA",
+                url: "https://external-report.com",
+                iconName: "hedge-fund"
+              },
+              {
+                title: "Báo cáo giám sát và đánh giá đầu tư",
+                url: "/danh-sach-tin-tuc/doanh-nghiep/bao-cao-giam-sat-va-danh-gia-dau-tu/",
+                iconName: "wealth-management"
+              }
+            ]
+          },
+          {
+            title: "Xem thêm",
+            contents: [
+              {
+                title: "Thủ tục | Hồ sơ | Dữ liệu môi trường",
+                url: "/danh-sach-tin-tuc/doanh-nghiep/thu-tuc-ho-so-du-lieu-moi-truong/",
+                iconName: "database"
+              }
+            ]
+          }
         ]
-      },
-      {
-        heading: "Xem thêm:",
-        links: [
-          { title: "Lịch công tác", url: "/lich-cong-tac/" },
-          { title: "Thông báo", url: "/danh-sach-tin-tuc/thong-bao/" }
+      };
+    case "cam-nang-dau-tu":
+      return {
+        columns: [
+          {
+            title: "Cẩm nang đầu tư",
+            contents: [
+              {
+                title: "Khám phá Cẩm nang đầu tư",
+                url: "/danh-sach-tin-tuc/cam-nang-dau-tu/",
+                iconName: "corporate-venture-capital"
+              },
+              {
+                title: "Cơ hội đầu tư",
+                url: "/co-hoi-dau-tu/",
+                iconName: "private-equity"
+              },
+              {
+                title: "Quy trình đầu tư",
+                url: "/quy-trinh-dau-tu/",
+                iconName: "ria"
+              },
+              {
+                title: "Ưu đãi đầu tư",
+                url: "/uu-dai-dau-tu/",
+                iconName: "chief-financial-officer"
+              }
+            ]
+          }
         ]
-      }
-    ]
-  },
-  {
-    id: "doanh-nghiep",
-    title: "Doanh nghiệp",
-    columns: [
-      {
-        heading: "Báo cáo",
-        links: [
-          { title: "Báo cáo trực tuyến về DSEZA", url: "https://external-report.com" },
-          { title: "Báo cáo giám sát và đánh giá đầu tư", url: "/danh-sach-tin-tuc/doanh-nghiep/bao-cao-giam-sat-va-danh-gia-dau-tu/" }
+      };
+    case "van-ban":
+      return {
+        columns: [
+          {
+            title: "Văn bản Pháp luật",
+            contents: [
+              {
+                title: "Văn bản pháp quy trung ương",
+                url: "/van-ban/van-ban-phap-quy-tw/",
+                iconName: "private-debt"
+              },
+              {
+                title: "Văn bản pháp quy địa phương",
+                url: "/van-ban/van-ban-phap-quy-dia-phuong/",
+                iconName: "private-debt"
+              },
+              {
+                title: "Văn bản chỉ đạo điều hành",
+                url: "/van-ban/van-ban-chi-dao-dieu-hanh/",
+                iconName: "private-debt"
+              }
+            ]
+          },
+          {
+            title: "Tài liệu & Góp ý",
+            contents: [
+              {
+                title: "Văn bản hướng dẫn",
+                url: "/danh-sach-tin-tuc/van-ban/van-ban-huong-dan/",
+                iconName: "book-open"
+              },
+              {
+                title: "Góp ý dự thảo văn bản",
+                url: "/gop-y-du-thao-van-ban/",
+                iconName: "file-text"
+              }
+            ]
+          }
         ]
-      },
-      {
-        heading: "Xem thêm",
-        links: [
-          { title: "Thủ tục | Hồ sơ | Dữ liệu môi trường", url: "/danh-sach-tin-tuc/doanh-nghiep/thu-tuc-ho-so-du-lieu-moi-truong/" }
+      };
+    case "cai-cach-hanh-chinh":
+      return {
+        columns: [
+          {
+            title: "Ứng dụng và dịch vụ",
+            contents: [
+              {
+                title: "Dịch vụ công trực tuyến",
+                url: "https://dichvucong.danang.gov.vn/web/guest/dich-vu-cong",
+                iconName: "database"
+              },
+              {
+                title: "Công khai KQ giải quyết TTHC",
+                url: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
+                iconName: "database"
+              },
+              {
+                title: "Đặt lịch hẹn giao dịch trực tuyến",
+                url: "http://49.156.54.87/index.php",
+                iconName: "clock"
+              }
+            ]
+          },
+          {
+            title: "Văn bản CCHC",
+            contents: [
+              {
+                title: "Thủ tục hành chính",
+                url: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
+                iconName: "file-text"
+              },
+              {
+                title: "Mẫu đơn, tờ khai",
+                url: "/mau-don-to-khai/",
+                iconName: "file-text"
+              }
+            ]
+          }
         ]
-      }
-    ]
-  },
-  {
-    id: "cam-nang-dau-tu",
-    title: "Cẩm nang đầu tư",
-    columns: [
-      {
-        heading: "Cẩm nang đầu tư",
-        links: [
-          { title: "Khám phá Cẩm nang đầu tư", url: "/danh-sach-tin-tuc/cam-nang-dau-tu/" },
-          { title: "Cơ hội đầu tư", url: "/co-hoi-dau-tu/" },
-          { title: "Quy trình đầu tư", url: "/quy-trinh-dau-tu/" },
-          { title: "Ưu đãi đầu tư", url: "/uu-dai-dau-tu/" }
+      };
+    default:
+      return {
+        columns: [
+          {
+            title: "Menu",
+            contents: [
+              {
+                title: "No content available",
+                url: "#",
+              }
+            ]
+          }
         ]
-      }
-    ]
-  },
-  {
-    id: "van-ban",
-    title: "Văn bản",
-    columns: [
-      {
-        heading: "Văn bản Pháp luật",
-        links: [
-          { title: "Văn bản pháp quy trung ương", url: "/van-ban/van-ban-phap-quy-tw/" },
-          { title: "Văn bản pháp quy địa phương", url: "/van-ban/van-ban-phap-quy-dia-phuong/" },
-          { title: "Văn bản chỉ đạo điều hành", url: "/van-ban/van-ban-chi-dao-dieu-hanh/" }
-        ]
-      },
-      {
-        heading: "Tài liệu & Góp ý",
-        links: [
-          { title: "Văn bản hướng dẫn", url: "/danh-sach-tin-tuc/van-ban/van-ban-huong-dan/" },
-          { title: "Góp ý dự thảo văn bản", url: "/gop-y-du-thao-van-ban/" }
-        ]
-      }
-    ]
-  },
-  {
-    id: "cai-cach-hanh-chinh",
-    title: "Cải cách hành chính",
-    columns: [
-      {
-        heading: "Ứng dụng và dịch vụ",
-        links: [
-          { title: "Dịch vụ công trực tuyến", url: "https://dichvucong.danang.gov.vn/web/guest/dich-vu-cong" },
-          { title: "Công khai KQ giải quyết TTHC", url: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh" },
-          { title: "Đặt lịch hẹn giao dịch trực tuyến", url: "http://49.156.54.87/index.php" }
-        ]
-      },
-      {
-        heading: "Văn bản CCHC",
-        links: [
-          { title: "Thủ tục hành chính", url: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh" },
-          { title: "Mẫu đơn, tờ khai", url: "/mau-don-to-khai/" }
-        ]
-      }
-    ]
+      };
   }
+};
+
+// Define menu items
+const menuItems = [
+  { id: "gioi-thieu", title: "Giới thiệu" },
+  { id: "tin-tuc", title: "Tin tức" },
+  { id: "doanh-nghiep", title: "Doanh nghiệp" },
+  { id: "cam-nang-dau-tu", title: "Cẩm nang đầu tư" },
+  { id: "van-ban", title: "Văn bản" },
+  { id: "cai-cach-hanh-chinh", title: "Cải cách hành chính" },
+  { id: "lien-he", title: "Liên hệ", url: "https://dseza.danang.gov.vn/lien-he/" }
 ];
 
 /**
@@ -188,9 +327,6 @@ const NavigationBar: React.FC = () => {
   const activeTextColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
   const hoverBgColor = theme === "dark" ? "hover:bg-dseza-dark-hover-bg" : "hover:bg-dseza-light-hover-bg";
   const activeBgColor = theme === "dark" ? "bg-dseza-dark-hover-bg" : "bg-dseza-light-hover-bg";
-  const megaMenuBgColor = theme === "dark" ? "bg-dseza-dark-main-bg" : "bg-dseza-light-main-bg";
-  const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
-  const linkHoverColor = theme === "dark" ? "hover:text-dseza-dark-primary-accent" : "hover:text-dseza-light-primary-accent";
 
   // Toggle mega menu
   const handleMenuClick = (menuId: string) => {
@@ -201,91 +337,47 @@ const NavigationBar: React.FC = () => {
     }
   };
 
-  // Close mega menu
-  const closeMegaMenu = () => {
-    setActiveMegaMenu(null);
-  };
-
   return (
     <div ref={megaMenuRef} className="absolute top-36 left-0 right-0 z-10">
       {/* Main Navigation */}
       <div className="container mx-auto flex justify-center items-center h-16 px-8">
         <nav className="flex items-center">
-          {megaMenus.map((menu) => (
-            <button
-              key={menu.id}
-              onClick={() => handleMenuClick(menu.id)}
-              className={cn(
-                "px-5 py-3 font-medium text-base transition-colors duration-300 rounded-md mx-1",
-                textColor,
-                hoverBgColor,
-                activeMegaMenu === menu.id ? `${activeTextColor} ${activeBgColor}` : ""
-              )}
-            >
-              {menu.title}
-            </button>
+          {menuItems.map((menu) => (
+            menu.url ? (
+              <a
+                key={menu.id}
+                href={menu.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "px-5 py-3 font-medium text-base transition-colors duration-300 rounded-md mx-1",
+                  textColor,
+                  hoverBgColor
+                )}
+              >
+                {menu.title}
+              </a>
+            ) : (
+              <button
+                key={menu.id}
+                onClick={() => handleMenuClick(menu.id)}
+                className={cn(
+                  "px-5 py-3 font-medium text-base transition-colors duration-300 rounded-md mx-1",
+                  textColor,
+                  hoverBgColor,
+                  activeMegaMenu === menu.id ? `${activeTextColor} ${activeBgColor}` : ""
+                )}
+              >
+                {menu.title}
+              </button>
+            )
           ))}
-          <a
-            href="https://dseza.danang.gov.vn/lien-he/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`px-5 py-3 font-medium text-base transition-colors duration-300 rounded-md mx-1 ${textColor} ${hoverBgColor}`}
-          >
-            Liên hệ
-          </a>
         </nav>
       </div>
 
       {/* Mega Menu */}
       {activeMegaMenu && (
-        <div 
-          className={`${megaMenuBgColor} shadow-2xl rounded-b-lg animate-fade-in`}
-        >
-          <div className="container mx-auto p-8 lg:p-12">
-            <div className="flex">
-              {megaMenus
-                .find(menu => menu.id === activeMegaMenu)
-                ?.columns.map((column, colIndex) => (
-                  <div key={colIndex} className="flex-1 px-6 first:pl-0 last:pr-0">
-                    <h4 className="text-lg font-semibold font-montserrat mb-4">{column.heading}</h4>
-                    <ul className="space-y-3">
-                      {column.links.map((link, linkIndex) => (
-                        <li key={linkIndex}>
-                          <a 
-                            href={link.url}
-                            target={link.url.startsWith("http") ? "_blank" : "_self"}
-                            rel={link.url.startsWith("http") ? "noopener noreferrer" : ""}
-                            onClick={closeMegaMenu}
-                            className={`${secondaryTextColor} ${linkHoverColor} transition-colors duration-300`}
-                          >
-                            {link.title}
-                          </a>
-                          
-                          {link.subLinks && (
-                            <ul className="mt-2 ml-4 space-y-2">
-                              {link.subLinks.map((subLink, subLinkIndex) => (
-                                <li key={subLinkIndex}>
-                                  <a 
-                                    href={subLink.url}
-                                    target={subLink.url.startsWith("http") ? "_blank" : "_self"}
-                                    rel={subLink.url.startsWith("http") ? "noopener noreferrer" : ""}
-                                    onClick={closeMegaMenu}
-                                    className={`${secondaryTextColor} ${linkHoverColor} transition-colors duration-300 text-sm`}
-                                  >
-                                    {subLink.title}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
+        <MegaMenu config={createMegaMenuConfig(activeMegaMenu)} />
       )}
     </div>
   );
