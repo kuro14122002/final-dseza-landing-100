@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import SocialBar from "./SocialBar";
 import ImageTabs from "./ImageTabs";
 import { cn } from "@/lib/utils";
 
-// Define tab data structure with real images
+// Define tab data structure with placeholder images 
+// (these should be replaced with actual high-quality images in production)
 const tabsData = [
   {
     id: "tab1",
@@ -32,7 +34,7 @@ const tabsData = [
 ];
 
 /**
- * Hero background component with dynamic image tabs
+ * Hero background component with dynamic image tabs and contrast overlay
  */
 const HeroBackground: React.FC = () => {
   const [activeTab, setActiveTab] = useState(tabsData[0].id);
@@ -76,8 +78,8 @@ const HeroBackground: React.FC = () => {
         style={{ backgroundImage: `url(${activeImage})` }}
       />
       
-      {/* Overlay gradient for better text visibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-0"></div>
+      {/* Contrast overlay gradient for better text visibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-1"></div>
       
       {/* Social Bar */}
       <SocialBar />

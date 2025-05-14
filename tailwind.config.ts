@@ -143,6 +143,9 @@ export default {
         DEFAULT: '1px 1px 3px rgba(0, 0, 0, 0.3)',
         lg: '2px 2px 5px rgba(0, 0, 0, 0.4)',
       },
+      scale: {
+        '103': '1.03',
+      },
     }
   },
   plugins: [require("tailwindcss-animate")],
