@@ -16,29 +16,7 @@ import {
   HeartHandshake
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// Type definitions
-type MegaMenuContentType = {
-  title: string;
-  url?: string;
-  iconName?: string;
-  items?: {
-    title: string;
-    url: string;
-    subItems?: { title: string; url: string }[];
-  }[];
-};
-
-type MegaMenuColumnType = {
-  title: string;
-  contents: MegaMenuContentType[];
-  specialContent?: React.ReactNode;
-};
-
-type MegaMenuConfigType = {
-  columns: MegaMenuColumnType[];
-  featuredContent?: React.ReactNode;
-};
+import { MegaMenuConfigType } from './types/megaMenu';
 
 type MegaMenuProps = {
   config: MegaMenuConfigType;
