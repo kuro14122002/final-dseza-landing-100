@@ -26,13 +26,19 @@ const NavigationBar = () => {
   }, []);
 
   const handleMenuClick = (index: number) => {
+    // Nếu mục menu không có megaMenuConfig, không làm gì cả (để cho phép điều hướng mặc định)
+    if (!menuItems[index].megaMenuConfig) {
+      setActiveMenuIndex(null); // Đảm bảo đóng bất kỳ mega menu nào đang mở
+      return;
+    }
     setActiveMenuIndex(activeMenuIndex === index ? null : index);
   };
 
   return (
-    <nav ref={navRef} className="glass-nav absolute top-36 left-0 right-0 z-30"> {/* Đã thay đổi dòng này */}
+    <nav ref={navRef} className="glass-nav absolute top-36 left-0 right-0 z-30">
       <div className="container mx-auto px-6">
-        <ul className="flex gap-x-8">
+        {/* Thay đổi ở dòng dưới: thêm class 'justify-center' */}
+        <ul className="flex justify-center gap-x-8">
           {menuItems.map((item, index) => (
             <NavigationMenuItem
               key={index}
@@ -47,7 +53,7 @@ const NavigationBar = () => {
 
       {/* Mega Menu */}
       {activeMenuIndex !== null && menuItems[activeMenuIndex].megaMenuConfig && (
-        <MegaMenu config={menuItems[activeMenuIndex].megaMenuConfig} />
+        <MegaMenu config={menuItems[activeMenuIndex].megaMenuConfig!} />
       )}
     </nav>
   );

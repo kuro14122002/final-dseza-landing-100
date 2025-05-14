@@ -1,4 +1,3 @@
-
 import { MenuItem } from '../types/megaMenu';
 
 export const getNavigationMenuItems = (): MenuItem[] => {
@@ -261,55 +260,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     {
       title: "Cẩm nang đầu tư",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/",
-      megaMenuConfig: {
-        columns: [
-          {
-            title: "Thông tin đầu tư",
-            contents: [
-              {
-                title: "Hướng dẫn đầu tư",
-                url: "#",
-                iconName: "investor-relations"
-              },
-              {
-                title: "Chính sách ưu đãi",
-                url: "#",
-                iconName: "chief-financial-officer"
-              },
-              {
-                title: "Quy trình đầu tư",
-                url: "#",
-                iconName: "business-development"
-              },
-              {
-                title: "Các mô hình đầu tư",
-                url: "#",
-                iconName: "private-equity"
-              }
-            ]
-          },
-          {
-            title: "Tài liệu tham khảo",
-            contents: [
-              {
-                title: "Báo cáo thường niên",
-                url: "#",
-                iconName: "real-estate"
-              },
-              {
-                title: "Tài liệu thu hút đầu tư",
-                url: "#",
-                iconName: "hedge-fund"
-              },
-              {
-                title: "Thông tin thị trường",
-                url: "#",
-                iconName: "family-offices"
-              }
-            ]
-          }
-        ]
-      }
+      // Thay đổi ở đây: Đã xóa thuộc tính megaMenuConfig
     },
     {
       title: "Văn bản",
