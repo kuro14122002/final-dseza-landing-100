@@ -1,4 +1,4 @@
-
+// src/components/hero/NavigationBar.tsx
 import { useRef, useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
 import MegaMenu from './MegaMenu';
@@ -30,7 +30,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <nav ref={navRef} className="glass-nav sticky top-0 z-30">
+    <nav ref={navRef} className="glass-nav absolute top-36 left-0 right-0 z-30"> {/* Đã thay đổi dòng này */}
       <div className="container mx-auto px-6">
         <ul className="flex gap-x-8">
           {menuItems.map((item, index) => (

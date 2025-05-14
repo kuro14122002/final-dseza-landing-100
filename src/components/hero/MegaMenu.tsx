@@ -1,12 +1,11 @@
-
 import React from 'react';
-import { 
+import {
   User,
   Building2,
   Users,
   CircleDollarSign,
   BarChart,
-  Home as HomeIcon,
+  HomeIcon, // Đổi tên Home thành HomeIcon để tránh trùng lặp nếu có component Home khác
   Briefcase,
   FileText,
   Database,
@@ -14,9 +13,32 @@ import {
   BookOpen,
   GraduationCap,
   HeartHandshake
+  // Clock, // Đã xóa Clock vì không được sử dụng trong iconMap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MegaMenuConfigType } from './types/megaMenu';
+
+// Type definitions
+type MegaMenuContentType = {
+  title: string;
+  url?: string;
+  iconName?: string;
+  items?: {
+    title: string;
+    url: string;
+    subItems?: { title: string; url: string }[];
+  }[];
+};
+
+type MegaMenuColumnType = {
+  title: string;
+  contents: MegaMenuContentType[];
+  specialContent?: React.ReactNode;
+};
+
+type MegaMenuConfigType = {
+  columns: MegaMenuColumnType[];
+  featuredContent?: React.ReactNode;
+};
 
 type MegaMenuProps = {
   config: MegaMenuConfigType;
@@ -42,18 +64,18 @@ const iconMap: Record<string, any> = {
 
 const MegaMenu = ({ config }: MegaMenuProps) => {
   // Calculate grid columns based on number of columns in config
-  const gridCols = config.columns.length <= 2 ? 
-    `grid-cols-${config.columns.length}` : 
+  const gridCols = config.columns.length <= 2 ?
+    `grid-cols-${config.columns.length}` :
     "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
   return (
     <div
       className={cn(
         "mega-menu-container w-full border-t",
-        "bg-white/30 dark:bg-dseza-dark-secondary/50", // Reduced background opacity
-        "backdrop-blur-lg", // Increased blur for glassmorphism effect
-        "border-white/20 dark:border-dseza-dark-hover/30", // Softer borders
-        "shadow-2xl" // Strong shadow for depth
+        "bg-white/30 dark:bg-dseza-dark-secondary/50",
+        "backdrop-blur-lg",
+        "border-white/20 dark:border-dseza-dark-hover/30",
+        "shadow-2xl"
       )}
     >
       <div className="max-w-6xl mx-auto p-8">
