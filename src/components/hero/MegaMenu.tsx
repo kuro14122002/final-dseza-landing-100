@@ -13,8 +13,7 @@ import {
   LineChart,
   BookOpen,
   GraduationCap,
-  HeartHandshake,
-  Clock
+  HeartHandshake
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
