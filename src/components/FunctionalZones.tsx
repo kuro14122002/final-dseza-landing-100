@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Building2 } from "lucide-react";
@@ -26,16 +25,80 @@ const FunctionalZones: React.FC = () => {
   const primaryAccent = theme === "dark" ? "bg-dseza-dark-primary-accent" : "bg-dseza-light-primary-accent";
   const secondaryAccent = theme === "dark" ? "bg-dseza-dark-secondary-accent" : "bg-dseza-light-secondary-accent";
   
-  // Zones data
+  // Zones data with real images
   const zonesData: ZoneData[] = [
-    { id: 1, name: "Khu công nghệ Cao Đà Nẵng", enterprises: 32, occupancy: 42.85, area: "1,128.4 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=KCNC", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=KCNC+Large" },
-    { id: 2, name: "Hòa Khánh mở rộng", enterprises: 42, occupancy: 100, area: "132.34 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=HKMR", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=HKMR+Large" },
-    { id: 3, name: "Khu công nghiệp Đà Nẵng", enterprises: 45, occupancy: 100, area: "50.1 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=KCN+DN", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=KCN+DN+Large" },
-    { id: 4, name: "Hòa Khánh", enterprises: 228, occupancy: 100, area: "394 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=HK", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=HK+Large" },
-    { id: 5, name: "Khu công nghiệp Liên Chiểu", enterprises: 36, occupancy: 60.07, area: "289.35 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=KCN+LC", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=KCN+LC+Large" },
-    { id: 6, name: "Khu công nghiệp dịch vụ Thủy sản Đà Nẵng", enterprises: 56, occupancy: 100, area: "50.63 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=KCN+TS", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=KCN+TS+Large" },
-    { id: 7, name: "Hòa Cầm", enterprises: 81, occupancy: 97.66, area: "149.84 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=HC", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=HC+Large" },
-    { id: 8, name: "Khu công nghệ thông tin tập trung", enterprises: 5, occupancy: 31.82, area: "131.1 ha", imageThumb: "https://via.placeholder.com/300x200/CCCCCC/FFFFFF?text=KCNTT", imageLarge: "https://via.placeholder.com/1200x500/CCCCCC/FFFFFF?text=KCNTT+Large" }
+    { 
+      id: 1, 
+      name: "Khu công nghệ Cao Đà Nẵng", 
+      enterprises: 32, 
+      occupancy: 42.85, 
+      area: "1,128.4 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 2, 
+      name: "Hòa Khánh mở rộng", 
+      enterprises: 42, 
+      occupancy: 100, 
+      area: "132.34 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 3, 
+      name: "Khu công nghiệp Đà Nẵng", 
+      enterprises: 45, 
+      occupancy: 100, 
+      area: "50.1 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 4, 
+      name: "Hòa Khánh", 
+      enterprises: 228, 
+      occupancy: 100, 
+      area: "394 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 5, 
+      name: "Khu công nghiệp Liên Chiểu", 
+      enterprises: 36, 
+      occupancy: 60.07, 
+      area: "289.35 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 6, 
+      name: "Khu công nghiệp dịch vụ Thủy sản Đà Nẵng", 
+      enterprises: 56, 
+      occupancy: 100, 
+      area: "50.63 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 7, 
+      name: "Hòa Cầm", 
+      enterprises: 81, 
+      occupancy: 97.66, 
+      area: "149.84 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    },
+    { 
+      id: 8, 
+      name: "Khu công nghệ thông tin tập trung", 
+      enterprises: 5, 
+      occupancy: 31.82, 
+      area: "131.1 ha", 
+      imageThumb: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
+      imageLarge: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+    }
   ];
 
   const currentZone = zonesData.find(zone => zone.id === selectedZone) || zonesData[0];

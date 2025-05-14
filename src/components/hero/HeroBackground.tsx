@@ -1,34 +1,33 @@
-
 import React, { useState, useEffect } from "react";
 import SocialBar from "./SocialBar";
 import ImageTabs from "./ImageTabs";
 import { cn } from "@/lib/utils";
 
-// Define tab data structure
+// Define tab data structure with real images
 const tabsData = [
   {
     id: "tab1",
     title: "Khu công nghệ cao Đà Nẵng",
-    image: "https://via.placeholder.com/1920x1080/4A90E2/FFFFFF?text=Khu+Cong+Nghe+Cao+Da+Nang",
-    thumbnailImage: "https://via.placeholder.com/80x60/4A90E2/FFFFFF?text=KCNC"
+    image: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+    thumbnailImage: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
   },
   {
     id: "tab2",
     title: "Khu thương mại tự do Đà Nẵng",
-    image: "https://via.placeholder.com/1920x1080/50E3C2/FFFFFF?text=Khu+Thuong+Mai+Tu+Do",
-    thumbnailImage: "https://via.placeholder.com/80x60/50E3C2/FFFFFF?text=KTMTD"
+    image: "https://images.unsplash.com/photo-1534007191209-e8216f636cde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+    thumbnailImage: "https://images.unsplash.com/photo-1534007191209-e8216f636cde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
   },
   {
     id: "tab3",
     title: "Khu công nghệ thông tin tập trung",
-    image: "https://via.placeholder.com/1920x1080/B8E986/FFFFFF?text=Khu+CNTT+Tap+Trung",
-    thumbnailImage: "https://via.placeholder.com/80x60/B8E986/FFFFFF?text=CNTT"
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+    thumbnailImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
   },
   {
     id: "tab4",
     title: "Các Khu công nghiệp Đà Nẵng",
-    image: "https://via.placeholder.com/1920x1080/F8E71C/000000?text=Cac+Khu+Cong+Nghiep",
-    thumbnailImage: "https://via.placeholder.com/80x60/F8E71C/000000?text=KCN"
+    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80",
+    thumbnailImage: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
   }
 ];
 

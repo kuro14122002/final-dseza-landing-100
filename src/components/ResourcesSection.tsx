@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -24,31 +23,31 @@ const ResourcesSection: React.FC = () => {
   const buttonHoverBgColor = theme === "dark" ? "hover:bg-dseza-dark-primary-accent" : "hover:bg-dseza-light-primary-accent";
   const buttonHoverTextColor = theme === "dark" ? "hover:text-dseza-dark-main-bg" : "hover:text-white";
   
-  // Placeholder image resources
+  // Real image resources
   const imageResources = [
     {
       id: 1,
       title: "Khu công nghệ cao Đà Nẵng",
       date: "15/05/2023",
-      imageUrl: "https://via.placeholder.com/400x300/444444/FFFFFF?text=Khu+công+nghệ+cao+Đà+Nẵng"
+      imageUrl: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
     },
     {
       id: 2,
       title: "Lễ khởi công dự án mới",
       date: "08/07/2023",
-      imageUrl: "https://via.placeholder.com/400x300/444444/FFFFFF?text=Lễ+khởi+công+dự+án+mới"
+      imageUrl: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
     },
     {
       id: 3,
       title: "Hội thảo phát triển công nghệ cao",
       date: "21/04/2023",
-      imageUrl: "https://via.placeholder.com/400x300/444444/FFFFFF?text=Hội+thảo+phát+triển"
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
     },
     {
       id: 4,
       title: "Khánh thành nhà máy sản xuất",
       date: "03/03/2023",
-      imageUrl: "https://via.placeholder.com/400x300/444444/FFFFFF?text=Khánh+thành+nhà+máy"
+      imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
     }
   ];
 

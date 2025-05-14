@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -27,25 +26,95 @@ const InvestmentInformation: React.FC = () => {
     ? "hover:text-dseza-dark-primary-accent-hover" 
     : "hover:text-dseza-light-primary-accent-hover";
   
-  // Carousel data
+  // Carousel data with real images
   const investorCards: InvestmentCard[] = [
-    { id: 'inv1', title: "Quy trình lĩnh vực đầu tư", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Quy+trinh", link: "#investor-process" },
-    { id: 'inv2', title: "Lĩnh vực thu hút đầu tư", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Linh+vuc", link: "#investment-fields" },
-    { id: 'inv3', title: "Quy hoạch khu chức năng", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Quy+hoach", link: "#zoning-plans" },
-    { id: 'inv4', title: "Đăng ký nộp hồ sơ qua bưu điện", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Dang+ky+HS", link: "#postal-submission" },
-    { id: 'inv5', title: "Tra cứu thủ tục hành chính", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Tra+cuu+TTHC", link: "#admin-procedure-lookup" },
-    { id: 'inv6', title: "Dịch vụ công trực tuyến", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=DVCTT", link: "#online-services" }
+    { 
+      id: 'inv1', 
+      title: "Quy trình lĩnh vực đầu tư", 
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#investor-process" 
+    },
+    { 
+      id: 'inv2', 
+      title: "Lĩnh vực thu hút đầu tư", 
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#investment-fields" 
+    },
+    { 
+      id: 'inv3', 
+      title: "Quy hoạch khu chức năng", 
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#zoning-plans" 
+    },
+    { 
+      id: 'inv4', 
+      title: "Đăng ký nộp hồ sơ qua bưu điện", 
+      image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#postal-submission" 
+    },
+    { 
+      id: 'inv5', 
+      title: "Tra cứu thủ tục hành chính", 
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#admin-procedure-lookup" 
+    },
+    { 
+      id: 'inv6', 
+      title: "Dịch vụ công trực tuyến", 
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#online-services" 
+    }
   ];
 
   const environmentCards: InvestmentCard[] = [
-    { id: 'env1', title: "Hạ tầng khu công nghiệp", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Ha+tang+KCN", link: "#iz-infrastructure" },
-    { id: 'env2', title: "Hạ tầng giao thông", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Ha+tang+GT", link: "#transport-infra" },
-    { id: 'env3', title: "Khoa học công nghệ, môi trường", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=KHCN+Moi+truong", link: "#s&t-environment" },
-    { id: 'env4', title: "Logistic", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Logistic", link: "#logistics" },
-    { id: 'env5', title: "Hạ tầng xã hội", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Ha+tang+XH", link: "#social-infra" },
-    { id: 'env6', title: "Nguồn nhân lực", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Nhan+luc", link: "#human-resources" },
-    { id: 'env7', title: "Cải cách hành chính", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=CCHC", link: "#admin-reform" },
-    { id: 'env8', title: "Chuyển đổi số", image: "https://via.placeholder.com/400x250/CCCCCC/FFFFFF?text=Chuyen+doi+so", link: "#digital-transformation" }
+    { 
+      id: 'env1', 
+      title: "Hạ tầng khu công nghiệp", 
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#iz-infrastructure" 
+    },
+    { 
+      id: 'env2', 
+      title: "Hạ tầng giao thông", 
+      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#transport-infra" 
+    },
+    { 
+      id: 'env3', 
+      title: "Khoa học công nghệ, môi trường", 
+      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#s&t-environment" 
+    },
+    { 
+      id: 'env4', 
+      title: "Logistic", 
+      image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#logistics" 
+    },
+    { 
+      id: 'env5', 
+      title: "Hạ tầng xã hội", 
+      image: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#social-infra" 
+    },
+    { 
+      id: 'env6', 
+      title: "Nguồn nhân lực", 
+      image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#human-resources" 
+    },
+    { 
+      id: 'env7', 
+      title: "Cải cách hành chính", 
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#admin-reform" 
+    },
+    { 
+      id: 'env8', 
+      title: "Chuyển đổi số", 
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80", 
+      link: "#digital-transformation" 
+    }
   ];
   
   const currentCards = activeTab === "investors" ? investorCards : environmentCards;

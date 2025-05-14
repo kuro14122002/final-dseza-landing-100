@@ -12,23 +12,23 @@ const BusinessesAndPartners: React.FC = () => {
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   
-  // Placeholder logos for partners and businesses
+  // Real company logos (using tech company logos as placeholders)
   const partnerLogos = [
-    "https://via.placeholder.com/150x60/AAAAAA/FFFFFF?text=Logo+1",
-    "https://via.placeholder.com/180x60/AAAAAA/FFFFFF?text=Logo+2",
-    "https://via.placeholder.com/120x60/AAAAAA/FFFFFF?text=Logo+3",
-    "https://via.placeholder.com/160x60/AAAAAA/FFFFFF?text=Logo+4",
-    "https://via.placeholder.com/140x60/AAAAAA/FFFFFF?text=Logo+5",
-    "https://via.placeholder.com/170x60/AAAAAA/FFFFFF?text=Logo+6",
-    "https://via.placeholder.com/130x60/AAAAAA/FFFFFF?text=Logo+7",
-    "https://via.placeholder.com/150x60/AAAAAA/FFFFFF?text=Logo+8",
-    "https://via.placeholder.com/165x60/AAAAAA/FFFFFF?text=Logo+9",
-    "https://via.placeholder.com/155x60/AAAAAA/FFFFFF?text=Logo+10",
-    "https://via.placeholder.com/175x60/AAAAAA/FFFFFF?text=Logo+11",
-    "https://via.placeholder.com/145x60/AAAAAA/FFFFFF?text=Logo+12",
-    "https://via.placeholder.com/135x60/AAAAAA/FFFFFF?text=Logo+13",
-    "https://via.placeholder.com/160x60/AAAAAA/FFFFFF?text=Logo+14",
-    "https://via.placeholder.com/170x60/AAAAAA/FFFFFF?text=Logo+15",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1667px-Apple_logo_black.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/2560px-IBM_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/2560px-Logo_of_YouTube_%282015-2017%29.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dart-logo.png/768px-Dart-logo.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/2560px-PHP-logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/C_Programming_Language.svg/1853px-C_Programming_Language.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1822px-ISO_C%2B%2B_Logo.svg.png",
   ];
   
   return (
