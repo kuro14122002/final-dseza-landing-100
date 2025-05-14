@@ -42,14 +42,15 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
     `grid-cols-${config.columns.length}` :
     "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
-  return (
+    return (
     <div
       className={cn(
         "mega-menu-container w-full border-t",
-        "bg-white/30 dark:bg-dseza-dark-secondary/50",
-        "backdrop-blur-lg",
-        "border-white/20 dark:border-dseza-dark-hover/30",
-        "shadow-2xl"
+        // Áp dụng style giống glass-nav-sticky (hoặc trạng thái mong muốn khi sticky)
+        "bg-white/70 dark:bg-dseza-dark-secondary/70",
+        "backdrop-blur-md",
+        "border-white/20 dark:border-dseza-dark-hover/30", // Viền này của MegaMenu có thể khác với Nav
+        "shadow-2xl" // MegaMenu thường có bóng đổ lớn hơn
       )}
     >
       <div className="max-w-6xl mx-auto p-8">

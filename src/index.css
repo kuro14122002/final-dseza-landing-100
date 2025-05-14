@@ -120,8 +120,14 @@
   }
 
   /* Glass nav styling */
+  .glass-nav-initial {
+    @apply bg-white/20 dark:bg-black/20 backdrop-blur-sm border-b border-transparent dark:border-transparent shadow-none;
+  }
+  .glass-nav-sticky {
+    @apply bg-white/70 dark:bg-dseza-dark-secondary/70 backdrop-blur-md border-b border-white/20 dark:border-dseza-dark-border/30 shadow-sm;
+  }
   .glass-nav {
-    @apply bg-white/70 dark:bg-dseza-dark-main-bg/80 backdrop-blur-lg border-b border-white/20 dark:border-dseza-dark-border/30 shadow-sm;
+    @apply bg-white/20 dark:bg-black/20 backdrop-blur-sm border-b border-white/20 dark:border-dseza-dark-border/30 shadow-sm;
   }
 }
 
