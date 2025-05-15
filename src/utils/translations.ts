@@ -140,6 +140,19 @@ const viTranslations: TranslationObject = {
     newsCardDesc: "Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.",
     newsCardBtn: "Xem thêm →",
   },
+
+  // Resources Section
+  resourcesSection: {
+    sectionTitle: "TƯ LIỆU",
+    tabImages: "Hình ảnh",
+    tabVideos: "Video",
+    tabDocuments: "Tài liệu",
+    dateLabel: "Ngày đăng",
+    comingSoonTitle: "Đang phát triển",
+    comingSoonVideos: "Sắp ra mắt: Video liên quan đến hoạt động và các khu của DSEZA.",
+    comingSoonDocuments: "Sắp ra mắt: Tài liệu, báo cáo và khung pháp lý có thể tải về.",
+    viewAll: "Xem tất cả tư liệu",
+  },
 };
 
 const enTranslations: TranslationObject = {
@@ -275,6 +288,19 @@ const enTranslations: TranslationObject = {
     newsCardTitle: "Latest news on Management Authority activities",
     newsCardDesc: "Get the latest updates on important activities and events.",
     newsCardBtn: "See more →",
+  },
+
+  // Resources Section
+  resourcesSection: {
+    sectionTitle: "RESOURCES",
+    tabImages: "Images",
+    tabVideos: "Videos",
+    tabDocuments: "Documents",
+    dateLabel: "Date posted",
+    comingSoonTitle: "Coming soon",
+    comingSoonVideos: "Coming soon: Videos related to DSEZA's activities and zones.",
+    comingSoonDocuments: "Coming soon: Downloadable documents, reports, and legal frameworks.",
+    viewAll: "View all resources",
   },
 };
 

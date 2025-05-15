@@ -184,7 +184,7 @@ const FunctionalZones: React.FC = () => {
             >
               <div className="absolute bottom-0 left-0 right-0">
                 <div className={cn(
-                  "px-3 py-2 font-montserrat font-medium text-white text-sm",
+                  "px-3 py-2 font-montserrat font-medium text-white text-xs",
                   zone.id === selectedZone ? primaryAccent : secondaryAccent
                 )}>
                   {getZoneName(zone)}

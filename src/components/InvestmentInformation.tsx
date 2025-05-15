@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useTranslation } from "@/utils/translations";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -11,16 +11,13 @@ interface InvestmentCard {
   link: string;
 }
 
-/**
- * Investment Information section with tabbed categories and image carousel
- */
 const InvestmentInformation: React.FC = () => {
   const { theme } = useTheme();
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<"investors" | "environment">("investors");
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Theme-specific styles
+  // Theme-specific styles (giữ nguyên)
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
   const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
@@ -28,7 +25,7 @@ const InvestmentInformation: React.FC = () => {
     ? "hover:text-dseza-dark-primary-accent-hover" 
     : "hover:text-dseza-light-primary-accent-hover";
   
-  // Investment card data with translation keys
+  // Dữ liệu card (giữ nguyên)
   const investorCards: InvestmentCard[] = [
     { 
       id: 'inv1', 
@@ -121,16 +118,34 @@ const InvestmentInformation: React.FC = () => {
   
   const currentCards = activeTab === "investors" ? investorCards : environmentCards;
   
-  // Handle carousel scroll
-  const scrollAmount = 300;
-  
+  // Cập nhật scrollAmount để cuộn chính xác hơn từng card một
+  // Giả sử mỗi card có chiều rộng 320px và khoảng cách giữa các card là 1rem (16px)
+  const cardWidth = 320; // Chiều rộng của một card
+  const cardGap = 16; // Khoảng cách giữa các card (tương ứng với gap-4)
+  const scrollAmount = cardWidth + cardGap;
+
+  // Logic cuộn vòng lặp
   const scrollCarousel = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
-    
+
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    const maxScrollLeft = scrollWidth - clientWidth;
+
     if (direction === "left") {
-      carouselRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    } else {
-      carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      if (scrollLeft <= 0) {
+        // Nếu đang ở đầu, cuộn đến cuối
+        carouselRef.current.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+      } else {
+        carouselRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      }
+    } else { // direction === "right"
+      // Sử dụng một ngưỡng nhỏ để xác định đã đến cuối
+      if (scrollLeft >= maxScrollLeft - 5) { // -5px là ngưỡng để tránh sai số float
+        // Nếu đang ở cuối, cuộn về đầu
+        carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
     }
   };
   
@@ -147,7 +162,7 @@ const InvestmentInformation: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left column: tabs and navigation */}
           <div className="w-full lg:w-1/3">
-            {/* Category tabs */}
+            {/* Category tabs (giữ nguyên) */}
             <div className="mb-8">
               <button 
                 className={cn(
@@ -172,13 +187,13 @@ const InvestmentInformation: React.FC = () => {
               </button>
             </div>
             
-            {/* Carousel navigation arrows */}
+            {/* Carousel navigation arrows (giữ nguyên giao diện, chỉ thay đổi logic) */}
             <div className="flex space-x-4">
               <button 
                 className={cn(
                   "p-2 rounded-full transition-colors",
-                  secondaryTextColor,
-                  accentHoverColor
+                  secondaryTextColor, // Giữ màu mặc định
+                  accentHoverColor // Luôn cho phép hover
                 )}
                 onClick={() => scrollCarousel("left")}
               >
@@ -188,8 +203,8 @@ const InvestmentInformation: React.FC = () => {
               <button 
                 className={cn(
                   "p-2 rounded-full transition-colors",
-                  secondaryTextColor,
-                  accentHoverColor
+                  secondaryTextColor, // Giữ màu mặc định
+                  accentHoverColor // Luôn cho phép hover
                 )}
                 onClick={() => scrollCarousel("right")}
               >

@@ -6,12 +6,14 @@ import { Video } from "lucide-react";
 import { File } from "lucide-react";
 import { Button } from "./ui/button";
 import { AspectRatio } from "./ui/aspect-ratio";
+import { useTranslation } from "@/utils/translations";
 
 /**
  * Resources section with tabbed interface for Images, Videos, and Documents
  */
 const ResourcesSection: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'images' | 'videos' | 'documents'>('images');
   
   // Theme-specific styles
@@ -58,7 +60,7 @@ const ResourcesSection: React.FC = () => {
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor
         )}>
-          Tư liệu
+          {t('resourcesSection.sectionTitle')}
         </h2>
         
         {/* Tab Navigation */}
@@ -73,7 +75,7 @@ const ResourcesSection: React.FC = () => {
             onClick={() => setActiveTab('images')}
           >
             <Image className="w-5 h-5 mr-2" />
-            Hình ảnh
+            {t('resourcesSection.tabImages')}
           </button>
           
           <button
@@ -86,7 +88,7 @@ const ResourcesSection: React.FC = () => {
             onClick={() => setActiveTab('videos')}
           >
             <Video className="w-5 h-5 mr-2" />
-            Video
+            {t('resourcesSection.tabVideos')}
           </button>
           
           <button
@@ -99,7 +101,7 @@ const ResourcesSection: React.FC = () => {
             onClick={() => setActiveTab('documents')}
           >
             <File className="w-5 h-5 mr-2" />
-            Tài liệu
+            {t('resourcesSection.tabDocuments')}
           </button>
         </div>
         
@@ -127,7 +129,7 @@ const ResourcesSection: React.FC = () => {
                       {resource.title}
                     </h3>
                     <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                      Ngày đăng: {resource.date}
+                      {t('resourcesSection.dateLabel')}: {resource.date}
                     </p>
                   </div>
                 </a>
@@ -138,10 +140,10 @@ const ResourcesSection: React.FC = () => {
           {activeTab === 'videos' && (
             <div className={cn("p-12 text-center rounded-lg", secondaryBgColor)}>
               <h3 className={cn("text-xl font-semibold mb-2", textColor)}>
-                Đang phát triển
+                {t('resourcesSection.comingSoonTitle')}
               </h3>
               <p className={cn("text-base", secondaryTextColor)}>
-                Coming soon: Videos related to DSEZA's activities and zones.
+                {t('resourcesSection.comingSoonVideos')}
               </p>
             </div>
           )}
@@ -149,10 +151,10 @@ const ResourcesSection: React.FC = () => {
           {activeTab === 'documents' && (
             <div className={cn("p-12 text-center rounded-lg", secondaryBgColor)}>
               <h3 className={cn("text-xl font-semibold mb-2", textColor)}>
-                Đang phát triển
+                {t('resourcesSection.comingSoonTitle')}
               </h3>
               <p className={cn("text-base", secondaryTextColor)}>
-                Coming soon: Downloadable documents, reports, and legal frameworks.
+                {t('resourcesSection.comingSoonDocuments')}
               </p>
             </div>
           )}
@@ -168,7 +170,7 @@ const ResourcesSection: React.FC = () => {
               buttonHoverTextColor
             )}
           >
-            Xem tất cả tư liệu
+            {t('resourcesSection.viewAll')}
           </Button>
         </div>
       </div>
