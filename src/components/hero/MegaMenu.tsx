@@ -1,12 +1,13 @@
 // src/components/hero/MegaMenu.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import {
   User, Building2, Users, CircleDollarSign, BarChart, HomeIcon,
   Briefcase, FileText, Database, LineChart, BookOpen, GraduationCap, HeartHandshake,
   ChevronDown, ChevronUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MegaMenuConfigType, MegaMenuContentType } from './types/megaMenu'; // Đã sửa: MegaMenuItem không được sử dụng trực tiếp ở đây
+import { MegaMenuConfigType, MegaMenuContentType } from './types/megaMenu';
+import { useLanguage } from '@/context/LanguageContext';
 
 const iconMap: Record<string, any> = {
   "general-partner": User,
@@ -27,9 +28,12 @@ const iconMap: Record<string, any> = {
 
 type MegaMenuProps = {
   config: MegaMenuConfigType;
+  currentLanguage: string;
 };
 
-const MegaMenu = ({ config }: MegaMenuProps) => {
+const MegaMenu = ({ config, currentLanguage }: MegaMenuProps) => {
+  const { t } = useLanguage();
+  
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
 
   const toggleDropdown = (id: string) => {
@@ -40,15 +44,22 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
     `grid-cols-${config.columns.length}` :
     "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
 
+  // Function to get translated content
+  const getTranslatedText = (text: string, translationKey?: string) => {
+    if (translationKey) {
+      return t(translationKey);
+    }
+    return text;
+  };
+
   return (
     <div
       className={cn(
-        "mega-menu-container w-full",
-        // Vì NavigationBar (cha) đã có border-bottom từ class glass-initial/glass-sticky,
-        // MegaMenu có thể không cần border-top, hoặc nếu có thì cần rất mờ để không quá dày.
-        // Tạm thời bỏ border-top ở đây, dựa vào border-bottom của NavigationBar.
-        // "border-t border-white/20 dark:border-dseza-dark-border/30", 
-        "shadow-xl" // Shadow riêng cho MegaMenu, có thể là shadow-2xl nếu muốn nổi bật hơn shadow-lg của Nav khi sticky
+        "mega-menu-container w-full border-t",
+        "bg-white/30 dark:bg-dseza-dark-secondary/50",
+        "backdrop-blur-lg",
+        "border-white/20 dark:border-dseza-dark-hover/30",
+        "shadow-2xl"
       )}
     >
       <div className="max-w-6xl mx-auto p-8">
@@ -56,7 +67,7 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
           {config.columns.map((column, colIndex) => (
             <div key={colIndex} className="menu-column">
               <h5 className="text-lg font-semibold pb-3 mb-3 border-b border-foreground/10 dark:border-dseza-dark-hover/50">
-                {column.title}
+                {getTranslatedText(column.title, column.translationKey)}
               </h5>
               <ul className="space-y-1">
                 {column.contents.map((content, contentIndex) => {
@@ -85,7 +96,9 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
                               {React.createElement(iconMap[content.iconName], { size: 20 })}
                             </span>
                           )}
-                          <span className="font-medium">{content.title}</span>
+                          <span className="font-medium">
+                            {getTranslatedText(content.title, content.translationKey)}
+                          </span>
                         </a>
                         {content.items && (
                           <button
@@ -104,7 +117,7 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
                                 href={item.url}
                                 className="block py-1.5 px-3 rounded-md text-sm hover:bg-white/10 dark:hover:bg-dseza-dark-hover/50 transition-colors"
                               >
-                                {item.title}
+                                {getTranslatedText(item.title, item.translationKey)}
                               </a>
                             </li>
                           ))}

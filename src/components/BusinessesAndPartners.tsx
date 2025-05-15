@@ -1,13 +1,14 @@
-
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 /**
  * Businesses and Partners section with continuous scrolling logo carousel
  */
 const BusinessesAndPartners: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
@@ -38,7 +39,7 @@ const BusinessesAndPartners: React.FC = () => {
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor
         )}>
-          DOANH NGHIỆP VÀ ĐỐI TÁC
+          {t("section.businessesAndPartners")}
         </h2>
         
         {/* Continuous scrolling logo carousel */}

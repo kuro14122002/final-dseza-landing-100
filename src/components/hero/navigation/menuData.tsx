@@ -1,10 +1,11 @@
 // src/components/hero/navigation/menuData.tsx
-import { MenuItem } from '../types/megaMenu'; // Đảm bảo import đúng MenuItem cho thanh điều hướng
+import { MenuItem } from '../types/megaMenu';
 
 export const getNavigationMenuItems = (): MenuItem[] => {
   return [
     {
       title: "Giới thiệu",
+      translationKey: "nav.introduction",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/",
       megaMenuConfig: {
         columns: [
@@ -117,9 +118,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
         ]
       }
     },
-    // ... (Các mục menu khác giữ nguyên như bạn đã cung cấp)
     {
       title: "Tin tức",
+      translationKey: "nav.news",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/tin-tuc/",
       megaMenuConfig: {
         columns: [
@@ -201,6 +202,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     },
     {
       title: "Doanh nghiệp",
+      translationKey: "nav.business",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/doanh-nghiep/",
       megaMenuConfig: {
         columns: [
@@ -260,10 +262,12 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     },
     {
       title: "Cẩm nang đầu tư",
+      translationKey: "nav.investmentGuide",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/",
     },
     {
       title: "Văn bản",
+      translationKey: "nav.documents",
       url: "https://dseza.danang.gov.vn/van-ban/",
       megaMenuConfig: {
         columns: [
@@ -335,6 +339,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     },
     {
       title: "Cải cách hành chính",
+      translationKey: "nav.administrativeReform",
       url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/moi-truong-dau-tu/cai-cach-hanh-chinh/",
       megaMenuConfig: {
         columns: [
@@ -414,6 +419,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     },
     {
       title: "Liên hệ",
+      translationKey: "nav.contact",
       url: "https://dseza.danang.gov.vn/lien-he/",
     }
   ];

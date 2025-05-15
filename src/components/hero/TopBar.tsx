@@ -1,3 +1,4 @@
+
 // src/components/hero/TopBar.tsx
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
@@ -8,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const TopBar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, t } = useLanguage();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -71,7 +72,7 @@ const TopBar: React.FC = () => {
             )}
           >
             <Map className="w-4 h-4 mr-1" />
-            <span>Sơ đồ site</span>
+            <span>{t("site.map")}</span>
           </a>
 
           {/* Ngôn ngữ */}
@@ -85,7 +86,7 @@ const TopBar: React.FC = () => {
                   : (isScrolled ? scrolledLangInactiveColor : initialLangInactiveColor)
               )}
             >
-              VIE
+              {t("language.vietnamese")}
             </button>
             <span className={cn(
                 "mx-1",
@@ -102,7 +103,7 @@ const TopBar: React.FC = () => {
                   : (isScrolled ? scrolledLangInactiveColor : initialLangInactiveColor)
               )}
             >
-              ENG
+              {t("language.english")}
             </button>
           </div>
 

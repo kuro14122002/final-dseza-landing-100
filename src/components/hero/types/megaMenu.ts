@@ -1,28 +1,42 @@
 
-export type MegaMenuContentType = {
-  title: string;
-  url?: string;
-  iconName?: string;
-  items?: {
-    title: string;
-    url: string;
-    subItems?: { title: string; url: string }[];
-  }[];
-};
+// Cập nhật các type để thêm khóa dịch
 
-export type MegaMenuColumnType = {
-  title: string;
-  contents: MegaMenuContentType[];
-  specialContent?: React.ReactNode;
-};
-
-export type MegaMenuConfigType = {
-  columns: MegaMenuColumnType[];
-  featuredContent?: React.ReactNode;
-};
-
-export type MenuItem = {
+export interface MenuItem {
   title: string;
   url: string;
-  megaMenuConfig?: MegaMenuConfigType;
-};
+  translationKey?: string; // Thêm khóa dịch
+  megaMenuConfig?: MegaMenuConfig;
+}
+
+export interface MegaMenuConfig {
+  columns: MegaMenuColumn[];
+  featuredContent?: React.ReactNode;
+}
+
+export interface MegaMenuColumn {
+  title: string;
+  translationKey?: string; // Thêm khóa dịch
+  contents: MegaMenuContent[];
+  specialContent?: React.ReactNode;
+}
+
+export interface MegaMenuContent {
+  title: string;
+  translationKey?: string; // Thêm khóa dịch
+  url?: string;
+  iconName?: string;
+  items?: MegaMenuSubItem[];
+}
+
+export interface MegaMenuSubItem {
+  title: string;
+  translationKey?: string; // Thêm khóa dịch
+  url: string;
+  subItems?: MegaMenuNestedItem[];
+}
+
+export interface MegaMenuNestedItem {
+  title: string;
+  translationKey?: string; // Thêm khóa dịch
+  url: string;
+}

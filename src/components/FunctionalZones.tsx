@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ interface ZoneData {
  */
 const FunctionalZones: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const [selectedZone, setSelectedZone] = useState<number>(1);
   
   // Theme-specific styles
@@ -110,8 +112,7 @@ const FunctionalZones: React.FC = () => {
           "font-montserrat font-bold text-2xl md:text-3xl mb-8 text-left",
           textColor
         )}>
-          KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO,<br />
-          CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
+          {t("section.functionalZones")}
         </h2>
         
         {/* Large interactive display panel */}
@@ -132,20 +133,20 @@ const FunctionalZones: React.FC = () => {
             </h3>
             <div className="flex items-center text-white">
               <Building2 className="w-5 h-5 mr-2" />
-              <span className="font-inter text-lg">{currentZone.enterprises} Doanh nghiệp</span>
+              <span className="font-inter text-lg">{currentZone.enterprises} {t("zones.enterpriseCount")}</span>
             </div>
           </div>
           
           {/* Bottom right - Occupancy and area info */}
           <div className="absolute bottom-6 right-6 text-right">
-            <p className="text-white font-inter mb-1">Tỉ lệ lấp đầy: {currentZone.occupancy}%</p>
+            <p className="text-white font-inter mb-1">{t("zones.occupancyRate")} {currentZone.occupancy}%</p>
             <div className="h-2 w-32 sm:w-48 bg-white/30 rounded-full mb-2">
               <div 
                 className={`h-full rounded-full ${primaryAccent}`}
                 style={{ width: `${currentZone.occupancy}%` }}
               ></div>
             </div>
-            <p className="text-white font-inter">Diện tích: {currentZone.area}</p>
+            <p className="text-white font-inter">{t("zones.area")} {currentZone.area}</p>
           </div>
         </div>
         

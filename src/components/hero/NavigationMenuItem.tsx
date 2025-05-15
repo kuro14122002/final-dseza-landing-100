@@ -1,28 +1,41 @@
+
 import React from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { MenuItem } from './types/megaMenu';
+import { useLanguage } from '@/context/LanguageContext';
 
 type NavigationMenuItemProps = {
   item: MenuItem;
   index: number;
   activeMenuIndex: number | null;
   onMenuClick: (index: number) => void;
+  currentLanguage: string;
 };
 
 const NavigationMenuItem = ({ 
   item, 
   index, 
   activeMenuIndex, 
-  onMenuClick 
+  onMenuClick,
+  currentLanguage
 }: NavigationMenuItemProps) => {
   const isActive = activeMenuIndex === index;
+  const { t } = useLanguage();
   
   const handleClick = (e: React.MouseEvent) => {
     if (item.megaMenuConfig) {
       e.preventDefault();
       onMenuClick(index);
     }
+  };
+
+  // Get display title based on current language
+  const getTitle = () => {
+    if (item.translationKey && currentLanguage) {
+      return t(item.translationKey);
+    }
+    return item.title;
   };
 
   return (
@@ -37,7 +50,7 @@ const NavigationMenuItem = ({
         )}
         onClick={handleClick}
       >
-        {item.title}
+        {getTitle()}
         {item.megaMenuConfig && (
           <span className="ml-1 transition-transform duration-300">
             {isActive ? (
