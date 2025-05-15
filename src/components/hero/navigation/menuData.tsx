@@ -1,8 +1,10 @@
 // src/components/hero/navigation/menuData.tsx
 import React from 'react';
 import { MenuItem } from '../types/megaMenu'; // Đảm bảo import đúng MenuItem cho thanh điều hướng
+import { useTranslation } from '@/utils/translations';
 
 export const getNavigationMenuItems = (): MenuItem[] => {
+  const { t } = useTranslation();
   return [
     {
       title: "nav.intro",
@@ -131,9 +133,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             ],
             specialContent: (
               <div className="p-4 rounded-lg bg-dseza-light-primary dark:bg-dseza-dark-primary text-white mt-4">
-                <h5 className="font-semibold mb-2">Thành tựu đã đạt được</h5>
-                <p className="text-sm">Khu Công nghệ cao và các Khu Công nghiệp Đà Nẵng đã trở thành động lực quan trọng cho sự phát triển của thành phố.</p>
-                <button className="mt-3 bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-3 rounded text-sm font-medium">Tìm hiểu thêm</button>
+                <h5 className="font-semibold mb-2">{t('menuSpecial.achievementTitle')}</h5>
+                <p className="text-sm">{t('menuSpecial.achievementDesc')}</p>
+                <button className="mt-3 bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-3 rounded text-sm font-medium">{t('menuSpecial.achievementBtn')}</button>
               </div>
             )
           }
@@ -225,9 +227,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
                   className="w-full h-32 object-cover"
                 />
                 <div className="p-4">
-                  <h5 className="font-semibold text-sm mb-2 line-clamp-2">Tin tức mới nhất về hoạt động của Ban quản lý</h5>
-                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.</p>
-                  <a href="#" className="text-dseza-light-primary dark:text-dseza-dark-primary text-xs font-medium">Xem thêm →</a>
+                  <h5 className="font-semibold text-sm mb-2 line-clamp-2">{t('menuSpecial.newsCardTitle')}</h5>
+                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{t('menuSpecial.newsCardDesc')}</p>
+                  <a href="#" className="text-dseza-light-primary dark:text-dseza-dark-primary text-xs font-medium">{t('menuSpecial.newsCardBtn')}</a>
                 </div>
               </div>
             )
@@ -295,9 +297,9 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             contents: [],
             specialContent: (
               <div className="p-4 rounded-lg bg-dseza-light-primary/10 dark:bg-dseza-dark-primary/20 mt-4">
-                <h5 className="font-semibold mb-2 text-dseza-light-primary dark:text-dseza-dark-primary">Dịch vụ hỗ trợ</h5>
-                <p className="text-sm">Chúng tôi cung cấp nhiều dịch vụ hỗ trợ cho doanh nghiệp trong các Khu công nghiệp.</p>
-                <button className="mt-3 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 px-3 rounded text-sm font-medium">Liên hệ hỗ trợ</button>
+                <h5 className="font-semibold mb-2 text-dseza-light-primary dark:text-dseza-dark-primary">{t('menuSpecial.supportServiceTitle')}</h5>
+                <p className="text-sm">{t('menuSpecial.supportServiceDesc')}</p>
+                <button className="mt-3 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 px-3 rounded text-sm font-medium">{t('menuSpecial.supportServiceBtn')}</button>
               </div>
             )
           }
@@ -376,14 +378,14 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             ],
             specialContent: (
               <div className="mt-4 p-4 border rounded-lg">
-                <h5 className="font-semibold mb-2">Tra cứu văn bản nhanh</h5>
+                <h5 className="font-semibold mb-2">{t('menuSpecial.quickDocSearchTitle')}</h5>
                 <input
                   type="text"
-                  placeholder="Nhập từ khóa tìm kiếm..."
+                  placeholder={t('menuSpecial.quickDocSearchPlaceholder')}
                   className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-dseza-dark-secondary dark:border-dseza-dark-hover"
                 />
                 <button className="w-full bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 rounded text-sm font-medium">
-                  Tìm kiếm
+                  {t('menuSpecial.quickDocSearchBtn')}
                 </button>
               </div>
             )
@@ -440,21 +442,29 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               {
                 title: "Thủ tục hành chính",
                 titleEn: "Administrative Procedures",
-                url: "https://dichvucong.danang.gov.vn/",
+                url: "https://dichvucong.danang.gov.vn/", // Giữ URL này nếu đây là trang chính cho TTHC
                 iconName: "corporate-venture-capital"
               },
               {
                 title: "Quy trình thực hiện thủ tục hành chính",
                 titleEn: "Administrative Procedure Process",
-                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-thuc-hien-thu-tuc-hanh-chinh/",
-                iconName: "hedge-fund"
+                // url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-thuc-hien-thu-tuc-hanh-chinh/", // Bỏ URL ở đây nếu nó chỉ để mở dropdown
+                iconName: "hedge-fund",
+                items: [ // Thêm mục con vào đây
+                  {
+                    title: "Quy trình lĩnh vực đầu tư",
+                    titleEn: "Investment Process",
+                    url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/"
+                  }
+                ]
               },
-              {
-                title: "Quy trình lĩnh vực đầu tư",
-                titleEn: "Investment Process",
-                url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/",
-                iconName: "family-offices"
-              },
+              // Mục "Quy trình lĩnh vực đầu tư" đã được chuyển lên làm con, nên xóa ở đây
+              // {
+              //   title: "Quy trình lĩnh vực đầu tư",
+              //   titleEn: "Investment Process",
+              //   url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/",
+              //   iconName: "family-offices"
+              // },
               {
                 title: "Văn bản cải cách hành chính",
                 titleEn: "Administrative Reform Documents",
@@ -469,13 +479,13 @@ export const getNavigationMenuItems = (): MenuItem[] => {
             contents: [],
             specialContent: (
               <div className="mt-4 p-4 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white rounded-lg">
-                <h5 className="font-semibold mb-2">Dịch vụ công nổi bật</h5>
-                <p className="text-sm mb-3">Trải nghiệm dịch vụ công trực tuyến tại Ban quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng</p>
+                <h5 className="font-semibold mb-2">{t('menuSpecial.featuredServiceTitle')}</h5>
+                <p className="text-sm mb-3">{t('menuSpecial.featuredServiceDesc')}</p>
                 <a
                   href="https://dichvucong.danang.gov.vn/"
                   className="inline-block bg-white text-dseza-light-primary dark:text-dseza-dark-primary py-2 px-4 rounded text-sm font-medium"
                 >
-                  Truy cập ngay
+                  {t('menuSpecial.featuredServiceBtn')}
                 </a>
               </div>
             )

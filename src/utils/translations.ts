@@ -121,6 +121,25 @@ const viTranslations: TranslationObject = {
     tab3: "Khu công nghệ thông tin tập trung",
     tab4: "Các Khu công nghiệp Đà Nẵng",
   },
+
+  // Special content in navigation menu
+  menuSpecial: {
+    achievementTitle: "Thành tựu đã đạt được",
+    achievementDesc: "Khu Công nghệ cao và các Khu Công nghiệp Đà Nẵng đã trở thành động lực quan trọng cho sự phát triển của thành phố.",
+    achievementBtn: "Tìm hiểu thêm",
+    featuredServiceTitle: "Dịch vụ công nổi bật",
+    featuredServiceDesc: "Trải nghiệm dịch vụ công trực tuyến tại Ban quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng",
+    featuredServiceBtn: "Truy cập ngay",
+    quickDocSearchTitle: "Tra cứu văn bản nhanh",
+    quickDocSearchPlaceholder: "Nhập từ khóa tìm kiếm...",
+    quickDocSearchBtn: "Tìm kiếm",
+    supportServiceTitle: "Dịch vụ hỗ trợ",
+    supportServiceDesc: "Chúng tôi cung cấp nhiều dịch vụ hỗ trợ cho doanh nghiệp trong các Khu công nghiệp.",
+    supportServiceBtn: "Liên hệ hỗ trợ",
+    newsCardTitle: "Tin tức mới nhất về hoạt động của Ban quản lý",
+    newsCardDesc: "Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.",
+    newsCardBtn: "Xem thêm →",
+  },
 };
 
 const enTranslations: TranslationObject = {
@@ -237,6 +256,25 @@ const enTranslations: TranslationObject = {
     tab2: "Danang Free Trade Zone",
     tab3: "Concentrated IT Zone",
     tab4: "Danang Industrial Zones",
+  },
+
+  // Special content in navigation menu
+  menuSpecial: {
+    achievementTitle: "Outstanding Achievements",
+    achievementDesc: "Danang High-Tech Park and Industrial Zones have become a key driving force for the city's development.",
+    achievementBtn: "Learn more",
+    featuredServiceTitle: "Featured Public Services",
+    featuredServiceDesc: "Experience online public services at the Danang High-Tech Park and Industrial Zones Authority",
+    featuredServiceBtn: "Access now",
+    quickDocSearchTitle: "Quick Document Search",
+    quickDocSearchPlaceholder: "Enter search keywords...",
+    quickDocSearchBtn: "Search",
+    supportServiceTitle: "Support Services",
+    supportServiceDesc: "We provide a variety of support services for businesses in the industrial zones.",
+    supportServiceBtn: "Contact support",
+    newsCardTitle: "Latest news on Management Authority activities",
+    newsCardDesc: "Get the latest updates on important activities and events.",
+    newsCardBtn: "See more →",
   },
 };
 
