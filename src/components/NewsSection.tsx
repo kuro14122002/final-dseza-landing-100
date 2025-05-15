@@ -80,24 +80,24 @@ const NewsSection: React.FC = () => {
       id: 1,
       category: "investment",
       date: "14/05/2025",
-      title: "Dự án Khu Công Nghệ Cao Đà Nẵng Mở Rộng Giai Đoạn 2 Chính Thức Khởi Động",
-      excerpt: "Sáng nay, Ban Quản lý KCNC và các KCN Đà Nẵng đã tổ chức lễ khởi công giai đoạn 2 của dự án mở rộng Khu Công Nghệ Cao, hứa hẹn thu hút thêm nhiều tập đoàn công nghệ lớn...",
+      title: t('news.sampleNews.news1.title'),
+      excerpt: t('news.sampleNews.news1.excerpt'),
       image: "https://via.placeholder.com/800x450/3B5998/FFFFFF?text=Khu+Công+Nghệ+Cao+Đà+Nẵng"
     },
     {
       id: 2,
       category: "investment",
       date: "12/05/2025",
-      title: "Đà Nẵng Đẩy Mạnh Hợp Tác Quốc Tế Trong Lĩnh Vực Vi Mạch",
-      excerpt: "Nhiều thỏa thuận hợp tác đã được ký kết nhằm phát triển nguồn nhân lực và công nghệ cho ngành vi mạch bán dẫn...",
+      title: t('news.sampleNews.news2.title'),
+      excerpt: t('news.sampleNews.news2.excerpt'),
       image: "https://via.placeholder.com/400x225/4EABF1/FFFFFF?text=Hợp+Tác+Quốc+Tế"
     },
     {
       id: 3,
       category: "investment",
       date: "10/05/2025",
-      title: "Chính Sách Ưu Đãi Mới Cho Doanh Nghiệp Đầu Tư Vào Khu Thương Mại Tự Do",
-      excerpt: "Các chính sách mới tập trung vào việc giảm thiểu thủ tục hành chính và tăng cường các ưu đãi về thuế...",
+      title: t('news.sampleNews.news3.title'),
+      excerpt: t('news.sampleNews.news3.excerpt'),
       image: "https://via.placeholder.com/400x225/00BB6D/FFFFFF?text=Chính+Sách+Ưu+Đãi"
     }
   ];

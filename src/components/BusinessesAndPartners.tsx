@@ -35,7 +35,7 @@ const BusinessesAndPartners: React.FC = () => {
     <section className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <h2 className={cn(
-          "font-montserrat font-bold text-3xl md:text-4xl mb-8",
+          "font-montserrat font-bold text-3xl md:text-4xl mb-16",
           textColor
         )}>
           DOANH NGHIỆP VÀ ĐỐI TÁC

@@ -3,9 +3,11 @@ import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/utils/translations";
 
 const LogoSearchBar: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const placeholderColor = theme === "dark" ? "placeholder-dseza-dark-secondary-text" : "placeholder-dseza-light-secondary-text";
@@ -47,7 +49,7 @@ const LogoSearchBar: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Tìm kiếm..."
+            placeholder={t('logoSearchBar.searchPlaceholder')}
             className={cn(
               "w-full py-3 pl-10 pr-4 rounded-lg transition-all duration-300 outline-none",
               inputSpecificBg, 
@@ -62,9 +64,9 @@ const LogoSearchBar: React.FC = () => {
         </div>
         
         <div className={`${textColor} flex items-center`}>
-          <a href="#" className={`${textColor} ${hoverColor} transition-colors duration-300`}>Đăng ký</a>
+          <a href="#" className={`${textColor} ${hoverColor} transition-colors duration-300`}>{t('logoSearchBar.register')}</a>
           <span className="mx-2 opacity-50">|</span>
-          <a href="#" className={`${textColor} ${hoverColor} transition-colors duration-300`}>Đăng nhập</a>
+          <a href="#" className={`${textColor} ${hoverColor} transition-colors duration-300`}>{t('logoSearchBar.login')}</a>
         </div>
       </div>
     </div>

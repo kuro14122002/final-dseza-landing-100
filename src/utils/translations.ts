@@ -88,6 +88,20 @@ const viTranslations: TranslationObject = {
       digital: "Chuyển đổi số",
       management: "Hoạt động Ban quản lý",
       other: "Tin khác",
+    },
+    sampleNews: {
+      news1: {
+        title: "Dự án Khu Công Nghệ Cao Đà Nẵng Mở Rộng Giai Đoạn 2 Chính Thức Khởi Động",
+        excerpt: "Sáng nay, Ban Quản lý KCNC và các KCN Đà Nẵng đã tổ chức lễ khởi công giai đoạn 2 của dự án mở rộng Khu Công Nghệ Cao, hứa hẹn thu hút thêm nhiều tập đoàn công nghệ lớn..."
+      },
+      news2: {
+        title: "Đà Nẵng Đẩy Mạnh Hợp Tác Quốc Tế Trong Lĩnh Vực Vi Mạch",
+        excerpt: "Nhiều thỏa thuận hợp tác đã được ký kết nhằm phát triển nguồn nhân lực và công nghệ cho ngành vi mạch bán dẫn..."
+      },
+      news3: {
+        title: "Chính Sách Ưu Đãi Mới Cho Doanh Nghiệp Đầu Tư Vào Khu Thương Mại Tự Do",
+        excerpt: "Các chính sách mới tập trung vào việc giảm thiểu thủ tục hành chính và tăng cường các ưu đãi về thuế..."
+      }
     }
   },
   
@@ -152,6 +166,13 @@ const viTranslations: TranslationObject = {
     comingSoonVideos: "Sắp ra mắt: Video liên quan đến hoạt động và các khu của DSEZA.",
     comingSoonDocuments: "Sắp ra mắt: Tài liệu, báo cáo và khung pháp lý có thể tải về.",
     viewAll: "Xem tất cả tư liệu",
+  },
+
+  // Logo Search Bar
+  logoSearchBar: {
+    searchPlaceholder: "Tìm kiếm...",
+    register: "Đăng ký",
+    login: "Đăng nhập",
   },
 };
 
@@ -237,6 +258,20 @@ const enTranslations: TranslationObject = {
       digital: "Digital Transformation",
       management: "Management Activities",
       other: "Other News",
+    },
+    sampleNews: {
+      news1: {
+        title: "Danang High-Tech Park Phase 2 Expansion Project Officially Launched",
+        excerpt: "This morning, the Danang High-Tech Park and Industrial Zones Authority held the groundbreaking ceremony for phase 2 of the High-Tech Park expansion project, promising to attract more major technology corporations..."
+      },
+      news2: {
+        title: "Danang Boosts International Cooperation in Semiconductor Industry",
+        excerpt: "Multiple cooperation agreements have been signed to develop human resources and technology for the semiconductor industry..."
+      },
+      news3: {
+        title: "New Investment Incentives for Businesses in Free Trade Zone",
+        excerpt: "New policies focus on streamlining administrative procedures and enhancing tax incentives..."
+      }
     }
   },
   
@@ -302,6 +337,13 @@ const enTranslations: TranslationObject = {
     comingSoonDocuments: "Coming soon: Downloadable documents, reports, and legal frameworks.",
     viewAll: "View all resources",
   },
+
+  // Logo Search Bar
+  logoSearchBar: {
+    searchPlaceholder: "Search...",
+    register: "Register",
+    login: "Login",
+  },
 };
 
 // All translations
@@ -352,28 +394,38 @@ export const useTranslation = () => {
 };
 
 /**
- * Formats a date according to the current language
+ * Formats a date and time according to the current language
  * @param date - The date to format
- * @returns A formatted date string
+ * @param includeTime - Whether to include time (HH:MM:SS) in the output. Defaults to false.
+ * @returns A formatted date string, optionally with time
  */
-export const formatDate = (date: Date): string => {
+export const formatDate = (date: Date, includeTime: boolean = false): string => {
   const { language } = useLanguage();
   const translationSet = language === 'vi' ? viTranslations : enTranslations;
-  
-  // Ensure we can access the dayNames array safely
+
   const dateTranslation = translationSet.date as TranslationObject;
   const dayNames = dateTranslation.dayNames as string[];
-  
+
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
-  
+
+  let formattedDateString: string;
+
   if (language === 'vi') {
-    // Vietnamese format: Thứ Ba, 01/01/2023
-    return `${dayNames[date.getDay()]}, ${day}/${month}/${year}`;
+    formattedDateString = `${dayNames[date.getDay()]}, ${day}/${month}/${year}`;
   } else {
-    // English format: Tuesday, Jan 01, 2023
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${dayNames[date.getDay()]}, ${monthNames[date.getMonth()]} ${day}, ${year}`;
+    formattedDateString = `${dayNames[date.getDay()]}, ${monthNames[date.getMonth()]} ${day}, ${year}`;
   }
-}; 
+
+  if (includeTime) {
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+    // Thêm dấu gạch đứng và khoảng trắng ở đây
+    formattedDateString += ` | ${hours}:${minutes}:${seconds}`;
+  }
+
+  return formattedDateString;
+};
