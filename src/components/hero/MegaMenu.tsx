@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MegaMenuConfigType, MegaMenuContentType } from './types/megaMenu'; // Đã sửa: MegaMenuItem không được sử dụng trực tiếp ở đây
+import { useLanguage } from '@/context/LanguageContext';
 
 const iconMap: Record<string, any> = {
   "general-partner": User,
@@ -31,6 +32,7 @@ type MegaMenuProps = {
 
 const MegaMenu = ({ config }: MegaMenuProps) => {
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+  const { language } = useLanguage();
 
   const toggleDropdown = (id: string) => {
     setOpenDropdowns(prev => ({ ...prev, [id]: !prev[id] }));
@@ -39,6 +41,14 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
   const gridCols = config.columns.length <= 2 ?
     `grid-cols-${config.columns.length}` :
     "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+
+  // Helper function to get the appropriate title based on language
+  const getLocalizedTitle = (title: string, titleEn?: string) => {
+    if (language === 'en' && titleEn) {
+      return titleEn;
+    }
+    return title;
+  };
 
   return (
     <div
@@ -56,7 +66,7 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
           {config.columns.map((column, colIndex) => (
             <div key={colIndex} className="menu-column">
               <h5 className="text-lg font-semibold pb-3 mb-3 border-b border-foreground/10 dark:border-dseza-dark-hover/50">
-                {column.title}
+                {getLocalizedTitle(column.title, column.titleEn)}
               </h5>
               <ul className="space-y-1">
                 {column.contents.map((content, contentIndex) => {
@@ -85,7 +95,9 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
                               {React.createElement(iconMap[content.iconName], { size: 20 })}
                             </span>
                           )}
-                          <span className="font-medium">{content.title}</span>
+                          <span className="font-medium">
+                            {getLocalizedTitle(content.title, content.titleEn)}
+                          </span>
                         </a>
                         {content.items && (
                           <button
@@ -104,7 +116,7 @@ const MegaMenu = ({ config }: MegaMenuProps) => {
                                 href={item.url}
                                 className="block py-1.5 px-3 rounded-md text-sm hover:bg-white/10 dark:hover:bg-dseza-dark-hover/50 transition-colors"
                               >
-                                {item.title}
+                                {getLocalizedTitle(item.title, item.titleEn)}
                               </a>
                             </li>
                           ))}

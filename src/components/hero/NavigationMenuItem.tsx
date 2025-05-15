@@ -2,6 +2,8 @@ import React from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { MenuItem } from './types/megaMenu';
+import { useLanguage } from '@/context/LanguageContext';
+import { useTranslation } from '@/utils/translations';
 
 type NavigationMenuItemProps = {
   item: MenuItem;
@@ -17,11 +19,24 @@ const NavigationMenuItem = ({
   onMenuClick 
 }: NavigationMenuItemProps) => {
   const isActive = activeMenuIndex === index;
+  const { language } = useLanguage();
+  const { t } = useTranslation();
   
   const handleClick = (e: React.MouseEvent) => {
     if (item.megaMenuConfig) {
       e.preventDefault();
       onMenuClick(index);
+    }
+  };
+
+  // Get the menu item title based on language and whether it's translatable
+  const getItemTitle = () => {
+    if (item.translatable) {
+      return t(item.title);
+    } else if (language === 'en' && item.titleEn) {
+      return item.titleEn;
+    } else {
+      return item.title;
     }
   };
 
@@ -37,7 +52,7 @@ const NavigationMenuItem = ({
         )}
         onClick={handleClick}
       >
-        {item.title}
+        {getItemTitle()}
         {item.megaMenuConfig && (
           <span className="ml-1 transition-transform duration-300">
             {isActive ? (

@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/utils/translations";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ZoneData {
   id: number;
-  name: string;
+  nameVi: string;
+  nameEn: string;
   enterprises: number;
   occupancy: number;
   area: string;
@@ -19,6 +22,8 @@ interface ZoneData {
 const FunctionalZones: React.FC = () => {
   const { theme } = useTheme();
   const [selectedZone, setSelectedZone] = useState<number>(1);
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
@@ -29,7 +34,8 @@ const FunctionalZones: React.FC = () => {
   const zonesData: ZoneData[] = [
     { 
       id: 1, 
-      name: "Khu công nghệ Cao Đà Nẵng", 
+      nameVi: "Khu công nghệ Cao Đà Nẵng", 
+      nameEn: "Danang High-Tech Park",
       enterprises: 32, 
       occupancy: 42.85, 
       area: "1,128.4 ha", 
@@ -38,7 +44,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 2, 
-      name: "Hòa Khánh mở rộng", 
+      nameVi: "Hòa Khánh mở rộng", 
+      nameEn: "Hoa Khanh Expanded",
       enterprises: 42, 
       occupancy: 100, 
       area: "132.34 ha", 
@@ -47,7 +54,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 3, 
-      name: "Khu công nghiệp Đà Nẵng", 
+      nameVi: "Khu công nghiệp Đà Nẵng", 
+      nameEn: "Danang Industrial Zone",
       enterprises: 45, 
       occupancy: 100, 
       area: "50.1 ha", 
@@ -56,7 +64,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 4, 
-      name: "Hòa Khánh", 
+      nameVi: "Hòa Khánh", 
+      nameEn: "Hoa Khanh",
       enterprises: 228, 
       occupancy: 100, 
       area: "394 ha", 
@@ -65,7 +74,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 5, 
-      name: "Khu công nghiệp Liên Chiểu", 
+      nameVi: "Khu công nghiệp Liên Chiểu", 
+      nameEn: "Lien Chieu Industrial Zone",
       enterprises: 36, 
       occupancy: 60.07, 
       area: "289.35 ha", 
@@ -74,7 +84,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 6, 
-      name: "Khu công nghiệp dịch vụ Thủy sản Đà Nẵng", 
+      nameVi: "Khu công nghiệp dịch vụ Thủy sản Đà Nẵng", 
+      nameEn: "Danang Seafood Service Industrial Zone",
       enterprises: 56, 
       occupancy: 100, 
       area: "50.63 ha", 
@@ -83,7 +94,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 7, 
-      name: "Hòa Cầm", 
+      nameVi: "Hòa Cầm", 
+      nameEn: "Hoa Cam",
       enterprises: 81, 
       occupancy: 97.66, 
       area: "149.84 ha", 
@@ -92,7 +104,8 @@ const FunctionalZones: React.FC = () => {
     },
     { 
       id: 8, 
-      name: "Khu công nghệ thông tin tập trung", 
+      nameVi: "Khu công nghệ thông tin tập trung", 
+      nameEn: "Concentrated IT Zone",
       enterprises: 5, 
       occupancy: 31.82, 
       area: "131.1 ha", 
@@ -100,6 +113,10 @@ const FunctionalZones: React.FC = () => {
       imageLarge: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
     }
   ];
+
+  const getZoneName = (zone: ZoneData): string => {
+    return language === 'vi' ? zone.nameVi : zone.nameEn;
+  };
 
   const currentZone = zonesData.find(zone => zone.id === selectedZone) || zonesData[0];
   
@@ -110,8 +127,7 @@ const FunctionalZones: React.FC = () => {
           "font-montserrat font-bold text-2xl md:text-3xl mb-8 text-left",
           textColor
         )}>
-          KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO,<br />
-          CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO
+          {t('functionalZones.title')}
         </h2>
         
         {/* Large interactive display panel */}
@@ -128,24 +144,24 @@ const FunctionalZones: React.FC = () => {
           {/* Bottom left - Zone name and enterprise info */}
           <div className="absolute bottom-6 left-6">
             <h3 className="font-montserrat font-bold text-2xl md:text-3xl text-white mb-2">
-              {currentZone.name}
+              {getZoneName(currentZone)}
             </h3>
             <div className="flex items-center text-white">
               <Building2 className="w-5 h-5 mr-2" />
-              <span className="font-inter text-lg">{currentZone.enterprises} Doanh nghiệp</span>
+              <span className="font-inter text-lg">{currentZone.enterprises} {t('functionalZones.enterprises')}</span>
             </div>
           </div>
           
           {/* Bottom right - Occupancy and area info */}
           <div className="absolute bottom-6 right-6 text-right">
-            <p className="text-white font-inter mb-1">Tỉ lệ lấp đầy: {currentZone.occupancy}%</p>
+            <p className="text-white font-inter mb-1">{t('functionalZones.occupancyRate')}: {currentZone.occupancy}%</p>
             <div className="h-2 w-32 sm:w-48 bg-white/30 rounded-full mb-2">
               <div 
                 className={`h-full rounded-full ${primaryAccent}`}
                 style={{ width: `${currentZone.occupancy}%` }}
               ></div>
             </div>
-            <p className="text-white font-inter">Diện tích: {currentZone.area}</p>
+            <p className="text-white font-inter">{t('functionalZones.area')}: {currentZone.area}</p>
           </div>
         </div>
         
@@ -171,7 +187,7 @@ const FunctionalZones: React.FC = () => {
                   "px-3 py-2 font-montserrat font-medium text-white text-sm",
                   zone.id === selectedZone ? primaryAccent : secondaryAccent
                 )}>
-                  {zone.name}
+                  {getZoneName(zone)}
                 </div>
               </div>
             </div>

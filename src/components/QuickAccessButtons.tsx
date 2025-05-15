@@ -1,11 +1,11 @@
-
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { Briefcase, FileText, SearchCheck, MessageSquare, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/utils/translations";
 
 interface QuickAccessCard {
-  text: string;
+  textKey: string;
   href: string;
   icon: JSX.Element;
 }
@@ -15,31 +15,32 @@ interface QuickAccessCard {
  */
 const QuickAccessButtons: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   
   // Define cards data
   const cards: QuickAccessCard[] = [
     {
-      text: "Dịch vụ công trực tuyến",
+      textKey: "quickAccess.onlinePublicService",
       href: "https://dichvucong.danang.gov.vn/web/guest/dich-vu-cong",
       icon: <Briefcase size={48} />
     },
     {
-      text: "Thủ tục hành chính",
+      textKey: "quickAccess.administrativeProcedures",
       href: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
       icon: <FileText size={48} />
     },
     {
-      text: "Công khai KQ giải quyết TTHC",
+      textKey: "quickAccess.publicResults",
       href: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
       icon: <SearchCheck size={48} />
     },
     {
-      text: "Kênh thông tin tiếp nhận phản ánh, kiến nghị",
+      textKey: "quickAccess.feedbackChannel",
       href: "https://dseza.danang.gov.vn/lien-he/",
       icon: <MessageSquare size={48} />
     },
     {
-      text: "Đặt lịch hẹn giao dịch trực tuyến",
+      textKey: "quickAccess.appointmentScheduling",
       href: "http://49.156.54.87/index.php",
       icon: <Calendar size={48} />
     }
@@ -76,7 +77,7 @@ const QuickAccessButtons: React.FC = () => {
                 {card.icon}
               </div>
               <span className="font-inter font-semibold text-lg line-clamp-3">
-                {card.text}
+                {t(card.textKey)}
               </span>
             </a>
           ))}
@@ -86,4 +87,4 @@ const QuickAccessButtons: React.FC = () => {
   );
 };
 
-export default QuickAccessButtons;
+export default QuickAccessButtons; 

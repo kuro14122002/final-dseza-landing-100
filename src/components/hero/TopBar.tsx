@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { formatDateVi, formatTime } from "@/utils/dateFormatter";
+import { useTranslation, formatDate } from "@/utils/translations";
 import { Sun, Moon, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TopBar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { language, toggleLanguage } = useLanguage();
+  const { t } = useTranslation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -49,13 +50,7 @@ const TopBar: React.FC = () => {
       <div className="container mx-auto h-full flex items-center justify-between px-8">
         {/* Ngày giờ */}
         <div className={cn("flex items-center", dateTextColor)}>
-          <span>{formatDateVi(currentDate)}</span>
-          <span className={cn(
-            "mx-2 opacity-50",
-            isScrolled ? (theme === "dark" ? "text-gray-500" : "text-gray-400")
-                       : (theme === "dark" ? "text-white/60" : "text-neutral-600/80")
-          )}>|</span>
-          <span>{formatTime(currentDate)}</span>
+          <span>{formatDate(currentDate)}</span>
         </div>
 
         {/* Sơ đồ site, Ngôn ngữ, Theme */}
@@ -71,7 +66,7 @@ const TopBar: React.FC = () => {
             )}
           >
             <Map className="w-4 h-4 mr-1" />
-            <span>Sơ đồ site</span>
+            <span>{t('sitemap')}</span>
           </a>
 
           {/* Ngôn ngữ */}

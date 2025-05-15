@@ -1,7 +1,7 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/utils/translations";
 
 interface NewsCardProps {
   date: string;
@@ -58,6 +58,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ date, title, excerpt, image, isLarg
 const NewsSection: React.FC = () => {
   const { theme } = useTheme();
   const [activeCategory, setActiveCategory] = useState("investment");
+  const { t } = useTranslation();
   
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
@@ -66,11 +67,11 @@ const NewsSection: React.FC = () => {
   
   // Tab categories
   const categories = [
-    { id: "investment", name: "Đầu tư – Hợp tác quốc tế" },
-    { id: "training", name: "Đào tạo, Ươm tạo khởi nghiệp" },
-    { id: "digital", name: "Chuyển đổi số" },
-    { id: "management", name: "Hoạt động Ban quản lý" },
-    { id: "other", name: "Tin khác" }
+    { id: "investment", name: t('news.categories.investment') },
+    { id: "training", name: t('news.categories.training') },
+    { id: "digital", name: t('news.categories.digital') },
+    { id: "management", name: t('news.categories.management') },
+    { id: "other", name: t('news.categories.other') }
   ];
   
   // Dummy news data
@@ -111,7 +112,7 @@ const NewsSection: React.FC = () => {
           "font-montserrat font-bold text-3xl md:text-4xl mb-4 text-center",
           textColor
         )}>
-          TIN TỨC
+          {t('news.title')}
         </h2>
         
         {/* Category Tabs */}

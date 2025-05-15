@@ -1,15 +1,15 @@
-
 import React, { useState, useEffect } from "react";
 import SocialBar from "./SocialBar";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/context/ThemeContext";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { useTranslation } from "@/utils/translations";
 
 // Define theme-aware tab data structure with both light and dark mode images
 const tabsData = [
   {
     id: "tab1",
-    title: "Khu công nghệ cao Đà Nẵng",
+    titleKey: "heroBackground.tab1",
     images: {
       light: {
         main: "media/khucongnghecaolight.jpg",
@@ -23,7 +23,7 @@ const tabsData = [
   },
   {
     id: "tab2",
-    title: "Khu thương mại tự do Đà Nẵng",
+    titleKey: "heroBackground.tab2",
     images: {
       light: {
         main: "media/khuthuongmaitdlight.jpg",
@@ -37,7 +37,7 @@ const tabsData = [
   },
   {
     id: "tab3",
-    title: "Khu công nghệ thông tin tập trung",
+    titleKey: "heroBackground.tab3",
     images: {
       light: {
         main: "media/khucongnghethongtinlight.jpg",
@@ -51,7 +51,7 @@ const tabsData = [
   },
   {
     id: "tab4",
-    title: "Các Khu công nghiệp Đà Nẵng",
+    titleKey: "heroBackground.tab4",
     images: {
       light: {
         main: "media/khucongnghieplight.jpg",
@@ -75,6 +75,7 @@ const HeroBackground: React.FC = () => {
   const [prevImage, setPrevImage] = useState("");
   const [transitioning, setTransitioning] = useState(false);
   const { theme } = useTheme();
+  const { t } = useTranslation();
   
   // Set initial image based on theme when component mounts
   useEffect(() => {
@@ -101,7 +102,7 @@ const HeroBackground: React.FC = () => {
     }
   }, [activeTab, theme]);
 
-  const activeTitle = tabsData.find(tab => tab.id === activeTab)?.title || "";
+  const activeTitle = t(tabsData.find(tab => tab.id === activeTab)?.titleKey || "");
   const currentTheme = theme === "dark" ? "dark" : "light";
 
   return (
@@ -145,7 +146,7 @@ const HeroBackground: React.FC = () => {
             <AspectRatio ratio={16/9}>
               <img 
                 src={tab.images[currentTheme].thumbnail} 
-                alt={tab.title}
+                alt={t(tab.titleKey)}
                 className="object-cover w-full h-full"
               />
             </AspectRatio>

@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useTranslation } from "@/utils/translations";
 
 /**
  * Location Map section with VR tour and digital map links
@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 const LocationSection: React.FC = () => {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("vr-tour");
+  const { t } = useTranslation();
   
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
@@ -29,7 +30,7 @@ const LocationSection: React.FC = () => {
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor
         )}>
-          BẢN ĐỒ VỊ TRÍ
+          {t('location.title')}
         </h2>
         
         <div className="flex flex-col lg:flex-row gap-8">
@@ -45,7 +46,7 @@ const LocationSection: React.FC = () => {
               )}
               onClick={() => setActiveTab("vr-tour")}
             >
-              VR 360 Tour - Khu CNC Đà Nẵng
+              {t('location.vrTour')}
             </button>
             
             {/* Digital Map Tab */}
@@ -58,7 +59,7 @@ const LocationSection: React.FC = () => {
               )}
               onClick={() => setActiveTab("digital-map")}
             >
-              Bản đồ số khu CNC + Các KCN Đà Nẵng + Báo cáo trực tuyến
+              {t('location.digitalMap')}
             </button>
           </div>
           
@@ -87,10 +88,10 @@ const LocationSection: React.FC = () => {
                 secondaryBgColor
               )}>
                 <h3 className={cn("text-xl font-montserrat font-medium mb-4 text-center", textColor)}>
-                  Bản đồ số và Báo cáo Đầu tư
+                  {t('location.digitalMapTitle')}
                 </h3>
                 <p className={cn("text-base font-inter text-center max-w-lg leading-relaxed", secondaryTextColor)}>
-                  Bản đồ tương tác với dữ liệu chi tiết về các khu công nghiệp, vị trí các doanh nghiệp và thông tin đầu tư.
+                  {t('location.digitalMapDescription')}
                 </p>
                 <Button 
                   asChild 
@@ -102,7 +103,7 @@ const LocationSection: React.FC = () => {
                   )}
                 >
                   <a href="#" target="_blank" rel="noopener noreferrer">
-                    Truy cập Bản đồ số
+                    {t('location.accessDigitalMap')}
                   </a>
                 </Button>
               </div>

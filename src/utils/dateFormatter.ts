@@ -1,5 +1,5 @@
-
 /**
+ * @deprecated Use the formatDate function from the translations utility instead.
  * Formats a date in Vietnamese format: "Thứ [day of week], DD/MM/YYYY"
  * @param date - The date to format
  * @returns A formatted date string
@@ -14,8 +14,9 @@ export const formatDateVi = (date: Date): string => {
 };
 
 /**
- * Formats time in HH:MM format (24-hour)
- * @param date - The date to extract time from
+ * @deprecated Use the formatDate function from the translations utility instead.
+ * Formats time in 24-hour format: "HH:MM"
+ * @param date - The date to format
  * @returns A formatted time string
  */
 export const formatTime = (date: Date): string => {
