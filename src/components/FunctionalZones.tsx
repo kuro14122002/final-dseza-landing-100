@@ -39,8 +39,8 @@ const FunctionalZones: React.FC = () => {
       enterprises: 32, 
       occupancy: 42.85, 
       area: "1,128.4 ha", 
-      imageThumb: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
-      imageLarge: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+      imageThumb: "/media/FunctionalZones/KCNC1.jpg", 
+      imageLarge: "/media/FunctionalZones/KCNC1.jpg" 
     },
     { 
       id: 2, 
@@ -49,8 +49,8 @@ const FunctionalZones: React.FC = () => {
       enterprises: 42, 
       occupancy: 100, 
       area: "132.34 ha", 
-      imageThumb: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", 
-      imageLarge: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+      imageThumb: "/media/FunctionalZones/HKMR.jpg", 
+      imageLarge: "/media/FunctionalZones/HKMR.jpg" 
     },
     { 
       id: 3, 

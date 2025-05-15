@@ -50,11 +50,11 @@ const viTranslations: TranslationObject = {
   // Footer
   footer: {
     management: "Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng",
-    address: "Địa chỉ: Tòa nhà Danang Business Incubator, số 15 Đường Nam Trân, Phường Hòa Cường Bắc, Quận Hải Châu, Thành phố Đà Nẵng",
+    address: "Địa chỉ: Lô A17, đường Trung tâm, Khu công nghệ cao, xã Hòa Liên, huyện Hòa Vang, Đà Nẵng",
     tel: "Điện thoại",
     fax: "Fax",
     email: "Email",
-    copyright: "Bản quyền © 2023 DSEZA. Đã đăng ký bản quyền.",
+    copyright: "Bản quyền © 2025 DSEZA. Đã đăng ký bản quyền.",
     legalInfo: "Thông tin pháp lý",
     networkCredibility: "Tín nhiệm mạng",
     license: "Giấy phép: Số 05/GP-STTTT do Sở TTTT Đà Nẵng cấp ngày 02/01/2020.",
@@ -219,16 +219,16 @@ const enTranslations: TranslationObject = {
   
   // Footer
   footer: {
-    management: "Danang High-Tech Park and Industrial Zones Authority",
-    address: "Address: Danang Business Incubator Building, 15 Nam Tran Street, Hoa Cuong Bac Ward, Hai Chau District, Danang City",
+    management: "Da Nang Specific Economic Zones Authority",
+    address: "Address: Lot A17, Center Road, High-Tech Park, Hoa Lien Commune, Hoa Vang District, Da Nang",
     tel: "Tel",
     fax: "Fax",
     email: "Email",
-    copyright: "Copyright © 2023 DSEZA. All rights reserved.",
+    copyright: "Copyright © 2025 DSEZA. All rights reserved.",
     legalInfo: "Legal Information",
     networkCredibility: "Network Credibility",
     license: "License: No. 05/GP-STTTT issued by Danang Department of Information and Communications on 01/02/2020.",
-    editor: "Editor in Chief: Tran Van Ty, Deputy Director of Danang High-Tech Park and Industrial Zones Authority.",
+    editor: "Editor in Chief: Tran Van Ty, Deputy Head of the Management Board of Da Nang Specific Economic Zones Authority.",
     citationConnect: "Citation & Connect",
     citationNote: "Please cite \"www.dseza.danang.gov.vn\" when referencing our information.",
     visitorCount: "Visitor count",
