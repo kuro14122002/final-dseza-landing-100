@@ -1,15 +1,14 @@
+
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
 import { MapPin, Phone, File, Mail, Facebook, Youtube, Linkedin } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
 
 /**
  * Footer component with contact information, legal details, and social media links
  */
 const Footer: React.FC = () => {
   const { theme } = useTheme();
-  const { t } = useLanguage();
   
   // Theme-specific styles
   const bgColor = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
@@ -28,35 +27,35 @@ const Footer: React.FC = () => {
               "font-montserrat font-semibold text-lg mb-4",
               textColor
             )}>
-              {t("footer.management")}
+              Ban Quản lý KCNC & các KCN Đà Nẵng
             </h3>
             
             <div className="space-y-2">
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 mr-2 mt-1 flex-shrink-0" />
                 <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                  {t("footer.address")}
+                  Địa chỉ: Lô A17, đường Trung tâm, KCNC, xã Hòa Liên, huyện Hòa Vang, Đà Nẵng
                 </p>
               </div>
               
               <div className="flex items-center">
                 <Phone className="w-5 h-5 mr-2 flex-shrink-0" />
                 <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                  {t("footer.phone")}
+                  SĐT: 0236 3666117
                 </p>
               </div>
               
               <div className="flex items-center">
                 <File className="w-5 h-5 mr-2 flex-shrink-0" />
                 <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                  {t("footer.reception")}
+                  Tiếp nhận hồ sơ: 0236.3666100
                 </p>
               </div>
               
               <div className="flex items-center">
                 <Mail className="w-5 h-5 mr-2 flex-shrink-0" />
                 <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                  {t("footer.email")}
+                  Email: dseza@danang.gov.vn
                 </p>
               </div>
             </div>
@@ -68,7 +67,7 @@ const Footer: React.FC = () => {
               "font-montserrat font-semibold text-lg mb-4",
               textColor
             )}>
-              {t("footer.location")}
+              Bản đồ vị trí
             </h3>
             
             <div className={cn(
@@ -85,20 +84,20 @@ const Footer: React.FC = () => {
               "font-montserrat font-semibold text-lg mb-4",
               textColor
             )}>
-              {t("footer.legal")}
+              Thông tin pháp lý
             </h3>
             
             <div className="space-y-2">
               <a href="#" className={cn("block font-inter text-sm", accentColor)}>
-                {t("footer.trusted")}
+                Tín nhiệm mạng
               </a>
               
               <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                {t("footer.license")}
+                Giấy phép: Số 05/GP-STTTT do Sở TTTT Đà Nẵng cấp ngày 02/01/2020.
               </p>
               
               <p className={cn("font-inter text-sm", secondaryTextColor)}>
-                {t("footer.editor")}
+                Trưởng Ban biên tập: Trần Văn Tỵ, Phó Trưởng ban BQL KCNC & các KCN Đà Nẵng.
               </p>
             </div>
           </div>
@@ -109,11 +108,11 @@ const Footer: React.FC = () => {
               "font-montserrat font-semibold text-lg mb-4",
               textColor
             )}>
-              {t("footer.citation")}
+              Trích dẫn & Kết nối
             </h3>
             
             <p className={cn("font-inter text-sm mb-4", secondaryTextColor)}>
-              {t("footer.citationInfo")}
+              Ghi rõ nguồn "www.dseza.danang.gov.vn" khi trích dẫn lại thông tin.
             </p>
             
             <div className="flex space-x-4">
@@ -150,10 +149,10 @@ const Footer: React.FC = () => {
       )}>
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center text-xs">
           <p className={cn("font-inter mb-2 sm:mb-0 text-center sm:text-left", secondaryTextColor)}>
-            {t("footer.copyright")}
+            © 2025 Bản quyền của Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng
           </p>
           <p className={cn("font-inter", secondaryTextColor)}>
-            {t("footer.visits")} 28,734
+            Số lượt truy cập: 28,734
           </p>
         </div>
       </div>

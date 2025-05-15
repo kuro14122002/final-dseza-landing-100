@@ -1,4 +1,3 @@
-
 // src/components/hero/NavigationBar.tsx
 import React, { useRef, useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
@@ -6,7 +5,6 @@ import MegaMenu from './MegaMenu';
 import NavigationMenuItem from './NavigationMenuItem';
 import { getNavigationMenuItems } from './navigation/menuData';
 import { MenuItem as NavigationMenuItemType } from './types/megaMenu';
-import { useLanguage } from '@/context/LanguageContext';
 
 const TOP_BAR_HEIGHT_STRING = "3rem"; 
 const INITIAL_NAV_TOP_STRING = "9rem";
@@ -17,7 +15,6 @@ const NavigationBar: React.FC = () => {
   const navRef = useRef<HTMLElement>(null);
   const menuItems: NavigationMenuItemType[] = getNavigationMenuItems();
   const [isSticky, setIsSticky] = useState(false);
-  const { language } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,7 +72,6 @@ const NavigationBar: React.FC = () => {
               index={index}
               activeMenuIndex={activeMenuIndex}
               onMenuClick={handleMenuClick}
-              currentLanguage={language}
             />
           ))}
         </ul>
@@ -84,7 +80,7 @@ const NavigationBar: React.FC = () => {
       {activeMenuIndex !== null && menuItems[activeMenuIndex].megaMenuConfig && (
         // MegaMenu sẽ kế thừa hiệu ứng glass từ navClasses của NavigationBar
         // Chỉ cần thêm style riêng cho MegaMenu nếu muốn (ví dụ: shadow)
-        <MegaMenu config={menuItems[activeMenuIndex].megaMenuConfig!} currentLanguage={language} />
+        <MegaMenu config={menuItems[activeMenuIndex].megaMenuConfig!} />
       )}
     </nav>
   );

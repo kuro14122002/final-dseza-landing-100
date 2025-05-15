@@ -1,9 +1,9 @@
+
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { CalendarDays } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
 
 type EventCardProps = {
   image: string;
@@ -46,7 +46,6 @@ const EventCard = ({ image, date, title, excerpt, featured = false, isLarge = fa
  */
 const FeaturedEvents: React.FC = () => {
   const { theme } = useTheme();
-  const { t } = useLanguage();
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
 
   // Sample event data - in a real app, this would come from an API
@@ -92,7 +91,7 @@ const FeaturedEvents: React.FC = () => {
           "font-montserrat font-bold text-3xl md:text-4xl mb-8 text-center",
           textColor
         )}>
-          {t("section.featuredEvents")}
+          SỰ KIỆN TIÊU ĐIỂM
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
