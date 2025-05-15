@@ -121,7 +121,10 @@ const FunctionalZones: React.FC = () => {
   const currentZone = zonesData.find(zone => zone.id === selectedZone) || zonesData[0];
   
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
+    <section className={cn(
+      "py-12 px-4 sm:px-6 lg:px-8",
+      theme === "dark" ? "bg-[#2C363F]" : "bg-[#F2F2F2]"
+    )}>
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-2xl md:text-3xl mb-8 text-left",

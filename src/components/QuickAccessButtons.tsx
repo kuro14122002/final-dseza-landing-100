@@ -54,7 +54,10 @@ const QuickAccessButtons: React.FC = () => {
   const iconColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
   
   return (
-    <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+    <section className={cn(
+      "py-12 md:py-16 px-4 sm:px-6 lg:px-8",
+      theme === "dark" ? "bg-[#1D262E]" : "bg-[#FFFFFF]"
+    )}>
       <div className="container mx-auto max-w-screen-xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {cards.map((card, index) => (

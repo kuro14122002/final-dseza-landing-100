@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -32,7 +31,10 @@ const BusinessesAndPartners: React.FC = () => {
   ];
   
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
+    <section className={cn(
+      "py-12 px-4 sm:px-6 lg:px-8",
+      theme === "dark" ? "bg-[#2C363F]" : "bg-[#FFFFFF]"
+    )}>
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-16",

@@ -18,13 +18,16 @@ const LocationSection: React.FC = () => {
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
   const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
   const accentBgColor = theme === "dark" ? "bg-dseza-dark-primary-accent" : "bg-dseza-light-primary-accent";
-  const secondaryBgColor = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
+  const secondaryBgColor = theme === "dark" ? "bg-[#020817]" : "bg-dseza-light-secondary-bg";
   const tabActiveText = theme === "dark" ? "text-dseza-dark-main-bg" : "text-white";
   const tabDefaultBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
   const tabHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg" : "hover:bg-dseza-light-hover-bg";
   
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
+    <section className={cn(
+      "py-12 px-4 sm:px-6 lg:px-8",
+      theme === "dark" ? "bg-[#2C363F]" : "bg-[#F2F2F2]"
+    )}>
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",

@@ -106,7 +106,10 @@ const NewsSection: React.FC = () => {
   const filteredNews = newsData.filter(item => item.category === activeCategory);
   
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
+    <section className={cn(
+      "py-12 px-4 sm:px-6 lg:px-8",
+      theme === "dark" ? "bg-[#1D262E]" : "bg-[#FFFFFF]"
+    )}>
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-4 text-center",

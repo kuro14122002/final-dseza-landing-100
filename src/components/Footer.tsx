@@ -19,7 +19,9 @@ const Footer: React.FC = () => {
   const bottomBarBgColor = theme === "dark" ? "bg-dseza-dark-hover-bg" : "bg-dseza-light-hover-bg";
   
   return (
-    <footer className={cn(bgColor)}>
+    <footer className={cn(
+      theme === "dark" ? "bg-[#1D262E]" : "bg-[#F2F2F2]"
+    )}>
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: Contact Information */}
