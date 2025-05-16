@@ -10,8 +10,12 @@ import LocationSection from "@/components/LocationSection";
 import ResourcesSection from "@/components/ResourcesSection";
 import BusinessesAndPartners from "@/components/BusinessesAndPartners";
 import Footer from "@/components/Footer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileQuickLinksCarousel from "@/components/mobile/MobileQuickLinksCarousel";
 
 const Index: React.FC = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -19,8 +23,8 @@ const Index: React.FC = () => {
       
       {/* Content Sections */}
       <div className="bg-background">
-        {/* Quick Access Buttons */}
-        <QuickAccessButtons />
+        {/* Quick Access Buttons - show desktop or mobile version based on viewport */}
+        {isMobile ? <MobileQuickLinksCarousel /> : <QuickAccessButtons />}
         
         {/* Featured Events Section */}
         <FeaturedEvents />
