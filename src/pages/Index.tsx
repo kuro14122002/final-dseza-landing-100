@@ -1,7 +1,5 @@
 
 import React from "react";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { LanguageProvider } from "@/context/LanguageContext";
 import HeroSection from "@/components/hero/HeroSection";
 import QuickAccessButtons from "@/components/QuickAccessButtons";
 import FeaturedEvents from "@/components/FeaturedEvents";
@@ -15,44 +13,40 @@ import Footer from "@/components/Footer";
 
 const Index: React.FC = () => {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <main className="min-h-screen">
-          {/* Hero Section */}
-          <HeroSection />
-          
-          {/* Content Sections */}
-          <div className="bg-background">
-            {/* Quick Access Buttons */}
-            <QuickAccessButtons />
-            
-            {/* Featured Events Section */}
-            <FeaturedEvents />
-            
-            {/* News Section */}
-            <NewsSection />
-            
-            {/* Functional Zones Section */}
-            <FunctionalZones />
-            
-            {/* Investment Information Section */}
-            <InvestmentInformation />
-            
-            {/* Location Map Section */}
-            <LocationSection />
-            
-            {/* Resources Section */}
-            <ResourcesSection />
-            
-            {/* Businesses and Partners Section */}
-            <BusinessesAndPartners />
-          </div>
-          
-          {/* Footer */}
-          <Footer />
-        </main>
-      </LanguageProvider>
-    </ThemeProvider>
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <HeroSection />
+      
+      {/* Content Sections */}
+      <div className="bg-background">
+        {/* Quick Access Buttons */}
+        <QuickAccessButtons />
+        
+        {/* Featured Events Section */}
+        <FeaturedEvents />
+        
+        {/* News Section */}
+        <NewsSection />
+        
+        {/* Functional Zones Section */}
+        <FunctionalZones />
+        
+        {/* Investment Information Section */}
+        <InvestmentInformation />
+        
+        {/* Location Map Section */}
+        <LocationSection />
+        
+        {/* Resources Section */}
+        <ResourcesSection />
+        
+        {/* Businesses and Partners Section */}
+        <BusinessesAndPartners />
+      </div>
+      
+      {/* Footer */}
+      <Footer />
+    </main>
   );
 };
 
