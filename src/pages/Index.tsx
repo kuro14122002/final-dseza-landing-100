@@ -14,6 +14,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import MobileQuickLinksCarousel from "@/components/mobile/MobileQuickLinksCarousel";
 import MobileFeaturedEvents from "@/components/mobile/MobileFeaturedEvents";
 import MobileNewsSection from "@/components/mobile/MobileNewsSection";
+import MobileFunctionalZonesCarousel from "@/components/mobile/MobileFunctionalZonesCarousel";
 
 const Index: React.FC = () => {
   const isMobile = useIsMobile();
@@ -34,8 +35,8 @@ const Index: React.FC = () => {
         {/* News Section - show desktop or mobile version based on viewport */}
         {isMobile ? <MobileNewsSection /> : <NewsSection />}
         
-        {/* Functional Zones Section */}
-        <FunctionalZones />
+        {/* Functional Zones Section - show desktop or mobile version based on viewport */}
+        {isMobile ? <MobileFunctionalZonesCarousel /> : <FunctionalZones />}
         
         {/* Investment Information Section */}
         <InvestmentInformation />
