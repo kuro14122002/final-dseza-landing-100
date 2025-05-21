@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -41,18 +40,18 @@ const NewsCard: React.FC<NewsArticle> = ({
 }) => {
   const { theme } = useTheme();
   const { language } = useLanguage();
-  
+
   // Use translated content if available
   const displayTitle = language === 'en' && titleEn ? titleEn : title;
   const displayExcerpt = language === 'en' && excerptEn ? excerptEn : excerpt;
-  
+
   // Theme-specific styles
   const cardBg = theme === "dark" ? "bg-[#2C3640]" : "bg-[#F2F2F2]";
   const mainText = theme === "dark" ? "text-white" : "text-black";
   const secondaryText = theme === "dark" ? "text-[#B0BEC5]" : "text-[#545454]";
   const shadowStyle = theme === "dark" ? "shadow-lg shadow-black/25" : "shadow-lg";
   const hoverShadow = theme === "dark" ? "hover:shadow-xl hover:shadow-black/35" : "hover:shadow-xl";
-  
+
   return (
     <a
       href={url}
@@ -75,7 +74,7 @@ const NewsCard: React.FC<NewsArticle> = ({
           className="w-full h-full object-cover"
         />
       </div>
-      
+
       {/* Text Content Area */}
       <div className="p-4">
         {/* News Date */}
@@ -85,12 +84,12 @@ const NewsCard: React.FC<NewsArticle> = ({
             {date}
           </p>
         </div>
-        
+
         {/* News Title */}
         <h3 className={cn("font-montserrat font-semibold text-lg mb-2 line-clamp-3", mainText)}>
           {displayTitle}
         </h3>
-        
+
         {/* News Snippet (if available) */}
         {displayExcerpt && (
           <p className={cn("font-inter font-normal text-sm line-clamp-2", secondaryText)}>
@@ -108,7 +107,7 @@ const NewsCard: React.FC<NewsArticle> = ({
 const NewsCardSkeleton: React.FC = () => {
   const { theme } = useTheme();
   const cardBg = theme === "dark" ? "bg-[#2C3640]" : "bg-[#F2F2F2]";
-  
+
   return (
     <div className={cn("rounded-xl overflow-hidden", cardBg, "shadow-lg")}>
       <Skeleton className="w-full aspect-video" />
@@ -133,44 +132,44 @@ const MobileNewsSection: React.FC = () => {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>("investment");
-  
+
   // Theme-specific styles for the section container
   const sectionBg = theme === "dark" ? "bg-[#1E272F]" : "bg-white";
   const titleText = theme === "dark" ? "text-white" : "text-black";
   const buttonText = theme === "dark" ? "text-[#19DBCF]" : "text-[#416628]";
   const buttonBorder = theme === "dark" ? "border-[#19DBCF]" : "border-[#416628]";
   const buttonHoverBg = theme === "dark" ? "hover:bg-[#19DBCF]/10" : "hover:bg-[#416628]/10";
-  
-  // News categories data
+
+  // News categories data - Đồng bộ với NewsSection
   const categories: NewsCategory[] = [
-    { 
-      id: "investment", 
+    {
+      id: "investment",
       name: "Đầu tư – Hợp tác quốc tế",
-      nameEn: "Investment – Int'l Cooperation" 
+      nameEn: "Investment – Int'l Cooperation"
     },
-    { 
-      id: "training", 
+    {
+      id: "training",
       name: "Đào tạo, Ươm tạo khởi nghiệp",
-      nameEn: "Training & Startup Incubation" 
+      nameEn: "Training & Startup Incubation"
     },
-    { 
-      id: "digital", 
+    {
+      id: "digital",
       name: "Chuyển đổi số",
-      nameEn: "Digital Transformation" 
+      nameEn: "Digital Transformation"
     },
-    { 
-      id: "activities", 
+    {
+      id: "activities", // Đổi từ 'management' để đồng bộ
       name: "Hoạt động Ban quản lý",
-      nameEn: "Management Board Activities" 
+      nameEn: "Management Board Activities"
     },
-    { 
-      id: "other", 
+    {
+      id: "other",
       name: "Tin khác",
-      nameEn: "Other News" 
+      nameEn: "Other News"
     }
   ];
-  
-  // Sample news articles data for each category
+
+  // Sample news articles data for each category - Đồng bộ với NewsSection
   const newsArticles: { [key: string]: NewsArticle[] } = {
     "investment": [
       {
@@ -348,28 +347,29 @@ const MobileNewsSection: React.FC = () => {
       }
     ]
   };
-  
+
+
   // Handle category change
   const handleCategoryChange = (categoryId: string) => {
     setActiveCategory(categoryId);
   };
-  
+
   // Get the current category's articles
   const currentArticles = newsArticles[activeCategory] || [];
-  
+
   return (
     <section className={cn(
       sectionBg,
       "py-8 px-4 w-full"
     )}>
-      {/* Section Title - Fixed to use the correct translation key */}
+      {/* Section Title */}
       <h2 className={cn(
-        "font-montserrat font-bold text-2xl text-left mb-6",
+        "font-montserrat font-bold text-2xl text-left mb-6", // Giữ nguyên căn lề trái
         titleText
       )}>
         {t('news.title') || "TIN TỨC"}
       </h2>
-      
+
       {/* Tabs navigation for filtering news */}
       <Tabs
         defaultValue={activeCategory}
@@ -400,13 +400,12 @@ const MobileNewsSection: React.FC = () => {
                   "focus-visible:ring-offset-0 focus-visible:ring-0" // Reset focus ring
                 )}
               >
-                {/* Display English name if language is English and nameEn exists */}
                 {language === 'en' && category.nameEn ? category.nameEn : category.name}
               </TabsTrigger>
             ))}
           </TabsList>
         </div>
-        
+
         {/* Tab content sections */}
         {categories.map((category) => (
           <TabsContent
@@ -416,23 +415,28 @@ const MobileNewsSection: React.FC = () => {
           >
             {/* News Articles List (Vertical Stack) */}
             <div className="flex flex-col space-y-5">
-              {newsArticles[category.id]?.map((article) => (
-                <NewsCard
-                  key={article.id}
-                  id={article.id}
-                  categoryId={article.categoryId}
-                  image={article.image}
-                  date={article.date}
-                  title={article.title}
-                  titleEn={article.titleEn}
-                  excerpt={article.excerpt}
-                  excerptEn={article.excerptEn}
-                  url={article.url}
-                />
-              ))}
+              {currentArticles.length > 0 ? (
+                 currentArticles.map((article) => (
+                  <NewsCard
+                    key={article.id}
+                    id={article.id}
+                    categoryId={article.categoryId}
+                    image={article.image}
+                    date={article.date}
+                    title={article.title}
+                    titleEn={article.titleEn}
+                    excerpt={article.excerpt}
+                    excerptEn={article.excerptEn}
+                    url={article.url}
+                  />
+                ))
+              ) : (
+                // Hiển thị skeleton nếu không có bài viết
+                Array.from({ length: 3 }).map((_, index) => <NewsCardSkeleton key={index} />)
+              )}
             </div>
-            
-            {/* View More Button - Fixed to use the correct translation key */}
+
+            {/* View More Button */}
             <div className="flex justify-center mt-6">
               <a
                 href={`#view-more-${category.id}`}
