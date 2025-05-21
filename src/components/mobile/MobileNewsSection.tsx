@@ -377,14 +377,14 @@ const MobileNewsSection: React.FC = () => {
         className="w-full"
       >
         {/* Custom TabsList wrapper to allow horizontal scrolling */}
-        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6">
-          <TabsList className="bg-transparent p-0 h-auto flex space-x-3">
+        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6 -mx-1 px-1">
+          <TabsList className="bg-transparent p-0 h-auto flex space-x-3 min-w-max">
             {categories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id}
                 className={cn(
-                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap",
+                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
                   "transition-colors duration-200 ease-in-out",
                   "data-[state=active]:bg-dseza-dark-primary data-[state=active]:text-dseza-dark-main-bg data-[state=active]:font-semibold dark:data-[state=active]:bg-[#19DBCF] dark:data-[state=active]:text-[#1E272F]",
                   "data-[state=inactive]:bg-dseza-light-hover dark:data-[state=inactive]:bg-[#3A4750]",
