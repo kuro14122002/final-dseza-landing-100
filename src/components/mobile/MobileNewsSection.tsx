@@ -131,6 +131,7 @@ const NewsCardSkeleton: React.FC = () => {
 const MobileNewsSection: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const { language } = useLanguage(); // Properly extract language from the hook
   const [activeCategory, setActiveCategory] = useState<string>("investment");
   
   // Theme-specific styles for the section container
