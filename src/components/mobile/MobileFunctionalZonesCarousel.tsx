@@ -129,7 +129,7 @@ const MobileFunctionalZonesCarousel: React.FC = () => {
         "font-montserrat font-bold text-2xl mb-6 mx-4",
         textClass
       )}>
-        {t('functionalZones.title')}
+        {t('homepage.functionalZonesMobile')}
       </h2>
       
       {/* Carousel */}

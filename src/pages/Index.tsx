@@ -1,4 +1,3 @@
-
 import React from "react";
 import HeroSection from "@/components/hero/HeroSection";
 import QuickAccessButtons from "@/components/QuickAccessButtons";
@@ -15,7 +14,7 @@ import MobileQuickLinksCarousel from "@/components/mobile/MobileQuickLinksCarous
 import MobileFeaturedEvents from "@/components/mobile/MobileFeaturedEvents";
 import MobileNewsSection from "@/components/mobile/MobileNewsSection";
 import MobileFunctionalZonesCarousel from "@/components/mobile/MobileFunctionalZonesCarousel";
-
+import MobileInvestmentInformation from "@/components/mobile/MobileInvestmentInformation";
 const Index: React.FC = () => {
   const isMobile = useIsMobile();
   
@@ -38,8 +37,8 @@ const Index: React.FC = () => {
         {/* Functional Zones Section - show desktop or mobile version based on viewport */}
         {isMobile ? <MobileFunctionalZonesCarousel /> : <FunctionalZones />}
         
-        {/* Investment Information Section */}
-        <InvestmentInformation />
+        {/* Investment Information Section - show desktop or mobile version based on viewport */}
+        {isMobile ? <MobileInvestmentInformation /> : <InvestmentInformation />} {/* Sử dụng component mới */}
         
         {/* Location Map Section */}
         <LocationSection />

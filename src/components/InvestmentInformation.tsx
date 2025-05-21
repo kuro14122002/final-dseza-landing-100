@@ -158,6 +158,7 @@ const InvestmentInformation: React.FC = () => {
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor
+          
         )}>
           {t('homepage.investmentInfo')}
         </h2>

@@ -1,18 +1,16 @@
+// src/components/LocationSection.tsx
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"; // Giữ lại import Tabs
 import { useTranslation } from "@/utils/translations";
 
-/**
- * Location Map section with VR tour and digital map links
- */
 const LocationSection: React.FC = () => {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("vr-tour");
   const { t } = useTranslation();
-  
+
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
@@ -22,27 +20,28 @@ const LocationSection: React.FC = () => {
   const tabActiveText = theme === "dark" ? "text-dseza-dark-main-bg" : "text-white";
   const tabDefaultBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
   const tabHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg" : "hover:bg-dseza-light-hover-bg";
-  
+
   return (
     <section className={cn(
-      "py-12 px-4 sm:px-6 lg:px-8",
-      theme === "dark" ? "bg-[#2C363F]" : "bg-[#F2F2F2]"
+      "py-12 px-4 sm:px-6 lg:px-8", // Giữ padding chung
+      theme === "dark" ? "bg-[#1E272F]" : "bg-white" // Thay đổi màu nền section cho phù hợp
     )}>
       <div className="container mx-auto">
         <h2 className={cn(
-          "font-montserrat font-bold text-3xl md:text-4xl mb-8",
-          textColor
+          "font-montserrat font-bold text-2xl md:text-3xl mb-8", // Giảm kích thước font cho mobile (text-2xl) và desktop (md:text-3xl)
+          textColor,
+          "text-left" // Áp dụng căn trái cho tất cả các kích thước màn hình
         )}>
           {t('location.title')}
         </h2>
         
+        {/* Giữ nguyên cấu trúc flex và tabs như ban đầu */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left column: tabs */}
           <div className="w-full lg:w-1/3 flex flex-col gap-4">
-            {/* VR Tour Tab */}
             <button 
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-lg transition-colors duration-300",
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", // text-base cho mobile, md:text-lg cho desktop
                 activeTab === "vr-tour" ? 
                   cn(accentBgColor, tabActiveText) : 
                   cn(tabDefaultBg, textColor, tabHoverBg)
@@ -52,10 +51,9 @@ const LocationSection: React.FC = () => {
               {t('location.vrTour')}
             </button>
             
-            {/* Digital Map Tab */}
             <button 
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-lg transition-colors duration-300",
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", // text-base cho mobile, md:text-lg cho desktop
                 activeTab === "digital-map" ? 
                   cn(accentBgColor, tabActiveText) : 
                   cn(tabDefaultBg, textColor, tabHoverBg)
@@ -70,36 +68,36 @@ const LocationSection: React.FC = () => {
           <div className="w-full lg:w-2/3">
             {activeTab === "vr-tour" ? (
               <div className={cn(
-                "rounded-lg h-80 sm:h-96 p-6 flex flex-col items-center justify-center",
+                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", // Giảm chiều cao và padding cho mobile
                 secondaryBgColor
               )}>
-                <p className={cn("text-xl font-montserrat text-center", textColor)}>
+                <p className={cn("text-lg md:text-xl font-montserrat text-center", textColor)}>
                   VR 360 Tour Placeholder
                 </p>
                 <a 
                   href="https://dseza.danang.gov.vn/vr360/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className={cn("mt-4", accentColor, "underline")}
+                  className={cn("mt-4", accentColor, "underline text-sm md:text-base")} // Giảm kích thước font link
                 >
                   https://dseza.danang.gov.vn/vr360/
                 </a>
               </div>
             ) : (
               <div className={cn(
-                "rounded-lg h-80 sm:h-96 p-6 flex flex-col items-center justify-center",
+                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", // Giảm chiều cao và padding cho mobile
                 secondaryBgColor
               )}>
-                <h3 className={cn("text-xl font-montserrat font-medium mb-4 text-center", textColor)}>
+                <h3 className={cn("text-lg md:text-xl font-montserrat font-medium mb-3 md:mb-4 text-center", textColor)}>
                   {t('location.digitalMapTitle')}
                 </h3>
-                <p className={cn("text-base font-inter text-center max-w-lg leading-relaxed", secondaryTextColor)}>
+                <p className={cn("text-sm md:text-base font-inter text-center max-w-lg leading-relaxed", secondaryTextColor)}>
                   {t('location.digitalMapDescription')}
                 </p>
                 <Button 
                   asChild 
                   className={cn(
-                    "mt-6 px-6 py-3", 
+                    "mt-4 md:mt-6 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base",  // Giảm padding và font size button cho mobile
                     accentBgColor,
                     theme === "dark" ? "text-dseza-dark-main-bg hover:bg-dseza-dark-primary-accent-hover" : 
                     "text-white hover:bg-dseza-light-primary-accent-hover"

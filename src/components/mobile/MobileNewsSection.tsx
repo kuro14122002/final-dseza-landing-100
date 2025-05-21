@@ -382,20 +382,27 @@ const MobileNewsSection: React.FC = () => {
           <TabsList className="bg-transparent p-0 h-auto flex space-x-3 min-w-max">
             {categories.map((category) => (
               <TabsTrigger
-                key={category.id}
-                value={category.id}
-                className={cn(
-                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
-                  "transition-colors duration-200 ease-in-out",
-                  "data-[state=active]:bg-dseza-dark-primary data-[state=active]:text-dseza-dark-main-bg data-[state=active]:font-semibold dark:data-[state=active]:bg-[#19DBCF] dark:data-[state=active]:text-[#1E272F]",
-                  "data-[state=inactive]:bg-dseza-light-hover dark:data-[state=inactive]:bg-[#3A4750]",
-                  "data-[state=inactive]:text-dseza-light-secondary-text dark:data-[state=inactive]:text-[#B0BEC5]",
-                  "hover:data-[state=inactive]:bg-dseza-light-border dark:hover:data-[state=inactive]:bg-[#455A64]",
-                  "focus-visible:ring-offset-0 focus-visible:ring-0"
-                )}
-              >
-                {category.name}
-              </TabsTrigger>
+              key={category.id}
+              value={category.id}
+              className={cn(
+                "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
+                "transition-colors duration-200 ease-in-out",
+                // Active state
+                "data-[state=active]:font-semibold",
+                "data-[state=active]:bg-dseza-light-primary data-[state=active]:text-white", // Light mode active
+                "dark:data-[state=active]:bg-dseza-dark-primary dark:data-[state=active]:text-dseza-dark-main-bg", // Dark mode active
+                // Inactive state
+                "data-[state=inactive]:bg-dseza-light-secondary-bg data-[state=inactive]:text-dseza-light-secondary-text", // Light mode inactive
+                "dark:data-[state=inactive]:bg-dseza-dark-secondary-bg dark:data-[state=inactive]:text-dseza-dark-secondary-text", // Dark mode inactive
+                // Hover on inactive state
+                "hover:data-[state=inactive]:bg-dseza-light-hover hover:data-[state=inactive]:text-dseza-light-main-text", // Light mode hover on inactive
+                "dark:hover:data-[state=inactive]:bg-dseza-dark-hover dark:hover:data-[state=inactive]:text-dseza-dark-main-text", // Dark mode hover on inactive
+                "focus-visible:ring-offset-0 focus-visible:ring-0" // Reset focus ring
+              )}
+            >
+              {/* Kiểm tra xem category.nameEn có tồn tại không trước khi sử dụng */}
+              {language === 'en' && category.nameEn ? category.nameEn : category.name}
+            </TabsTrigger>
             ))}
           </TabsList>
         </div>

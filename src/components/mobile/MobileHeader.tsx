@@ -266,28 +266,30 @@ const MobileHeader: React.FC = () => {
                 getBgColor()
               )}
             >
-              <div className="flex flex-col h-full">
-                {/* Menu Header */}
-                <div className={cn(
-                  "flex items-center justify-between h-16 px-4",
-                  getBgColor(),
-                  getShadowColor(),
-                  "shadow-md"
-                )}>
-                  <Logo />
-                  <button
-                    onClick={() => setIsMenuOpen(false)}
-                    aria-label="Close menu"
-                    className={cn(
-                      "p-2 rounded-md",
-                      getTextColor(),
-                      "focus:outline-none focus:ring-2 focus:ring-offset-2",
-                      theme === "dark" ? "focus:ring-dseza-dark-primary" : "focus:ring-dseza-light-primary"
-                    )}
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
-                </div>
+            <div className="flex flex-col h-full">
+              {/* Menu Header */}
+              <div className={cn(
+                "flex items-center justify-between h-16 px-4",
+                getBgColor(),
+                getShadowColor(),
+                "shadow-md"
+            )}>
+              <Logo />
+      {/* === ĐÂY LÀ NÚT CẦN XÓA HOẶC ẨN ICON X === */}
+      <button
+        onClick={() => setIsMenuOpen(false)}
+        aria-label="Close menu"
+        className={cn(
+          "p-2 rounded-md",
+          getTextColor(),
+          "focus:outline-none focus:ring-2 focus:ring-offset-2",
+          theme === "dark" ? "focus:ring-dseza-dark-primary" : "focus:ring-dseza-light-primary"
+        )}
+      >
+        <X className="w-6 h-6" /> {/* Icon X sẽ được xóa hoặc ẩn */}
+      </button>
+      {/* =============================================== */}
+    </div>
                 
                 {/* Scrollable Menu Content */}
                 <div className={cn(
@@ -330,47 +332,50 @@ const MobileHeader: React.FC = () => {
                                 </h3>
                                 
                                 <div className="space-y-1">
-                                  {section.links.map((link, linkIdx) => (
-                                    <div key={linkIdx}>
-                                      {link.children ? (
-                                        <>
-                                          <div className={cn(
-                                            "py-2 px-4 font-inter text-sm",
-                                            getTextColor()
-                                          )}>
-                                            {link.title}
-                                          </div>
-                                          <div className="pl-6">
-                                            {link.children.map((child, childIdx) => (
-                                              <a
-                                                key={childIdx}
-                                                href={child.url}
-                                                className={cn(
-                                                  "block py-2 px-6 font-inter text-sm",
-                                                  getTextColor(),
-                                                  theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
-                                                )}
-                                              >
-                                                {child.title}
-                                              </a>
-                                            ))}
-                                          </div>
-                                        </>
-                                      ) : (
-                                        <a
-                                          href={link.url}
-                                          className={cn(
-                                            "block py-2 px-6 font-inter text-sm",
-                                            getTextColor(),
-                                            theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
-                                          )}
-                                        >
-                                          {link.title}
-                                        </a>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
+  {section.links.map((link, linkIdx) => (
+    <div key={linkIdx}>
+      {link.children ? (
+        <>
+          {/* Cấp 1 - Mục cha có con */}
+          <div className={cn(
+            "py-2 pl-4 pr-2 font-inter text-sm", // Giảm padding phải để chữ không bị ép nếu dài
+            getTextColor()
+          )}>
+            {link.title}
+          </div>
+          {/* Cấp 2 - Các mục con */}
+          <div className="pl-8"> {/* Thụt vào sâu hơn */}
+            {link.children.map((child, childIdx) => (
+              <a
+                key={childIdx}
+                href={child.url}
+                className={cn(
+                  "block py-2 pl-4 pr-2 font-inter text-sm", // Thụt vào cho mục con
+                  getTextColor(),
+                  theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
+                )}
+              >
+                {child.title}
+              </a>
+            ))}
+          </div>
+        </>
+      ) : (
+        // Cấp 1 - Mục không có con
+        <a
+          href={link.url}
+          className={cn(
+            "block py-2 pl-4 pr-2 font-inter text-sm", // Căn lề tương tự như mục cha có con
+            getTextColor(),
+            theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
+          )}
+        >
+          {link.title}
+        </a>
+      )}
+    </div>
+  ))}
+</div>
                               </div>
                             ))}
                           </CollapsibleContent>

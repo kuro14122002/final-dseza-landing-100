@@ -44,53 +44,51 @@ const BusinessesAndPartners: React.FC = () => {
         </h2>
         
         {/* Continuous scrolling logo carousel */}
-        <div className="relative w-full overflow-hidden">
-          <div className="flex animate-[scroll_60s_linear_infinite] hover:pause">
-            {/* First set of logos */}
-            {partnerLogos.map((logo, index) => (
-              <div
-                key={`logo-1-${index}`}
-                // Thay đổi giá trị mx-8 ở đây để tăng khoảng cách
-                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-              >
-                <img
-                  src={logo}
-                  alt={`Partner Logo ${index + 1}`}
-                  className="h-12 md:h-16 w-auto"
-                />
-              </div>
-            ))}
-            
-            {/* Duplicate set of logos for seamless scrolling */}
-            {partnerLogos.map((logo, index) => (
-              <div
-                key={`logo-2-${index}`}
-                // Thay đổi giá trị mx-8 ở đây tương tự
-                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-              >
-                <img
-                  src={logo}
-                  alt={`Partner Logo ${index + 1}`}
-                  className="h-12 md:h-16 w-auto"
-                />
-              </div>
-            ))}
-            
-            {/* Duplicate set of logos for seamless scrolling */}
-            {partnerLogos.map((logo, index) => (
-              <div 
-                key={`logo-2-${index}`} 
-                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-              >
-                <img 
-                  src={logo} 
-                  alt={`Partner Logo ${index + 1}`} 
-                  className="h-12 md:h-16 w-auto"
-                />
-              </div>
-            ))}
+    <div className="relative w-full overflow-hidden">
+      <div className="flex animate-[scroll_60s_linear_infinite] hover:pause">
+        {/* First set of logos */}
+        {partnerLogos.map((logo, index) => (
+          <div
+            key={`logo-1-${index}`}
+            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+          >
+            <img
+              src={logo}
+              alt={`Partner Logo ${index + 1}`}
+              className="h-8 md:h-12 w-auto" // <-- Đã thay đổi ở đây
+            />
           </div>
-        </div>
+        ))}
+        
+        {/* Duplicate set of logos for seamless scrolling */}
+        {partnerLogos.map((logo, index) => (
+          <div
+            key={`logo-2-${index}`}
+            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+          >
+            <img
+              src={logo}
+              alt={`Partner Logo ${index + 1}`}
+              className="h-8 md:h-12 w-auto" // <-- Và ở đây
+            />
+          </div>
+        ))}
+        
+        {/* Duplicate set of logos for seamless scrolling */}
+        {partnerLogos.map((logo, index) => (
+          <div 
+            key={`logo-3-${index}`} // Sửa key để đảm bảo tính duy nhất nếu bạn có 3 set
+            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+          >
+            <img 
+              src={logo} 
+              alt={`Partner Logo ${index + 1}`} 
+              className="h-8 md:h-12 w-auto" // <-- Và ở đây nữa
+            />
+          </div>
+        ))}
+      </div>
+    </div>
       </div>
     </section>
   );
