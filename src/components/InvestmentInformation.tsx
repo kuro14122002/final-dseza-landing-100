@@ -17,15 +17,16 @@ const InvestmentInformation: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"investors" | "environment">("investors");
   const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Theme-specific styles (giữ nguyên)
+  // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
   const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
-  const accentHoverColor = theme === "dark" 
-    ? "hover:text-dseza-dark-primary-accent-hover" 
-    : "hover:text-dseza-light-primary-accent-hover";
   
-  // Dữ liệu card (giữ nguyên)
+  // Updated hover colors for navigation arrows
+  const navArrowHoverBgColor = theme === "dark" ? "hover:bg-dseza-dark-primary-accent/20" : "hover:bg-dseza-light-primary-accent/20";
+  const navArrowHoverTextColor = theme === "dark" ? "hover:text-dseza-dark-primary-accent" : "hover:text-dseza-light-primary-accent";
+  
+  // Dữ liệu card
   const investorCards: InvestmentCard[] = [
     { 
       id: 'inv1', 
@@ -118,13 +119,10 @@ const InvestmentInformation: React.FC = () => {
   
   const currentCards = activeTab === "investors" ? investorCards : environmentCards;
   
-  // Cập nhật scrollAmount để cuộn chính xác hơn từng card một
-  // Giả sử mỗi card có chiều rộng 320px và khoảng cách giữa các card là 1rem (16px)
-  const cardWidth = 320; // Chiều rộng của một card
-  const cardGap = 16; // Khoảng cách giữa các card (tương ứng với gap-4)
+  const cardWidth = 320; 
+  const cardGap = 16; 
   const scrollAmount = cardWidth + cardGap;
 
-  // Logic cuộn vòng lặp
   const scrollCarousel = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
 
@@ -133,15 +131,12 @@ const InvestmentInformation: React.FC = () => {
 
     if (direction === "left") {
       if (scrollLeft <= 0) {
-        // Nếu đang ở đầu, cuộn đến cuối
         carouselRef.current.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
       } else {
         carouselRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       }
-    } else { // direction === "right"
-      // Sử dụng một ngưỡng nhỏ để xác định đã đến cuối
-      if (scrollLeft >= maxScrollLeft - 5) { // -5px là ngưỡng để tránh sai số float
-        // Nếu đang ở cuối, cuộn về đầu
+    } else { 
+      if (scrollLeft >= maxScrollLeft - 5) { 
         carouselRef.current.scrollTo({ left: 0, behavior: "smooth" });
       } else {
         carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
@@ -158,7 +153,6 @@ const InvestmentInformation: React.FC = () => {
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor
-          
         )}>
           {t('homepage.investmentInfo')}
         </h2>
@@ -166,13 +160,12 @@ const InvestmentInformation: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left column: tabs and navigation */}
           <div className="w-full lg:w-1/3">
-            {/* Category tabs (giữ nguyên) */}
             <div className="mb-8">
               <button 
                 className={cn(
-                  "block font-montserrat font-semibold text-xl mb-4 transition-colors",
+                  "block font-montserrat font-semibold text-xl mb-4 transition-colors duration-300",
                   activeTab === "investors" ? accentColor : secondaryTextColor,
-                  activeTab !== "investors" && accentHoverColor
+                  activeTab !== "investors" && (theme === "dark" ? "hover:text-dseza-dark-primary-accent-hover" : "hover:text-dseza-light-primary-accent-hover")
                 )}
                 onClick={() => setActiveTab("investors")}
               >
@@ -181,9 +174,9 @@ const InvestmentInformation: React.FC = () => {
               
               <button 
                 className={cn(
-                  "block font-montserrat font-semibold text-xl mb-4 transition-colors",
+                  "block font-montserrat font-semibold text-xl mb-4 transition-colors duration-300",
                   activeTab === "environment" ? accentColor : secondaryTextColor,
-                  activeTab !== "environment" && accentHoverColor
+                  activeTab !== "environment" && (theme === "dark" ? "hover:text-dseza-dark-primary-accent-hover" : "hover:text-dseza-light-primary-accent-hover")
                 )}
                 onClick={() => setActiveTab("environment")}
               >
@@ -191,13 +184,13 @@ const InvestmentInformation: React.FC = () => {
               </button>
             </div>
             
-            {/* Carousel navigation arrows (giữ nguyên giao diện, chỉ thay đổi logic) */}
             <div className="flex space-x-4">
               <button 
                 className={cn(
-                  "p-2 rounded-full transition-colors",
-                  secondaryTextColor, // Giữ màu mặc định
-                  accentHoverColor // Luôn cho phép hover
+                  "p-2 rounded-full transition-colors duration-300",
+                  secondaryTextColor, 
+                  navArrowHoverBgColor, // Apply hover background
+                  navArrowHoverTextColor // Apply hover text color for icon
                 )}
                 onClick={() => scrollCarousel("left")}
               >
@@ -206,9 +199,10 @@ const InvestmentInformation: React.FC = () => {
               
               <button 
                 className={cn(
-                  "p-2 rounded-full transition-colors",
-                  secondaryTextColor, // Giữ màu mặc định
-                  accentHoverColor // Luôn cho phép hover
+                  "p-2 rounded-full transition-colors duration-300",
+                  secondaryTextColor, 
+                  navArrowHoverBgColor, // Apply hover background
+                  navArrowHoverTextColor // Apply hover text color for icon
                 )}
                 onClick={() => scrollCarousel("right")}
               >
@@ -230,15 +224,23 @@ const InvestmentInformation: React.FC = () => {
                   href={card.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-[280px] sm:min-w-[320px] h-64 rounded-lg overflow-hidden relative flex-shrink-0 snap-start transition-transform duration-300 hover:scale-[1.03]"
+                  // Added 'group' to the card link for children hover effects
+                  className="group min-w-[280px] sm:min-w-[320px] h-64 rounded-lg overflow-hidden relative flex-shrink-0 snap-start transition-transform duration-300 hover:scale-[1.05]" // Increased scale on card hover
                 >
                   <div
-                    className="absolute inset-0 bg-cover bg-center"
+                    // Image zoom effect on card hover
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-110" 
                     style={{ backgroundImage: `url(${card.image})` }}
                   ></div>
-                  <div className="absolute inset-0 bg-black/30"></div>
+                  {/* Darker overlay on card hover */}
+                  <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/60"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="font-montserrat font-semibold text-lg text-white">
+                    <h3 className={cn(
+                      "font-montserrat font-semibold text-lg text-white transition-colors duration-300",
+                      // Example: Title brightens or changes to accent on hover
+                      "group-hover:text-white/90" // Brighter white on hover
+                      // Or: theme === "dark" ? "group-hover:text-dseza-dark-primary-accent" : "group-hover:text-dseza-light-primary-accent" 
+                    )}>
                       {t(card.titleKey)}
                     </h3>
                   </div>

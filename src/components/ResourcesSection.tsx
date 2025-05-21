@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
-import { Image } from "lucide-react";
-import { Video } from "lucide-react";
-import { File } from "lucide-react";
+import { Image as ImageIcon, Video as VideoIcon, File as FileIcon } from "lucide-react"; // Renamed to avoid conflict
 import { Button } from "./ui/button";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { useTranslation } from "@/utils/translations";
@@ -22,9 +20,19 @@ const ResourcesSection: React.FC = () => {
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
   const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
   const accentBgColor = theme === "dark" ? "bg-dseza-dark-primary-accent" : "bg-dseza-light-primary-accent";
-  const secondaryBgColor = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
-  const buttonHoverBgColor = theme === "dark" ? "hover:bg-dseza-dark-primary-accent" : "hover:bg-dseza-light-primary-accent";
-  const buttonHoverTextColor = theme === "dark" ? "hover:text-dseza-dark-main-bg" : "hover:text-white";
+  const tabDefaultBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg"; // Renamed for clarity
+  const panelContentBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg"; // For placeholder content
+
+  // Hover styles for tabs
+  const tabInactiveHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg/70" : "hover:bg-dseza-light-hover-bg/70";
+  const tabInactiveHoverTextColor = `hover:${accentColor}`;
+  const tabActiveHover = "hover:scale-103 hover:shadow-md";
+
+  // Hover styles for "View All" button
+  const viewAllButtonHoverBg = theme === "dark" ? "hover:bg-dseza-dark-primary-accent/10" : "hover:bg-dseza-light-primary-accent/10";
+  const viewAllButtonHoverText = `hover:${accentColor}`;
+  const viewAllButtonBaseBorder = theme === "dark" ? "border-dseza-dark-border" : "border-dseza-light-border";
+
 
   // Real image resources
   const imageResources = [
@@ -54,6 +62,21 @@ const ResourcesSection: React.FC = () => {
     }
   ];
 
+  const renderTabButton = (tabName: 'images' | 'videos' | 'documents', IconComponent: React.ElementType, labelKey: string) => (
+    <button
+      className={cn(
+        "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all duration-300 ease-in-out",
+        activeTab === tabName
+          ? `${accentBgColor} text-white ${tabActiveHover}`
+          : `${tabDefaultBg} ${secondaryTextColor} ${tabInactiveHoverBg} ${tabInactiveHoverTextColor}`
+      )}
+      onClick={() => setActiveTab(tabName)}
+    >
+      <IconComponent className="w-5 h-5 mr-2" />
+      {t(labelKey)}
+    </button>
+  );
+
   return (
     <section className={cn(
       "py-12 px-4 sm:px-6 lg:px-8",
@@ -63,77 +86,53 @@ const ResourcesSection: React.FC = () => {
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
           textColor,
-          "text-center lg:text-left" // Mobile: text-center, Desktop (lg trở lên): text-left
+          "text-center lg:text-left" 
         )}>
           {t('resourcesSection.sectionTitle')}
         </h2>
         
         {/* Tab Navigation */}
         <div className="flex flex-wrap gap-2 mb-8">
-          <button
-            className={cn(
-              "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'images'
-                ? `${accentBgColor} text-white`
-                : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
-            )}
-            onClick={() => setActiveTab('images')}
-          >
-            <Image className="w-5 h-5 mr-2" />
-            {t('resourcesSection.tabImages')}
-          </button>
-          
-          <button
-            className={cn(
-              "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'videos'
-                ? `${accentBgColor} text-white`
-                : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
-            )}
-            onClick={() => setActiveTab('videos')}
-          >
-            <Video className="w-5 h-5 mr-2" />
-            {t('resourcesSection.tabVideos')}
-          </button>
-          
-          <button
-            className={cn(
-              "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'documents'
-                ? `${accentBgColor} text-white`
-                : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
-            )}
-            onClick={() => setActiveTab('documents')}
-          >
-            <File className="w-5 h-5 mr-2" />
-            {t('resourcesSection.tabDocuments')}
-          </button>
+          {renderTabButton('images', ImageIcon, 'resourcesSection.tabImages')}
+          {renderTabButton('videos', VideoIcon, 'resourcesSection.tabVideos')}
+          {renderTabButton('documents', FileIcon, 'resourcesSection.tabDocuments')}
         </div>
         
         {/* Content Area based on active tab */}
-        <div className="mb-8">
+        <div className="mb-8 min-h-[300px]"> {/* Added min-h to prevent layout shift */}
           {activeTab === 'images' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> {/* Adjusted grid for better spacing */}
               {imageResources.map(resource => (
                 <a
                   key={resource.id}
-                  href="#"
-                  className="block group rounded-lg overflow-hidden hover:shadow-lg transition-all"
+                  href="#" // Replace with actual link to resource detail or lightbox
+                  className="block group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ease-in-out"
                 >
-                  <div className="aspect-w-4 aspect-h-3 w-full">
-                    <AspectRatio ratio={4/3} className="bg-gray-200">
+                  <div className="overflow-hidden"> {/* Added overflow-hidden for image scale */}
+                    <AspectRatio ratio={4/3} className="bg-gray-200 dark:bg-gray-700">
                       <img
                         src={resource.imageUrl}
                         alt={resource.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
                       />
                     </AspectRatio>
                   </div>
-                  <div className="p-4 bg-white dark:bg-gray-800">
-                    <h3 className={cn("font-inter font-semibold text-lg mb-1", textColor)}>
+                  <div className={cn(
+                    "p-4",
+                    theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-white"
+                  )}>
+                    <h3 className={cn(
+                      "font-inter font-semibold text-lg mb-1 transition-colors duration-300", 
+                      textColor,
+                      `group-hover:${accentColor}` // Title color change on hover
+                    )}>
                       {resource.title}
                     </h3>
-                    <p className={cn("font-inter text-sm", secondaryTextColor)}>
+                    <p className={cn(
+                      "font-inter text-sm transition-colors duration-300", 
+                      secondaryTextColor,
+                      `group-hover:${accentColor}` // Date color change on hover
+                    )}>
                       {t('resourcesSection.dateLabel')}: {resource.date}
                     </p>
                   </div>
@@ -143,7 +142,8 @@ const ResourcesSection: React.FC = () => {
           )}
           
           {activeTab === 'videos' && (
-            <div className={cn("p-12 text-center rounded-lg", secondaryBgColor)}>
+            <div className={cn("p-12 text-center rounded-lg", panelContentBg)}>
+              <VideoIcon className={cn("w-16 h-16 mx-auto mb-4", secondaryTextColor)} />
               <h3 className={cn("text-xl font-semibold mb-2", textColor)}>
                 {t('resourcesSection.comingSoonTitle')}
               </h3>
@@ -154,7 +154,8 @@ const ResourcesSection: React.FC = () => {
           )}
           
           {activeTab === 'documents' && (
-            <div className={cn("p-12 text-center rounded-lg", secondaryBgColor)}>
+            <div className={cn("p-12 text-center rounded-lg", panelContentBg)}>
+              <FileIcon className={cn("w-16 h-16 mx-auto mb-4", secondaryTextColor)} />
               <h3 className={cn("text-xl font-semibold mb-2", textColor)}>
                 {t('resourcesSection.comingSoonTitle')}
               </h3>
@@ -170,9 +171,12 @@ const ResourcesSection: React.FC = () => {
           <Button
             variant="outline"
             className={cn(
-              "font-inter font-semibold text-base border border-gray-300 dark:border-gray-600",
-              buttonHoverBgColor,
-              buttonHoverTextColor
+              "font-inter font-semibold text-base",
+              viewAllButtonBaseBorder, // Base border color
+              textColor, // Base text color
+              viewAllButtonHoverBg, // Hover background
+              viewAllButtonHoverText, // Hover text color
+              "hover:scale-105 hover:shadow-md transition-all duration-300 ease-in-out" // Scale and shadow
             )}
           >
             {t('resourcesSection.viewAll')}

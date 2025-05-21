@@ -25,19 +25,29 @@ const EventCard = ({ image, date, title, titleEn, excerpt, excerptEn, featured =
   const displayExcerpt = language === 'en' && excerptEn ? excerptEn : excerpt;
   
   return (
-    <div className={`relative overflow-hidden rounded-xl ${isFeature ? 'col-span-2 row-span-2' : ''}`}>
+    <div className={cn(
+      "relative overflow-hidden rounded-xl group", // Added 'group' for hover effects on children
+      isFeature ? 'col-span-2 row-span-2' : ''
+    )}>
       <AspectRatio ratio={1/1}>
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-105" // Added image zoom on hover
           style={{ backgroundImage: `url(${image})` }}
         ></div>
       </AspectRatio>
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+      {/* Overlay for darkening effect on hover */}
+      <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/50"></div>
+      
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4">
         <div className="flex items-center gap-2 mb-2 text-white/80">
           <CalendarDays className="h-4 w-4" />
           <span className="text-xs">{date}</span>
         </div>
-        <h3 className={`font-bold text-white ${isFeature ? 'text-xl mb-2' : 'text-base'}`}>
+        <h3 className={cn(
+          "text-white transition-all duration-300 ease-in-out", // Added transition for font weight
+          "group-hover:font-extrabold", // Make title bolder on hover
+          isFeature ? 'text-xl mb-2 font-bold' : 'text-base font-semibold' // Adjusted base font weight
+        )}>
           <a href="#" className="hover:underline">{displayTitle}</a>
         </h3>
         {isFeature && displayExcerpt && (

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"; // Giữ lại import Tabs
+// Tabs, TabsList, TabsTrigger, TabsContent không còn được sử dụng trực tiếp ở đây
+// nếu bạn chỉ dùng button như hiện tại. Nếu muốn quay lại dùng component Tabs của shadcn thì cần giữ lại.
 import { useTranslation } from "@/utils/translations";
 
 const LocationSection: React.FC = () => {
@@ -16,10 +17,17 @@ const LocationSection: React.FC = () => {
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
   const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
   const accentBgColor = theme === "dark" ? "bg-dseza-dark-primary-accent" : "bg-dseza-light-primary-accent";
-  const secondaryBgColor = theme === "dark" ? "bg-[#020817]" : "bg-dseza-light-secondary-bg";
+  const secondaryBgColor = theme === "dark" ? "bg-[#020817]" : "bg-dseza-light-secondary-bg"; // Panel content background
   const tabActiveText = theme === "dark" ? "text-dseza-dark-main-bg" : "text-white";
+  
+  // Tab base background (khi không active, không hover)
   const tabDefaultBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
-  const tabHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg" : "hover:bg-dseza-light-hover-bg";
+  
+  // Tab hover background (khi không active) - dùng màu hover chung của theme, có thể điều chỉnh độ trong suốt
+  const tabInactiveHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg/70" : "hover:bg-dseza-light-hover-bg/70";
+  // Tab hover text color (khi không active) - sẽ là màu accent
+  const tabInactiveHoverTextColor = theme === "dark" ? `hover:${accentColor}` : `hover:${accentColor}`;
+
 
   return (
     <section className={cn(
@@ -40,10 +48,10 @@ const LocationSection: React.FC = () => {
           <div className="w-full lg:w-1/3 flex flex-col gap-4">
             <button
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", 
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-all duration-300 ease-in-out text-center", 
                 activeTab === "vr-tour" ?
-                  cn(accentBgColor, tabActiveText) :
-                  cn(tabDefaultBg, textColor, tabHoverBg)
+                  cn(accentBgColor, tabActiveText, "hover:scale-103 hover:shadow-md") : // Thêm hover cho tab active
+                  cn(tabDefaultBg, textColor, tabInactiveHoverBg, tabInactiveHoverTextColor) // Áp dụng hover mới cho tab inactive
               )}
               onClick={() => setActiveTab("vr-tour")}
             >
@@ -52,10 +60,10 @@ const LocationSection: React.FC = () => {
             
             <button
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", 
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-all duration-300 ease-in-out text-center", 
                 activeTab === "digital-map" ?
-                  cn(accentBgColor, tabActiveText) :
-                  cn(tabDefaultBg, textColor, tabHoverBg)
+                  cn(accentBgColor, tabActiveText, "hover:scale-103 hover:shadow-md") : // Thêm hover cho tab active
+                  cn(tabDefaultBg, textColor, tabInactiveHoverBg, tabInactiveHoverTextColor) // Áp dụng hover mới cho tab inactive
               )}
               onClick={() => setActiveTab("digital-map")}
             >
@@ -77,7 +85,7 @@ const LocationSection: React.FC = () => {
                   href="https://dseza.danang.gov.vn/vr360/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn("mt-4", accentColor, "underline text-sm md:text-base")} 
+                  className={cn("mt-4", accentColor, "underline text-sm md:text-base hover:opacity-80 transition-opacity")} 
                 >
                   https://dseza.danang.gov.vn/vr360/
                 </a>
@@ -96,10 +104,11 @@ const LocationSection: React.FC = () => {
                 <Button
                   asChild
                   className={cn(
-                    "mt-4 md:mt-6 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base", 
+                    "mt-4 md:mt-6 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base transition-all duration-300 ease-in-out", // Added transition
                     accentBgColor,
-                    theme === "dark" ? "text-dseza-dark-main-bg hover:bg-dseza-dark-primary-accent-hover" :
-                    "text-white hover:bg-dseza-light-primary-accent-hover"
+                    theme === "dark" ? 
+                      "text-dseza-dark-main-bg hover:bg-dseza-dark-primary-accent-hover hover:scale-105" : // Added scale
+                      "text-white hover:bg-dseza-light-primary-accent-hover hover:scale-105" // Added scale
                   )}
                 >
                   <a href="#" target="_blank" rel="noopener noreferrer">

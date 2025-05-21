@@ -1,3 +1,4 @@
+// src/components/NewsSection.tsx
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ date, title, titleEn, excerpt, exce
   const cardBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
+  // Define hover title colors based on theme
+  const titleHoverColor = theme === "dark" ? "hover:text-dseza-dark-primary-accent" : "hover:text-dseza-light-primary-accent";
 
   // Sử dụng tiêu đề và đoạn trích phù hợp với ngôn ngữ
   const displayTitle = language === 'en' && titleEn ? titleEn : title;
@@ -36,21 +39,26 @@ const NewsCard: React.FC<NewsCardProps> = ({ date, title, titleEn, excerpt, exce
     <a
       href={url} // Sử dụng url
       className={cn(
-        "block rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:-translate-y-1 h-full",
+        "group block rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:-translate-y-1 h-full", // Added 'group' for image zoom
         cardBg,
         theme === "dark" ? "hover:shadow-[0_8px_16px_rgba(0,0,0,0.3)]" : "hover:shadow-[0_8px_16px_rgba(0,0,0,0.15)]"
       )}
     >
-      <div className="h-0 pb-[56.25%] relative"> {/* Aspect ratio 16:9 */}
+      <div className="h-0 pb-[56.25%] relative overflow-hidden"> {/* Added overflow-hidden for image zoom */}
         <img
           src={image}
           alt={displayTitle}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" // Increased scale and added group-hover
         />
       </div>
       <div className="p-4 sm:p-5">
         <p className={cn("text-xs mb-1", secondaryTextColor)}>{date}</p>
-        <h3 className={cn("font-montserrat font-semibold mb-2 line-clamp-2", textColor, isLarge ? "text-xl sm:text-2xl" : "text-base")}>
+        <h3 className={cn(
+          "font-montserrat font-semibold mb-2 line-clamp-2 transition-colors duration-300", // Added transition-colors
+          textColor, 
+          titleHoverColor, // Added hover color for title
+          isLarge ? "text-xl sm:text-2xl" : "text-base"
+        )}>
           {displayTitle}
         </h3>
         <p className={cn("text-sm line-clamp-3", secondaryTextColor)}>
@@ -383,7 +391,8 @@ const NewsSection: React.FC = () => {
               "border transition-colors duration-200",
               buttonText,
               buttonBorder,
-              buttonHoverBg
+              buttonHoverBg,
+              "hover:scale-105 hover:shadow-md" // Added hover effects for View All button
             )}
           >
             {t('homepage.viewAll') || "XEM TẤT CẢ"}
