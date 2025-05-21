@@ -305,27 +305,16 @@ const MobileHeader: React.FC = () => {
                           <CollapsibleTrigger asChild>
                             <button 
                               className={cn(
-                                "flex justify-between items-center w-full py-3.5 px-2",
+                                "flex items-center justify-between w-full py-3 px-2",
                                 getTextColor(),
                                 "font-montserrat font-semibold text-lg",
                                 getBorderColor(),
-                                "border-b",
-                                theme === "dark" ? "border-[#455A64]/70" : "border-[#DCDCDC]/70",
-                                "-webkit-font-smoothing antialiased",
-                                "-moz-osx-font-smoothing grayscale"
+                                "border-b"
                               )}
                             >
-                              <span className="flex-grow text-left">{item.title}</span>
-                              <span className="transform transition-transform duration-200 ml-3">
-                                {openCollapsibles[item.id] ? (
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                ) : (
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                )}
+                              <span>{item.title}</span>
+                              <span className="transform transition-transform duration-200">
+                                {openCollapsibles[item.id] ? "▼" : "▶"}
                               </span>
                             </button>
                           </CollapsibleTrigger>
@@ -335,9 +324,7 @@ const MobileHeader: React.FC = () => {
                               <div key={idx} className="mb-4">
                                 <h3 className={cn(
                                   "pt-3 pb-2 px-4 font-montserrat font-medium text-base",
-                                  theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text",
-                                  "-webkit-font-smoothing antialiased",
-                                  "-moz-osx-font-smoothing grayscale"
+                                  theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text"
                                 )}>
                                   {section.heading}
                                 </h3>
@@ -349,9 +336,7 @@ const MobileHeader: React.FC = () => {
                                         <>
                                           <div className={cn(
                                             "py-2 px-4 font-inter text-sm",
-                                            getTextColor(),
-                                            "-webkit-font-smoothing antialiased",
-                                            "-moz-osx-font-smoothing grayscale"
+                                            getTextColor()
                                           )}>
                                             {link.title}
                                           </div>
@@ -363,9 +348,7 @@ const MobileHeader: React.FC = () => {
                                                 className={cn(
                                                   "block py-2 px-6 font-inter text-sm",
                                                   getTextColor(),
-                                                  theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary",
-                                                  "-webkit-font-smoothing antialiased",
-                                                  "-moz-osx-font-smoothing grayscale"
+                                                  theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
                                                 )}
                                               >
                                                 {child.title}
@@ -379,9 +362,7 @@ const MobileHeader: React.FC = () => {
                                           className={cn(
                                             "block py-2 px-6 font-inter text-sm",
                                             getTextColor(),
-                                            theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary",
-                                            "-webkit-font-smoothing antialiased",
-                                            "-moz-osx-font-smoothing grayscale"
+                                            theme === "dark" ? "hover:text-dseza-dark-primary" : "hover:text-dseza-light-primary"
                                           )}
                                         >
                                           {link.title}
@@ -398,17 +379,14 @@ const MobileHeader: React.FC = () => {
                         <a 
                           href={item.url}
                           className={cn(
-                            "flex justify-between items-center w-full py-3.5 px-2",
+                            "block py-3 px-2",
                             getTextColor(),
                             "font-montserrat font-semibold text-lg",
                             getBorderColor(),
-                            "border-b",
-                            theme === "dark" ? "border-[#455A64]/70" : "border-[#DCDCDC]/70",
-                            "-webkit-font-smoothing antialiased",
-                            "-moz-osx-font-smoothing grayscale"
+                            "border-b"
                           )}
                         >
-                          <span className="flex-grow text-left">{item.title}</span>
+                          {item.title}
                         </a>
                       )}
                     </div>

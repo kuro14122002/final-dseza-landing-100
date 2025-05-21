@@ -131,7 +131,6 @@ const NewsCardSkeleton: React.FC = () => {
 const MobileNewsSection: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const { language } = useLanguage(); // Properly extract language from the hook
   const [activeCategory, setActiveCategory] = useState<string>("investment");
   
   // Theme-specific styles for the section container
@@ -362,12 +361,12 @@ const MobileNewsSection: React.FC = () => {
       sectionBg,
       "py-8 px-4 w-full"
     )}>
-      {/* Section Title - Fixed to show actual text instead of translation key */}
+      {/* Section Title */}
       <h2 className={cn(
         "font-montserrat font-bold text-2xl text-left mb-6",
         titleText
       )}>
-        {language === 'en' ? "NEWS" : "TIN TỨC"}
+        {t('newsSection.title') || "TIN TỨC"}
       </h2>
       
       {/* Tabs navigation for filtering news */}
@@ -378,14 +377,14 @@ const MobileNewsSection: React.FC = () => {
         className="w-full"
       >
         {/* Custom TabsList wrapper to allow horizontal scrolling */}
-        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6 -mx-1 px-1">
-          <TabsList className="bg-transparent p-0 h-auto flex space-x-3 min-w-max">
+        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6">
+          <TabsList className="bg-transparent p-0 h-auto flex space-x-3">
             {categories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id}
                 className={cn(
-                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
+                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap",
                   "transition-colors duration-200 ease-in-out",
                   "data-[state=active]:bg-dseza-dark-primary data-[state=active]:text-dseza-dark-main-bg data-[state=active]:font-semibold dark:data-[state=active]:bg-[#19DBCF] dark:data-[state=active]:text-[#1E272F]",
                   "data-[state=inactive]:bg-dseza-light-hover dark:data-[state=inactive]:bg-[#3A4750]",
@@ -425,7 +424,7 @@ const MobileNewsSection: React.FC = () => {
               ))}
             </div>
             
-            {/* View More Button - Fixed to show actual text instead of translation key */}
+            {/* View More Button */}
             <div className="flex justify-center mt-6">
               <a
                 href={`#view-more-${category.id}`}
@@ -437,7 +436,7 @@ const MobileNewsSection: React.FC = () => {
                   buttonHoverBg
                 )}
               >
-                {language === 'en' ? "VIEW MORE NEWS" : "XEM THÊM TIN TỨC"}
+                {t('newsSection.viewMore') || "XEM THÊM TIN TỨC"}
               </a>
             </div>
           </TabsContent>
