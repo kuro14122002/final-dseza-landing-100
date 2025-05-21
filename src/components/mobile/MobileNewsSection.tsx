@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -361,12 +362,12 @@ const MobileNewsSection: React.FC = () => {
       sectionBg,
       "py-8 px-4 w-full"
     )}>
-      {/* Section Title */}
+      {/* Section Title - Fixed to use the correct translation key */}
       <h2 className={cn(
         "font-montserrat font-bold text-2xl text-left mb-6",
         titleText
       )}>
-        {t('newsSection.title') || "TIN TỨC"}
+        {t('news.title') || "TIN TỨC"}
       </h2>
       
       {/* Tabs navigation for filtering news */}
@@ -431,7 +432,7 @@ const MobileNewsSection: React.FC = () => {
               ))}
             </div>
             
-            {/* View More Button */}
+            {/* View More Button - Fixed to use the correct translation key */}
             <div className="flex justify-center mt-6">
               <a
                 href={`#view-more-${category.id}`}
@@ -443,7 +444,7 @@ const MobileNewsSection: React.FC = () => {
                   buttonHoverBg
                 )}
               >
-                {t('newsSection.viewMore') || "XEM THÊM TIN TỨC"}
+                {t('homepage.viewAll') || "XEM TẤT CẢ"}
               </a>
             </div>
           </TabsContent>

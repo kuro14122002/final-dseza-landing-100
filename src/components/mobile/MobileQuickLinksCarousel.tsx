@@ -65,12 +65,7 @@ const MobileQuickLinksCarousel: React.FC = () => {
   
   return (
     <section className={cn(sectionBg, "py-8 px-0 w-full")} aria-label="Quick access links">
-      <h2 className={cn(
-        titleText,
-        "font-montserrat font-semibold text-xl text-left mx-4 mb-5"
-      )}>
-        {t("quickAccess.sectionTitle") || "TIỆN ÍCH TRUY CẬP NHANH"}
-      </h2>
+      {/* Section title is now hidden in mobile version */}
       
       {/* Scrollable carousel container */}
       <div className="scrollbar-hide px-4 flex overflow-x-auto space-x-3 pb-4" 
