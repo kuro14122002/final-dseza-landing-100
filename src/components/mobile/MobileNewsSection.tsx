@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -131,7 +130,7 @@ const NewsCardSkeleton: React.FC = () => {
 const MobileNewsSection: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const { language } = useLanguage(); // Properly extract language from the hook
+  const { language } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<string>("investment");
   
   // Theme-specific styles for the section container
@@ -362,12 +361,12 @@ const MobileNewsSection: React.FC = () => {
       sectionBg,
       "py-8 px-4 w-full"
     )}>
-      {/* Section Title - Fixed to show actual text instead of translation key */}
+      {/* Section Title */}
       <h2 className={cn(
         "font-montserrat font-bold text-2xl text-left mb-6",
         titleText
       )}>
-        {language === 'en' ? "NEWS" : "TIN TỨC"}
+        {t('newsSection.title') || "TIN TỨC"}
       </h2>
       
       {/* Tabs navigation for filtering news */}
@@ -378,31 +377,31 @@ const MobileNewsSection: React.FC = () => {
         className="w-full"
       >
         {/* Custom TabsList wrapper to allow horizontal scrolling */}
-        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6 -mx-1 px-1">
-          <TabsList className="bg-transparent p-0 h-auto flex space-x-3 min-w-max">
+        <div className="overflow-x-auto scrollbar-hide pb-2 mb-6">
+          <TabsList className="bg-transparent p-0 h-auto flex space-x-3">
             {categories.map((category) => (
               <TabsTrigger
-              key={category.id}
-              value={category.id}
-              className={cn(
-                "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
-                "transition-colors duration-200 ease-in-out",
-                // Active state
-                "data-[state=active]:font-semibold",
-                "data-[state=active]:bg-dseza-light-primary data-[state=active]:text-white", // Light mode active
-                "dark:data-[state=active]:bg-dseza-dark-primary dark:data-[state=active]:text-dseza-dark-main-bg", // Dark mode active
-                // Inactive state
-                "data-[state=inactive]:bg-dseza-light-secondary-bg data-[state=inactive]:text-dseza-light-secondary-text", // Light mode inactive
-                "dark:data-[state=inactive]:bg-dseza-dark-secondary-bg dark:data-[state=inactive]:text-dseza-dark-secondary-text", // Dark mode inactive
-                // Hover on inactive state
-                "hover:data-[state=inactive]:bg-dseza-light-hover hover:data-[state=inactive]:text-dseza-light-main-text", // Light mode hover on inactive
-                "dark:hover:data-[state=inactive]:bg-dseza-dark-hover dark:hover:data-[state=inactive]:text-dseza-dark-main-text", // Dark mode hover on inactive
-                "focus-visible:ring-offset-0 focus-visible:ring-0" // Reset focus ring
-              )}
-            >
-              {/* Kiểm tra xem category.nameEn có tồn tại không trước khi sử dụng */}
-              {language === 'en' && category.nameEn ? category.nameEn : category.name}
-            </TabsTrigger>
+                key={category.id}
+                value={category.id}
+                className={cn(
+                  "py-2 px-4 rounded-full font-inter text-sm font-medium whitespace-nowrap flex-shrink-0",
+                  "transition-colors duration-200 ease-in-out",
+                  // Active state
+                  "data-[state=active]:font-semibold",
+                  "data-[state=active]:bg-dseza-light-primary data-[state=active]:text-white", // Light mode active
+                  "dark:data-[state=active]:bg-dseza-dark-primary dark:data-[state=active]:text-dseza-dark-main-bg", // Dark mode active
+                  // Inactive state
+                  "data-[state=inactive]:bg-dseza-light-secondary-bg data-[state=inactive]:text-dseza-light-secondary-text", // Light mode inactive
+                  "dark:data-[state=inactive]:bg-dseza-dark-secondary-bg dark:data-[state=inactive]:text-dseza-dark-secondary-text", // Dark mode inactive
+                  // Hover on inactive state
+                  "hover:data-[state=inactive]:bg-dseza-light-hover hover:data-[state=inactive]:text-dseza-light-main-text", // Light mode hover on inactive
+                  "dark:hover:data-[state=inactive]:bg-dseza-dark-hover dark:hover:data-[state=inactive]:text-dseza-dark-main-text", // Dark mode hover on inactive
+                  "focus-visible:ring-offset-0 focus-visible:ring-0" // Reset focus ring
+                )}
+              >
+                {/* Display English name if language is English and nameEn exists */}
+                {language === 'en' && category.nameEn ? category.nameEn : category.name}
+              </TabsTrigger>
             ))}
           </TabsList>
         </div>
@@ -432,7 +431,7 @@ const MobileNewsSection: React.FC = () => {
               ))}
             </div>
             
-            {/* View More Button - Fixed to show actual text instead of translation key */}
+            {/* View More Button */}
             <div className="flex justify-center mt-6">
               <a
                 href={`#view-more-${category.id}`}
@@ -444,7 +443,7 @@ const MobileNewsSection: React.FC = () => {
                   buttonHoverBg
                 )}
               >
-                {language === 'en' ? "VIEW MORE NEWS" : "XEM THÊM TIN TỨC"}
+                {t('newsSection.viewMore') || "XEM THÊM TIN TỨC"}
               </a>
             </div>
           </TabsContent>

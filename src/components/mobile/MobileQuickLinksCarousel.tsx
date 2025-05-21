@@ -55,6 +55,7 @@ const MobileQuickLinksCarousel: React.FC = () => {
   
   // Get theme-specific styles
   const sectionBg = theme === "dark" ? "bg-[#1E272F]" : "bg-white";
+  const titleText = theme === "dark" ? "text-white" : "text-black";
   const cardBg = theme === "dark" ? "bg-[#2C3640]" : "bg-[#F2F2F2]";
   const cardHoverBg = theme === "dark" ? "hover:bg-[#3A4750]" : "hover:bg-[#E9E9E9]";
   const iconColor = theme === "dark" ? "text-[#19DBCF]" : "text-[#416628]";
@@ -64,7 +65,12 @@ const MobileQuickLinksCarousel: React.FC = () => {
   
   return (
     <section className={cn(sectionBg, "py-8 px-0 w-full")} aria-label="Quick access links">
-      {/* Section Title is now hidden as per the requirement */}
+      <h2 className={cn(
+        titleText,
+        "font-montserrat font-semibold text-xl text-left mx-4 mb-5"
+      )}>
+        {t("quickAccess.sectionTitle") || "TIỆN ÍCH TRUY CẬP NHANH"}
+      </h2>
       
       {/* Scrollable carousel container */}
       <div className="scrollbar-hide px-4 flex overflow-x-auto space-x-3 pb-4" 
