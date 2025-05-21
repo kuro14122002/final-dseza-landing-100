@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -379,7 +380,7 @@ const MobileNewsSection: React.FC = () => {
       >
         {/* Custom TabsList wrapper to allow horizontal scrolling */}
         <div className="overflow-x-auto scrollbar-hide pb-2 mb-6">
-          <TabsList className="bg-transparent p-0 h-auto flex space-x-3">
+          <TabsList className="bg-transparent p-0 h-auto flex space-x-3 min-w-max">
             {categories.map((category) => (
               <TabsTrigger
                 key={category.id}
