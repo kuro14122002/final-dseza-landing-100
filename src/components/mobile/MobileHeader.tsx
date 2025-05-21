@@ -384,26 +384,26 @@ const MobileHeader: React.FC = () => {
 const LanguageSwitcher = () => {
   const { language, toggleLanguage } = useLanguage();
   const { theme } = useTheme();
-  const { t } = useTranslation(); // Đã có useTranslation
+  const { t } = useTranslation(); // Thêm để dịch nếu cần
 
   const getActiveClass = (lang: string) => {
     const isActive = language === lang;
     return cn(
       "font-inter text-sm",
-      isActive
-        ? (theme === "dark" ? "text-dseza-dark-primary font-semibold" : "text-dseza-light-primary font-semibold")
+      isActive 
+        ? (theme === "dark" ? "text-dseza-dark-primary font-semibold" : "text-dseza-light-primary font-semibold") 
         : (theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text")
     );
   };
-
+  
   return (
     <div className="flex items-center">
-      <button
-        onClick={toggleLanguage}
+      <button 
+        onClick={toggleLanguage} 
         className={getActiveClass("vi")}
-        disabled={language === "vi"} // Bạn có thể thêm thuộc tính disabled
+        // disabled={language === "vi"} // Có thể thêm disabled nếu không muốn toggle khi đã active
       >
-        {t('languageSwitcher.vietnamese')} {/* Sử dụng key đã định nghĩa */}
+        {t('languageSwitcher.vietnamese') || "Tiếng Việt"} 
       </button>
       <span className={cn(
         "mx-1",
@@ -411,25 +411,24 @@ const LanguageSwitcher = () => {
       )}>
         /
       </span>
-      <button
-        onClick={toggleLanguage}
+      <button 
+        onClick={toggleLanguage} 
         className={getActiveClass("en")}
-        disabled={language === "en"} // Bạn có thể thêm thuộc tính disabled
+        // disabled={language === "en"}
       >
-        {t('languageSwitcher.english')} {/* Sử dụng key đã định nghĩa */}
+        {t('languageSwitcher.english') || "English"}
       </button>
     </div>
   );
 };
 
-// Theme Toggle Component
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
-  const { t } = useTranslation(); // Đã có useTranslation
+  const { t } = useTranslation(); // Thêm để dịch nếu cần
   const isDark = theme === "dark";
-
+  
   return (
-    <button
+    <button 
       onClick={toggleTheme}
       className={cn(
         "flex items-center space-x-1 font-inter text-sm",
@@ -438,12 +437,12 @@ const ThemeToggle = () => {
     >
       {isDark ? (
         <>
-          <span>{t('themeToggle.darkMode')}</span> {/* Sử dụng key đã định nghĩa */}
+          <span>{t('themeToggle.darkMode') || "Dark Mode"}</span>
           <span className="rounded-full w-4 h-4 bg-dseza-dark-primary"></span>
         </>
       ) : (
         <>
-          <span>{t('themeToggle.lightMode')}</span> {/* Sử dụng key đã định nghĩa */}
+          <span>{t('themeToggle.lightMode') || "Light Mode"}</span>
           <span className="rounded-full w-4 h-4 bg-dseza-light-primary"></span>
         </>
       )}
