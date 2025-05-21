@@ -23,27 +23,26 @@ const LocationSection: React.FC = () => {
 
   return (
     <section className={cn(
-      "py-12 px-4 sm:px-6 lg:px-8", // Giữ padding chung
-      theme === "dark" ? "bg-[#1E272F]" : "bg-white" // Thay đổi màu nền section cho phù hợp
+      "py-12 px-4 sm:px-6 lg:px-8", 
+      theme === "dark" ? "bg-[#1E272F]" : "bg-white" 
     )}>
       <div className="container mx-auto">
         <h2 className={cn(
-          "font-montserrat font-bold text-2xl md:text-3xl mb-8", // Giảm kích thước font cho mobile (text-2xl) và desktop (md:text-3xl)
+          "font-montserrat font-bold text-2xl md:text-3xl mb-8", 
           textColor,
-          "text-left" // Áp dụng căn trái cho tất cả các kích thước màn hình
+          "text-center lg:text-left"
         )}>
           {t('location.title')}
         </h2>
         
-        {/* Giữ nguyên cấu trúc flex và tabs như ban đầu */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left column: tabs */}
           <div className="w-full lg:w-1/3 flex flex-col gap-4">
-            <button 
+            <button
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", // text-base cho mobile, md:text-lg cho desktop
-                activeTab === "vr-tour" ? 
-                  cn(accentBgColor, tabActiveText) : 
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", 
+                activeTab === "vr-tour" ?
+                  cn(accentBgColor, tabActiveText) :
                   cn(tabDefaultBg, textColor, tabHoverBg)
               )}
               onClick={() => setActiveTab("vr-tour")}
@@ -51,11 +50,11 @@ const LocationSection: React.FC = () => {
               {t('location.vrTour')}
             </button>
             
-            <button 
+            <button
               className={cn(
-                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", // text-base cho mobile, md:text-lg cho desktop
-                activeTab === "digital-map" ? 
-                  cn(accentBgColor, tabActiveText) : 
+                "px-6 py-4 rounded-lg font-montserrat font-semibold text-base md:text-lg transition-colors duration-300 text-center", 
+                activeTab === "digital-map" ?
+                  cn(accentBgColor, tabActiveText) :
                   cn(tabDefaultBg, textColor, tabHoverBg)
               )}
               onClick={() => setActiveTab("digital-map")}
@@ -68,24 +67,24 @@ const LocationSection: React.FC = () => {
           <div className="w-full lg:w-2/3">
             {activeTab === "vr-tour" ? (
               <div className={cn(
-                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", // Giảm chiều cao và padding cho mobile
+                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", 
                 secondaryBgColor
               )}>
                 <p className={cn("text-lg md:text-xl font-montserrat text-center", textColor)}>
                   VR 360 Tour Placeholder
                 </p>
-                <a 
-                  href="https://dseza.danang.gov.vn/vr360/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className={cn("mt-4", accentColor, "underline text-sm md:text-base")} // Giảm kích thước font link
+                <a
+                  href="https://dseza.danang.gov.vn/vr360/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn("mt-4", accentColor, "underline text-sm md:text-base")} 
                 >
                   https://dseza.danang.gov.vn/vr360/
                 </a>
               </div>
             ) : (
               <div className={cn(
-                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", // Giảm chiều cao và padding cho mobile
+                "rounded-lg h-72 sm:h-80 md:h-96 p-4 md:p-6 flex flex-col items-center justify-center", 
                 secondaryBgColor
               )}>
                 <h3 className={cn("text-lg md:text-xl font-montserrat font-medium mb-3 md:mb-4 text-center", textColor)}>
@@ -94,12 +93,12 @@ const LocationSection: React.FC = () => {
                 <p className={cn("text-sm md:text-base font-inter text-center max-w-lg leading-relaxed", secondaryTextColor)}>
                   {t('location.digitalMapDescription')}
                 </p>
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   className={cn(
-                    "mt-4 md:mt-6 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base",  // Giảm padding và font size button cho mobile
+                    "mt-4 md:mt-6 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base", 
                     accentBgColor,
-                    theme === "dark" ? "text-dseza-dark-main-bg hover:bg-dseza-dark-primary-accent-hover" : 
+                    theme === "dark" ? "text-dseza-dark-main-bg hover:bg-dseza-dark-primary-accent-hover" :
                     "text-white hover:bg-dseza-light-primary-accent-hover"
                   )}
                 >

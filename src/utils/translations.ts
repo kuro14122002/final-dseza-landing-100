@@ -9,7 +9,7 @@ type TranslationObject = {
 const viTranslations: TranslationObject = {
   // Common
   sitemap: "Sơ đồ site",
-  
+
   // Nav Items
   nav: {
     intro: "Giới thiệu",
@@ -22,7 +22,7 @@ const viTranslations: TranslationObject = {
     documents: "Văn bản",
     adminReform: "Cải cách hành chính",
   },
-  
+
   // Home Sections
   homepage: {
     featuredEvents: "SỰ KIỆN NỔI BẬT",
@@ -35,7 +35,7 @@ const viTranslations: TranslationObject = {
     resources: "TÀI NGUYÊN",
     businessesAndPartners: "DOANH NGHIỆP & ĐỐI TÁC",
   },
-  
+
   // Investment Information Section
   investment: {
     forInvestors: "Dành cho nhà đầu tư",
@@ -47,7 +47,7 @@ const viTranslations: TranslationObject = {
     infrastructure: "Cơ sở hạ tầng",
     environment: "Môi trường",
   },
-  
+
   // Footer
   footer: {
     management: "Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng",
@@ -64,7 +64,7 @@ const viTranslations: TranslationObject = {
     citationNote: "Ghi rõ nguồn \"www.dseza.danang.gov.vn\" khi trích dẫn lại thông tin.",
     visitorCount: "Số lượt truy cập",
   },
-  
+
   // Date formatting
   date: {
     dayNames: ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"],
@@ -79,7 +79,7 @@ const viTranslations: TranslationObject = {
     digitalMapDescription: "Bản đồ tương tác với dữ liệu chi tiết về các khu công nghiệp, vị trí các doanh nghiệp và thông tin đầu tư.",
     accessDigitalMap: "Truy cập Bản đồ số",
   },
-  
+
   // News Section
   news: {
     title: "TIN TỨC",
@@ -90,7 +90,7 @@ const viTranslations: TranslationObject = {
       management: "Hoạt động Ban quản lý",
       other: "Tin khác",
     },
-    sampleNews: {
+    sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
         title: "Dự án Khu Công Nghệ Cao Đà Nẵng Mở Rộng Giai Đoạn 2 Chính Thức Khởi Động",
         excerpt: "Sáng nay, Ban Quản lý KCNC và các KCN Đà Nẵng đã tổ chức lễ khởi công giai đoạn 2 của dự án mở rộng Khu Công Nghệ Cao, hứa hẹn thu hút thêm nhiều tập đoàn công nghệ lớn..."
@@ -105,7 +105,7 @@ const viTranslations: TranslationObject = {
       }
     }
   },
-  
+
   // Functional Zones Section
   functionalZones: {
     title: "KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO, CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO",
@@ -137,7 +137,7 @@ const viTranslations: TranslationObject = {
     tab4: "Các Khu công nghiệp Đà Nẵng",
   },
 
-  // Special content in navigation menu
+  // Special content in navigation menu AND Mobile Menu
   menuSpecial: {
     achievementTitle: "Thành tựu đã đạt được",
     achievementDesc: "Khu Công nghệ cao và các Khu Công nghiệp Đà Nẵng đã trở thành động lực quan trọng cho sự phát triển của thành phố.",
@@ -154,6 +154,65 @@ const viTranslations: TranslationObject = {
     newsCardTitle: "Tin tức mới nhất về hoạt động của Ban quản lý",
     newsCardDesc: "Cập nhật thông tin mới nhất về các hoạt động và sự kiện quan trọng.",
     newsCardBtn: "Xem thêm →",
+    // Keys for mobile menu (ví dụ)
+    letterOfGreeting: "Thư ngỏ",
+    overviewDanang: "Tổng quan về Đà Nẵng",
+    overviewAuthority: "Tổng quan về Ban Quản lý",
+    functionsAndDuties: "Chức năng, nhiệm vụ, quyền hạn Ban Quản lý",
+    departments: "Các phòng ban",
+    affiliatedUnits: "Đơn vị trực thuộc",
+    functionalAreas: "Các Khu chức năng",
+    // Thêm các key khác cho các mục con của menu mobile tại đây
+    // Ví dụ cho "Các Khu công nghiệp Đà Nẵng" và các mục con của nó
+    izHoaKhanh: "Khu công nghiệp Hòa Khánh",
+    izHoaKhanhExpanded: "Khu công nghiệp Hòa Khánh mở rộng",
+    izDanang: "Khu công nghiệp Đà Nẵng",
+    izSeafoodService: "Khu công nghiệp Dịch vụ Thủy sản Đà Nẵng",
+    izHoaCam: "Khu công nghiệp Hòa Cầm",
+    izLienChieu: "Khu công nghiệp Liên Chiểu",
+    izHoaNinh: "Khu công nghiệp Hòa Ninh",
+    // Ví dụ cho menu Tin tức
+    newsEvents: "Tin tức | Sự kiện",
+    newsInvestmentCooperation: "Đầu tư - Hợp tác Quốc tế",
+    newsDigitalTransformation: "Chuyển đổi số",
+    newsTrainingIncubation: "Đào tạo, Ươm tạo Khởi nghiệp",
+    newsManagementActivities: "Hoạt động Ban Quản lý",
+    newsOther: "Tin khác",
+    seeMore: "Xem thêm",
+    workSchedule: "Lịch công tác",
+    announcements: "Thông báo",
+    pressInformation: "Thông tin báo chí",
+    // Ví dụ cho menu Doanh nghiệp
+    reportsData: "Báo cáo & Dữ liệu",
+    dsezaOnlineReports: "Báo cáo trực tuyến về DSEZA",
+    investmentMonitoringReports: "Báo cáo giám sát và đánh giá đầu tư",
+    reportTemplatesForms: "Mẫu | Bảng biểu báo cáo",
+    businessInformation: "Thông tin Doanh nghiệp",
+    envProceduresDocsData: "Thủ tục | Hồ sơ | Dữ liệu môi trường",
+    businessStatistics: "Thống kê doanh nghiệp",
+    recruitment: "Tuyển dụng",
+    businessSupport: "Hỗ trợ doanh nghiệp",
+    // Ví dụ cho menu Văn bản
+    legalDocuments: "Văn bản Pháp luật",
+    centralLegalDocs: "Văn bản pháp quy trung ương",
+    localLegalDocs: "Văn bản pháp quy địa phương",
+    administrativeDocs: "Văn bản chỉ đạo điều hành",
+    adminReformDocs: "Văn bản CCHC",
+    guidelinesFeedback: "Hướng dẫn & Góp ý",
+    guidanceDocs: "Văn bản hướng dẫn",
+    draftDocFeedback: "Góp ý dự thảo văn bản",
+    docSearch: "Tra cứu văn bản",
+    docSearchSystem: "Hệ thống tra cứu văn bản",
+    // Ví dụ cho menu Cải cách hành chính
+    applicationsServices: "Ứng dụng & Dịch vụ",
+    postalServices: "Bưu chính công ích",
+    docLookup: "Tra cứu hồ sơ",
+    onlineAppointment: "Đặt lịch hẹn giao dịch trực tuyến",
+    serviceQualityAssessment: "Đánh giá chất lượng dịch vụ HCC",
+    infoProcedures: "Thông tin & Quy trình",
+    adminProcedures: "Thủ tục hành chính", // Đã có ở quickAccess, có thể dùng chung hoặc tạo key mới
+    adminProcProcess: "Quy trình thực hiện thủ tục hành chính",
+    investmentProcProcess: "Quy trình lĩnh vực đầu tư",
   },
 
   // Resources Section
@@ -175,12 +234,22 @@ const viTranslations: TranslationObject = {
     register: "Đăng ký",
     login: "Đăng nhập",
   },
+
+  // Language Switcher & Theme Toggle
+  languageSwitcher: {
+    vietnamese: "Tiếng Việt",
+    english: "English",
+  },
+  themeToggle: {
+    lightMode: "Chế độ sáng",
+    darkMode: "Chế độ tối",
+  },
 };
 
 const enTranslations: TranslationObject = {
   // Common
   sitemap: "Site Map",
-  
+
   // Nav Items
   nav: {
     intro: "Introduction",
@@ -193,7 +262,7 @@ const enTranslations: TranslationObject = {
     documents: "Documents",
     adminReform: "Administrative Reform",
   },
-  
+
   // Home Sections
   homepage: {
     featuredEvents: "FEATURED EVENTS",
@@ -206,7 +275,7 @@ const enTranslations: TranslationObject = {
     resources: "RESOURCES",
     businessesAndPartners: "BUSINESSES & PARTNERS",
   },
-  
+
   // Investment Information Section
   investment: {
     forInvestors: "For Investors",
@@ -218,7 +287,7 @@ const enTranslations: TranslationObject = {
     infrastructure: "Infrastructure",
     environment: "Environment",
   },
-  
+
   // Footer
   footer: {
     management: "Da Nang Specific Economic Zones Authority",
@@ -235,7 +304,7 @@ const enTranslations: TranslationObject = {
     citationNote: "Please cite \"www.dseza.danang.gov.vn\" when referencing our information.",
     visitorCount: "Visitor count",
   },
-  
+
   // Date formatting
   date: {
     dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -250,7 +319,7 @@ const enTranslations: TranslationObject = {
     digitalMapDescription: "Interactive map with detailed data about industrial zones, business locations, and investment information.",
     accessDigitalMap: "Access Digital Map",
   },
-  
+
   // News Section
   news: {
     title: "NEWS",
@@ -261,7 +330,7 @@ const enTranslations: TranslationObject = {
       management: "Management Activities",
       other: "Other News",
     },
-    sampleNews: {
+    sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
         title: "Danang High-Tech Park Phase 2 Expansion Project Officially Launched",
         excerpt: "This morning, the Danang High-Tech Park and Industrial Zones Authority held the groundbreaking ceremony for phase 2 of the High-Tech Park expansion project, promising to attract more major technology corporations..."
@@ -276,7 +345,7 @@ const enTranslations: TranslationObject = {
       }
     }
   },
-  
+
   // Functional Zones Section
   functionalZones: {
     title: "HIGH-TECH PARK, SEMICONDUCTOR & AI CENTER, INDUSTRIAL ZONES, IT ZONES, FREE TRADE ZONE",
@@ -308,7 +377,7 @@ const enTranslations: TranslationObject = {
     tab4: "Danang Industrial Zones",
   },
 
-  // Special content in navigation menu
+  // Special content in navigation menu AND Mobile Menu
   menuSpecial: {
     achievementTitle: "Outstanding Achievements",
     achievementDesc: "Danang High-Tech Park and Industrial Zones have become a key driving force for the city's development.",
@@ -325,6 +394,64 @@ const enTranslations: TranslationObject = {
     newsCardTitle: "Latest news on Management Authority activities",
     newsCardDesc: "Get the latest updates on important activities and events.",
     newsCardBtn: "See more →",
+    // Keys for mobile menu (example)
+    letterOfGreeting: "Welcome Letter",
+    overviewDanang: "Overview of Da Nang",
+    overviewAuthority: "Overview of the Authority",
+    functionsAndDuties: "Functions, Duties, and Powers",
+    departments: "Departments",
+    affiliatedUnits: "Affiliated Units",
+    functionalAreas: "Functional Zones",
+    // Add other keys for mobile menu sub-items here
+    izHoaKhanh: "Hoa Khanh Industrial Zone",
+    izHoaKhanhExpanded: "Hoa Khanh Expanded Industrial Zone",
+    izDanang: "Da Nang Industrial Zone",
+    izSeafoodService: "Da Nang Seafood Service Industrial Zone",
+    izHoaCam: "Hoa Cam Industrial Zone",
+    izLienChieu: "Lien Chieu Industrial Zone",
+    izHoaNinh: "Hoa Ninh Industrial Zone",
+    // Example for News menu
+    newsEvents: "News | Events",
+    newsInvestmentCooperation: "Investment - International Cooperation",
+    newsDigitalTransformation: "Digital Transformation",
+    newsTrainingIncubation: "Training, Startup Incubation",
+    newsManagementActivities: "Management Activities",
+    newsOther: "Other News",
+    seeMore: "See More",
+    workSchedule: "Work Schedule",
+    announcements: "Announcements",
+    pressInformation: "Press Information",
+    // Example for Business menu
+    reportsData: "Reports & Data",
+    dsezaOnlineReports: "DSEZA Online Reports",
+    investmentMonitoringReports: "Investment Monitoring Reports",
+    reportTemplatesForms: "Templates | Report Forms",
+    businessInformation: "Business Information",
+    envProceduresDocsData: "Procedures | Documents | Environmental Data",
+    businessStatistics: "Business Statistics",
+    recruitment: "Recruitment",
+    businessSupport: "Business Support",
+    // Example for Documents menu
+    legalDocuments: "Legal Documents",
+    centralLegalDocs: "Central Legal Documents",
+    localLegalDocs: "Local Legal Documents",
+    administrativeDocs: "Administrative Documents",
+    adminReformDocs: "Administrative Reform Documents",
+    guidelinesFeedback: "Guidelines & Feedback",
+    guidanceDocs: "Guidance Documents",
+    draftDocFeedback: "Draft Document Feedback",
+    docSearch: "Document Search",
+    docSearchSystem: "Document Search System",
+    // Example for Administrative Reform menu
+    applicationsServices: "Applications & Services",
+    postalServices: "Postal Services",
+    docLookup: "Document Lookup",
+    onlineAppointment: "Online Appointment Scheduling",
+    serviceQualityAssessment: "Service Quality Assessment",
+    infoProcedures: "Information & Procedures",
+    adminProcedures: "Administrative Procedures",
+    adminProcProcess: "Administrative Procedure Process",
+    investmentProcProcess: "Investment Process",
   },
 
   // Resources Section
@@ -346,6 +473,16 @@ const enTranslations: TranslationObject = {
     register: "Register",
     login: "Login",
   },
+
+  // Language Switcher & Theme Toggle
+  languageSwitcher: {
+    vietnamese: "Vietnamese",
+    english: "English",
+  },
+  themeToggle: {
+    lightMode: "Light Mode",
+    darkMode: "Dark Mode",
+  },
 };
 
 // All translations
@@ -363,14 +500,14 @@ const translations = {
 const getNestedValue = (obj: any, path: string): string | undefined => {
   const keys = path.split('.');
   let value = obj;
-  
+
   for (const key of keys) {
     if (value === undefined || value === null) {
       return undefined;
     }
     value = value[key];
   }
-  
+
   return typeof value === 'string' ? value : undefined;
 };
 
@@ -380,7 +517,7 @@ const getNestedValue = (obj: any, path: string): string | undefined => {
  */
 export const useTranslation = () => {
   const { language } = useLanguage();
-  
+
   /**
    * Get a translation by key
    * @param key - The translation key (can be a dot notation for nested keys)
@@ -389,9 +526,15 @@ export const useTranslation = () => {
   const t = (key: string): string => {
     const translationSet = translations[language];
     const translation = getNestedValue(translationSet, key);
-    return translation || key;
+    // Fallback to the key itself if translation is not found
+    // or if the key points to an object (meaning it's a parent key, not a string leaf)
+    if (translation === undefined || typeof translation !== 'string') {
+        // console.warn(`Translation key not found or not a string: ${key}`); // Optional: for debugging
+        return key;
+    }
+    return translation;
   };
-  
+
   return { t, language };
 };
 
@@ -402,7 +545,7 @@ export const useTranslation = () => {
  * @returns A formatted date string, optionally with time
  */
 export const formatDate = (date: Date, includeTime: boolean = false): string => {
-  const { language } = useLanguage();
+  const { language } = useLanguage(); // This hook now correctly calls useLanguage from the context
   const translationSet = language === 'vi' ? viTranslations : enTranslations;
 
   const dateTranslation = translationSet.date as TranslationObject;
@@ -425,7 +568,6 @@ export const formatDate = (date: Date, includeTime: boolean = false): string => 
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
-    // Thêm dấu gạch đứng và khoảng trắng ở đây
     formattedDateString += ` | ${hours}:${minutes}:${seconds}`;
   }
 

@@ -1,3 +1,4 @@
+// src/components/BusinessesAndPartners.tsx
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -7,10 +8,10 @@ import { cn } from "@/lib/utils";
  */
 const BusinessesAndPartners: React.FC = () => {
   const { theme } = useTheme();
-  
+
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
-  
+
   // Real company logos (using tech company logos as placeholders)
   const partnerLogos = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png",
@@ -29,7 +30,7 @@ const BusinessesAndPartners: React.FC = () => {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/C_Programming_Language.svg/1853px-C_Programming_Language.svg.png",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1822px-ISO_C%2B%2B_Logo.svg.png",
   ];
-  
+
   return (
     <section className={cn(
       "py-12 px-4 sm:px-6 lg:px-8",
@@ -38,57 +39,58 @@ const BusinessesAndPartners: React.FC = () => {
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-16",
-          textColor
+          textColor,
+          "text-center lg:text-left" // Mobile: text-center, Desktop (lg trở lên): text-left
         )}>
           DOANH NGHIỆP VÀ ĐỐI TÁC
         </h2>
-        
+
         {/* Continuous scrolling logo carousel */}
-    <div className="relative w-full overflow-hidden">
-      <div className="flex animate-[scroll_60s_linear_infinite] hover:pause">
-        {/* First set of logos */}
-        {partnerLogos.map((logo, index) => (
-          <div
-            key={`logo-1-${index}`}
-            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-          >
-            <img
-              src={logo}
-              alt={`Partner Logo ${index + 1}`}
-              className="h-8 md:h-12 w-auto" // <-- Đã thay đổi ở đây
-            />
+        <div className="relative w-full overflow-hidden">
+          <div className="flex animate-[scroll_60s_linear_infinite] hover:pause">
+            {/* First set of logos */}
+            {partnerLogos.map((logo, index) => (
+              <div
+                key={`logo-1-${index}`}
+                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+              >
+                <img
+                  src={logo}
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-8 md:h-12 w-auto"
+                />
+              </div>
+            ))}
+
+            {/* Duplicate set of logos for seamless scrolling */}
+            {partnerLogos.map((logo, index) => (
+              <div
+                key={`logo-2-${index}`}
+                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+              >
+                <img
+                  src={logo}
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-8 md:h-12 w-auto"
+                />
+              </div>
+            ))}
+
+            {/* Duplicate set of logos for seamless scrolling */}
+            {partnerLogos.map((logo, index) => (
+              <div
+                key={`logo-3-${index}`} 
+                className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
+              >
+                <img
+                  src={logo}
+                  alt={`Partner Logo ${index + 1}`}
+                  className="h-8 md:h-12 w-auto" 
+                />
+              </div>
+            ))}
           </div>
-        ))}
-        
-        {/* Duplicate set of logos for seamless scrolling */}
-        {partnerLogos.map((logo, index) => (
-          <div
-            key={`logo-2-${index}`}
-            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-          >
-            <img
-              src={logo}
-              alt={`Partner Logo ${index + 1}`}
-              className="h-8 md:h-12 w-auto" // <-- Và ở đây
-            />
-          </div>
-        ))}
-        
-        {/* Duplicate set of logos for seamless scrolling */}
-        {partnerLogos.map((logo, index) => (
-          <div 
-            key={`logo-3-${index}`} // Sửa key để đảm bảo tính duy nhất nếu bạn có 3 set
-            className="flex-shrink-0 mx-8 transition-all duration-300 filter grayscale hover:grayscale-0 hover:scale-105"
-          >
-            <img 
-              src={logo} 
-              alt={`Partner Logo ${index + 1}`} 
-              className="h-8 md:h-12 w-auto" // <-- Và ở đây nữa
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+        </div>
       </div>
     </section>
   );

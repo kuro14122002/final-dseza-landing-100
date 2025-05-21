@@ -132,7 +132,7 @@ const MobileInvestmentInformation: React.FC = () => {
       {/* Tiêu đề section - căn trái */}
       <h2
         className={cn(
-          "font-montserrat font-bold text-2xl mb-6 text-left", // text-2xl và text-left
+          "font-montserrat font-bold text-2xl mb-6 text-center", // text-2xl và text-left
           textColor
         )}
       >

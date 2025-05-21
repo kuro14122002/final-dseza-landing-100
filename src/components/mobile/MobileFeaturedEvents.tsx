@@ -183,7 +183,7 @@ const MobileFeaturedEvents: React.FC = () => {
     )}>
       {/* Section Title */}
       <h2 className={cn(
-        "font-montserrat font-bold text-2xl text-left mb-6",
+        "font-montserrat font-bold text-2xl text-center mb-6",
         titleText
       )}>
         {t('featuredEvents.title') || "SỰ KIỆN TIÊU ĐIỂM"}

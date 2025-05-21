@@ -365,8 +365,8 @@ const MobileNewsSection: React.FC = () => {
     )}>
       {/* Section Title */}
       <h2 className={cn(
-        "font-montserrat font-bold text-2xl text-left mb-6", // Giữ nguyên căn lề trái
-        titleText
+          "font-montserrat font-bold text-2xl text-center mb-6", // Giữ nguyên căn lề trái
+          titleText
       )}>
         {t('news.title') || "TIN TỨC"}
       </h2>

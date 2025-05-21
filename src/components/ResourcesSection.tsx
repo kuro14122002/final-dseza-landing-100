@@ -1,3 +1,4 @@
+// src/components/ResourcesSection.tsx
 import React, { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -15,7 +16,7 @@ const ResourcesSection: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'images' | 'videos' | 'documents'>('images');
-  
+
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
@@ -24,7 +25,7 @@ const ResourcesSection: React.FC = () => {
   const secondaryBgColor = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
   const buttonHoverBgColor = theme === "dark" ? "hover:bg-dseza-dark-primary-accent" : "hover:bg-dseza-light-primary-accent";
   const buttonHoverTextColor = theme === "dark" ? "hover:text-dseza-dark-main-bg" : "hover:text-white";
-  
+
   // Real image resources
   const imageResources = [
     {
@@ -61,7 +62,8 @@ const ResourcesSection: React.FC = () => {
       <div className="container mx-auto">
         <h2 className={cn(
           "font-montserrat font-bold text-3xl md:text-4xl mb-8",
-          textColor
+          textColor,
+          "text-center lg:text-left" // Mobile: text-center, Desktop (lg trở lên): text-left
         )}>
           {t('resourcesSection.sectionTitle')}
         </h2>
@@ -71,8 +73,8 @@ const ResourcesSection: React.FC = () => {
           <button
             className={cn(
               "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'images' 
-                ? `${accentBgColor} text-white` 
+              activeTab === 'images'
+                ? `${accentBgColor} text-white`
                 : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
             )}
             onClick={() => setActiveTab('images')}
@@ -84,8 +86,8 @@ const ResourcesSection: React.FC = () => {
           <button
             className={cn(
               "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'videos' 
-                ? `${accentBgColor} text-white` 
+              activeTab === 'videos'
+                ? `${accentBgColor} text-white`
                 : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
             )}
             onClick={() => setActiveTab('videos')}
@@ -97,8 +99,8 @@ const ResourcesSection: React.FC = () => {
           <button
             className={cn(
               "flex items-center px-4 py-2 rounded-md font-inter font-semibold text-base transition-all",
-              activeTab === 'documents' 
-                ? `${accentBgColor} text-white` 
+              activeTab === 'documents'
+                ? `${accentBgColor} text-white`
                 : `${secondaryBgColor} ${secondaryTextColor} hover:${accentColor}`
             )}
             onClick={() => setActiveTab('documents')}
@@ -113,15 +115,15 @@ const ResourcesSection: React.FC = () => {
           {activeTab === 'images' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {imageResources.map(resource => (
-                <a 
+                <a
                   key={resource.id}
                   href="#"
                   className="block group rounded-lg overflow-hidden hover:shadow-lg transition-all"
                 >
                   <div className="aspect-w-4 aspect-h-3 w-full">
                     <AspectRatio ratio={4/3} className="bg-gray-200">
-                      <img 
-                        src={resource.imageUrl} 
+                      <img
+                        src={resource.imageUrl}
                         alt={resource.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -165,7 +167,7 @@ const ResourcesSection: React.FC = () => {
         
         {/* View All Resources button */}
         <div className="text-center">
-          <Button 
+          <Button
             variant="outline"
             className={cn(
               "font-inter font-semibold text-base border border-gray-300 dark:border-gray-600",
