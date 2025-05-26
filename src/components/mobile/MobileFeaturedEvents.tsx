@@ -126,7 +126,7 @@ const MobileFeaturedEvents: React.FC = () => {
   const events = [
     {
       id: "1",
-      image: "media/FeaturedEvents/Featuredevent1.png",
+      image: "media/FeaturedEvent/Featuredevent1.png",
       date: "20/05/2025",
       title: "Hội nghị xúc tiến đầu tư công nghệ cao Đà Nẵng năm 2025",
       titleEn: "Da Nang High-Tech Investment Promotion Conference 2025",
@@ -136,7 +136,7 @@ const MobileFeaturedEvents: React.FC = () => {
     },
     {
       id: "2",
-      image: "media/FeaturedEvents/Featuredevent2.png",
+      image: "media/FeaturedEvent/Featuredevent2.png",
       date: "15/05/2025",
       title: "Triển lãm công nghệ và đổi mới sáng tạo khu công nghệ cao",
       titleEn: "High-Tech Park Technology and Innovation Exhibition",
@@ -146,7 +146,7 @@ const MobileFeaturedEvents: React.FC = () => {
     },
     {
       id: "3",
-      image: "media/FeaturedEvents/Featuredevent3.png",
+      image: "media/FeaturedEvent/Featuredevent3.png",
       date: "10/05/2025",
       title: "Hội thảo ứng dụng AI trong sản xuất công nghiệp",
       titleEn: "Workshop on AI Applications in Industrial Production",
@@ -156,7 +156,7 @@ const MobileFeaturedEvents: React.FC = () => {
     },
     {
       id: "4",
-      image: "media/FeaturedEvents/Featuredevent4.png",
+      image: "media/FeaturedEvent/Featuredevent4.png",
       date: "05/05/2025",
       title: "Khóa đào tạo chuyên sâu về phát triển phần mềm",
       titleEn: "Advanced Software Development Training Course",
@@ -166,7 +166,7 @@ const MobileFeaturedEvents: React.FC = () => {
     },
     {
       id: "5",
-      image: "media/FeaturedEvents/Featuredevent5.png",
+      image: "media/FeaturedEvent/Featuredevent5.png",
       date: "01/05/2025",
       title: "Lễ khánh thành nhà máy sản xuất chip bán dẫn",
       titleEn: "Opening Ceremony of Semiconductor Chip Manufacturing Plant",
