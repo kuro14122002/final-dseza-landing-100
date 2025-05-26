@@ -70,7 +70,7 @@ const FeaturedEvents: React.FC = () => {
   const events = [
     {
       id: "1",
-      image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
+      image: "media/FeaturedEvents/Featuredevent1.png",
       date: "20/05/2023",
       title: "Sự kiện nổi bật 1",
       titleEn: "Featured event 1",
@@ -80,28 +80,28 @@ const FeaturedEvents: React.FC = () => {
     },
     {
       id: "2",
-      image: "https://images.unsplash.com/photo-1458668383970-8ddd3927deed",
+      image: "media/FeaturedEvents/Featuredevent2.png",
       date: "15/05/2023",
       title: "Sự kiện nổi bật 2",
       titleEn: "Featured event 2",
     },
     {
       id: "3",
-      image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67",
+      image: "media/FeaturedEvents/Featuredevent3.png",
       date: "10/05/2023",
       title: "Sự kiện nổi bật 3",
       titleEn: "Featured event 3",
     },
     {
       id: "4",
-      image: "https://images.unsplash.com/photo-1426604966848-d7adac402bff",
+      image: "media/FeaturedEvents/Featuredevent4.png",
       date: "05/05/2023",
       title: "Sự kiện nổi bật 4",
       titleEn: "Featured event 4",
     },
     {
       id: "5",
-      image: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843",
+      image: "media/FeaturedEvents/Featuredevent5.png",
       date: "01/05/2023",
       title: "Sự kiện nổi bật 5",
       titleEn: "Featured event 5",
