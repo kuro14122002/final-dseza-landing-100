@@ -12,12 +12,12 @@ const tabsData = [
     titleKey: "heroBackground.tab1",
     images: {
       light: {
-        main: "media/khucongnghecaolight.jpg",
-        thumbnail: "media/khucongnghecaothumb.jpg"
+        main: "media/HeroBackground/Slide1light.png",
+        thumbnail: "media/HeroBackground/Slide1light.png"
       },
       dark: {
-        main: "media/khucongnghecaodark.jpg",
-        thumbnail: "media/khucongnghecaothumb.jpg"
+        main: "media/HeroBackground/Slide1dark.png",
+        thumbnail: "media/HeroBackground/Slide1dark.png"
       }
     }
   },
@@ -26,12 +26,12 @@ const tabsData = [
     titleKey: "heroBackground.tab2",
     images: {
       light: {
-        main: "media/khuthuongmaitdlight.jpg",
-        thumbnail: "media/khuthuongmaitdthumb.jpg"
+        main: "media/HeroBackground/Slide2light.png",
+        thumbnail: "media/HeroBackground/Slide2light.png"
       },
       dark: {
-        main: "media/khuthuongmaitddark.jpg",
-        thumbnail: "media/khuthuongmaitdthumb.jpg"
+        main: "media/HeroBackground/Slide2dark.png",
+        thumbnail: "media/HeroBackground/Slide2dark.png"
       }
     }
   },
@@ -40,12 +40,12 @@ const tabsData = [
     titleKey: "heroBackground.tab3",
     images: {
       light: {
-        main: "media/khucongnghethongtinlight.jpg",
-        thumbnail: "media/khucongnghethongtinthumb.jpg"
+        main: "media/HeroBackground/Slide3light.png",
+        thumbnail: "media/HeroBackground/Slide3light.png"
       },
       dark: {
-        main: "media/khucongnghethongtindark.jpg",
-        thumbnail: "media/khucongnghethongtinthumb.jpg"
+        main: "media/HeroBackground/Slide3dark.png",
+        thumbnail: "media/HeroBackground/Slide3dark.png"
       }
     }
   },
@@ -54,12 +54,12 @@ const tabsData = [
     titleKey: "heroBackground.tab4",
     images: {
       light: {
-        main: "media/khucongnghieplight.jpg",
-        thumbnail: "media/khucongnghiepthumb.jpg"
+        main: "media/HeroBackground/Slide4light.png",
+        thumbnail: "media/HeroBackground/Slide4light.png"
       },
       dark: {
-        main: "media/khucongnghiephdark.jpg",
-        thumbnail: "media/khucongnghiepthumb.jpg"
+        main: "media/HeroBackground/Slide4dark.png",
+        thumbnail: "media/HeroBackground/Slide4dark.png"
       }
     }
   }

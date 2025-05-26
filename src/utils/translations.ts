@@ -132,9 +132,9 @@ const viTranslations: TranslationObject = {
   // Hero Background Tabs
   heroBackground: {
     tab1: "Khu công nghệ cao Đà Nẵng",
-    tab2: "Khu thương mại tự do Đà Nẵng",
-    tab3: "Khu công nghệ thông tin tập trung",
-    tab4: "Các Khu công nghiệp Đà Nẵng",
+    tab2: "Khu công nghệ cao Đà Nẵng",
+    tab3: "Khu công nghệ cao Đà Nẵng",
+    tab4: "Khu công nghệ cao Đà Nẵng",
   },
 
   // Special content in navigation menu AND Mobile Menu
@@ -313,7 +313,7 @@ const enTranslations: TranslationObject = {
   // Location Section
   location: {
     title: "LOCATION MAP",
-    vrTour: "VR 360 Tour - Danang High-Tech Park",
+    vrTour: "VR 360 Tour - Danang Hi-Tech Park",
     digitalMap: "Digital Map of High-Tech Park + Industrial Zones + Online Reports",
     digitalMapTitle: "Digital Map and Investment Reports",
     digitalMapDescription: "Interactive map with detailed data about industrial zones, business locations, and investment information.",
@@ -332,8 +332,8 @@ const enTranslations: TranslationObject = {
     },
     sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
-        title: "Danang High-Tech Park Phase 2 Expansion Project Officially Launched",
-        excerpt: "This morning, the Danang High-Tech Park and Industrial Zones Authority held the groundbreaking ceremony for phase 2 of the High-Tech Park expansion project, promising to attract more major technology corporations..."
+        title: "Danang Hi-Tech Park Phase 2 Expansion Project Officially Launched",
+        excerpt: "This morning, the Danang Hi-Tech Park and Industrial Zones Authority held the groundbreaking ceremony for phase 2 of the High-Tech Park expansion project, promising to attract more major technology corporations..."
       },
       news2: {
         title: "Danang Boosts International Cooperation in Semiconductor Industry",
@@ -371,19 +371,19 @@ const enTranslations: TranslationObject = {
 
   // Hero Background Tabs
   heroBackground: {
-    tab1: "Danang High-Tech Park",
-    tab2: "Danang Free Trade Zone",
-    tab3: "Concentrated IT Zone",
-    tab4: "Danang Industrial Zones",
+    tab1: "Danang Hi-Tech Park",
+    tab2: "Danang Hi-Tech Park",
+    tab3: "Danang Hi-Tech Park",
+    tab4: "Danang Hi-Tech Park",
   },
 
   // Special content in navigation menu AND Mobile Menu
   menuSpecial: {
     achievementTitle: "Outstanding Achievements",
-    achievementDesc: "Danang High-Tech Park and Industrial Zones have become a key driving force for the city's development.",
+    achievementDesc: "Danang Hi-Tech Park and Industrial Zones have become a key driving force for the city's development.",
     achievementBtn: "Learn more",
     featuredServiceTitle: "Featured Public Services",
-    featuredServiceDesc: "Experience online public services at the Danang High-Tech Park and Industrial Zones Authority",
+    featuredServiceDesc: "Experience online public services at the Danang Hi-Tech Park and Industrial Zones Authority",
     featuredServiceBtn: "Access now",
     quickDocSearchTitle: "Quick Document Search",
     quickDocSearchPlaceholder: "Enter search keywords...",
