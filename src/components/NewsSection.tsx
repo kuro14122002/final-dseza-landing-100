@@ -146,7 +146,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA successfully attracts $100M FDI project from Japan",
         excerpt: "Dự án tập trung vào sản xuất linh kiện điện tử công nghệ cao, dự kiến tạo ra hàng ngàn việc làm...",
         excerptEn: "The project focuses on high-tech electronic component manufacturing, expected to create thousands of jobs...",
-        url: "#news-inv1"
+        url: "/news/inv1"
       },
       {
         id: "inv2",
@@ -157,7 +157,7 @@ const NewsSection: React.FC = () => {
         titleEn: "Da Nang investment promotion workshop held in Singapore",
         excerpt: "Nhiều nhà đầu tư Singapore bày tỏ sự quan tâm sâu sắc đến môi trường đầu tư tại các KCN, KCNC Đà Nẵng...",
         excerptEn: "Many Singaporean investors expressed deep interest in the investment environment in Da Nang's industrial and high-tech zones...",
-        url: "#news-inv2"
+        url: "/news/inv2"
       },
       {
         id: "inv3",
@@ -168,7 +168,7 @@ const NewsSection: React.FC = () => {
         titleEn: "Da Nang enhances competitiveness in attracting foreign investment",
         excerpt: "Thành phố đang tích cực cải thiện môi trường đầu tư, đơn giản hóa thủ tục hành chính để thu hút các dự án chất lượng cao...",
         excerptEn: "The city is actively improving the investment environment and simplifying administrative procedures to attract high-quality projects...",
-        url: "#news-inv3"
+        url: "/news/inv3"
       }
     ],
     "training": [
@@ -181,7 +181,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA Technology Startup Incubation Program 2025 launched",
         excerpt: "Chương trình năm nay dự kiến sẽ chọn 10 dự án tiềm năng để hỗ trợ phát triển sản phẩm và kết nối với nhà đầu tư...",
         excerptEn: "This year's program is expected to select 10 potential projects to support product development and connect with investors...",
-        url: "#news-tr1"
+        url: "/news/tr1"
       },
       {
         id: "tr2",
@@ -192,7 +192,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA cooperates with FPT University to train high-tech human resources",
         excerpt: "Thỏa thuận hợp tác nhằm đào tạo nguồn nhân lực chất lượng cao đáp ứng nhu cầu của các doanh nghiệp trong khu công nghệ cao...",
         excerptEn: "The cooperation agreement aims to train high-quality human resources to meet the needs of businesses in the high-tech park...",
-        url: "#news-tr2"
+        url: "/news/tr2"
       },
       {
         id: "tr3",
@@ -203,7 +203,7 @@ const NewsSection: React.FC = () => {
         titleEn: "10 Da Nang tech startups selected for acceleration program",
         excerpt: "Các startup sẽ được hỗ trợ về mặt kỹ thuật, tài chính và kết nối thị trường trong 6 tháng...",
         excerptEn: "Startups will receive technical, financial support and market connections for 6 months...",
-        url: "#news-tr3"
+        url: "/news/tr3"
       }
     ],
     "digital": [
@@ -216,7 +216,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA implements digital platform for industrial zone management",
         excerpt: "Nền tảng mới giúp tối ưu hóa quy trình quản lý và tăng cường hiệu quả hoạt động của các khu công nghiệp...",
         excerptEn: "The new platform helps optimize management processes and enhance the operational efficiency of industrial zones...",
-        url: "#news-dig1"
+        url: "/news/dig1"
       },
       {
         id: "dig2",
@@ -227,7 +227,7 @@ const NewsSection: React.FC = () => {
         titleEn: "Businesses in Da Nang Industrial Zone accelerate digital transformation",
         excerpt: "Hơn 70% doanh nghiệp đã ứng dụng công nghệ số vào quy trình sản xuất và quản lý...",
         excerptEn: "More than 70% of businesses have applied digital technology to production and management processes...",
-        url: "#news-dig2"
+        url: "/news/dig2"
       },
       {
         id: "dig3",
@@ -238,7 +238,7 @@ const NewsSection: React.FC = () => {
         titleEn: "Workshop on AI and automation in industrial production at Da Nang High-Tech Park",
         excerpt: "Sự kiện thu hút sự tham gia của nhiều chuyên gia công nghệ và đại diện doanh nghiệp để thảo luận về xu hướng tương lai...",
         excerptEn: "The event attracted many technology experts and business representatives to discuss future trends...",
-        url: "#news-dig3"
+        url: "/news/dig3"
       }
     ],
     "activities": [
@@ -251,7 +251,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA Management Board organizes Q2/2025 dialogue with businesses",
         excerpt: "Buổi đối thoại nhằm lắng nghe ý kiến, giải quyết khó khăn và đề xuất từ các doanh nghiệp trong khu công nghiệp...",
         excerptEn: "The dialogue aims to listen to opinions, resolve difficulties and proposals from businesses in the industrial zone...",
-        url: "#news-act1"
+        url: "/news/act1"
       },
       {
         id: "act2",
@@ -262,7 +262,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA works with delegation from South Korea",
         excerpt: "Đoàn đại biểu bày tỏ mong muốn tìm kiếm cơ hội hợp tác và mở rộng hoạt động tại Đà Nẵng...",
         excerptEn: "The delegation expressed their desire to seek cooperation opportunities and expand activities in Da Nang...",
-        url: "#news-act2"
+        url: "/news/act2"
       },
       {
         id: "act3",
@@ -273,7 +273,7 @@ const NewsSection: React.FC = () => {
         titleEn: "DSEZA Management Board announces 5-year development plan (2026-2030)",
         excerpt: "Kế hoạch đặt ra mục tiêu thu hút 3 tỷ USD vốn đầu tư và phát triển các ngành công nghệ cao...",
         excerptEn: "The plan sets a target of attracting $3 billion in investment capital and developing high-tech industries...",
-        url: "#news-act3"
+        url: "/news/act3"
       }
     ],
     "other": [
@@ -286,7 +286,7 @@ const NewsSection: React.FC = () => {
         titleEn: "Da Nang develops transportation infrastructure connecting industrial zones",
         excerpt: "Dự án đường cao tốc mới sẽ giúp rút ngắn thời gian di chuyển và tăng hiệu quả logistic cho các doanh nghiệp...",
         excerptEn: "The new expressway project will help shorten travel time and increase logistics efficiency for businesses...",
-        url: "#news-oth1"
+        url: "/news/oth1"
       },
       {
         id: "oth2",
@@ -297,18 +297,18 @@ const NewsSection: React.FC = () => {
         titleEn: "Green technology exhibition at Da Nang High-Tech Park",
         excerpt: "Triển lãm giới thiệu những giải pháp công nghệ mới nhất giúp doanh nghiệp phát triển bền vững và thân thiện với môi trường...",
         excerptEn: "The exhibition introduces the latest technological solutions to help businesses develop sustainably and environmentally friendly...",
-        url: "#news-oth2"
+        url: "/news/oth2"
       },
       {
         id: "oth3",
         categoryId: "other",
-        image: "https://images.unsplash.com/photo-1523287562758-66c7fc58967f",
+        image: "https://images.unsplash.com/photo-1523287562758-66c7fc963095",
         date: "13/05/2025",
         title: "Khu công nghệ cao Đà Nẵng được vinh danh là một trong những KCNC xanh nhất Đông Nam Á",
         titleEn: "Da Nang High-Tech Park honored as one of the greenest in Southeast Asia",
         excerpt: "Giải thưởng ghi nhận những nỗ lực trong việc xây dựng môi trường công nghiệp xanh và bền vững...",
         excerptEn: "The award recognizes efforts in building a green and sustainable industrial environment...",
-        url: "#news-oth3"
+        url: "/news/oth3"
       }
     ]
   };

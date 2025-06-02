@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSEZA công bố chính sách ưu đãi đặc biệt - DSEZA Mobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dseza': {
+                            'light-primary': '#416628',
+                            'light-primary-hover': '#5A8C3E',
+                            'light-secondary': '#F2F2F2',
+                            'light-accent': '#6B8E23',
+                            'light-text': '#000000',
+                            'light-text-secondary': '#545454',
+                            'light-border': '#DCDCDC',
+                            'light-bg': '#FFFFFF',
+                            'dark-primary': '#19DBCF',
+                            'dark-primary-hover': '#66FFEB',
+                            'dark-secondary': '#2C3640',
+                            'dark-accent': '#26A69A',
+                            'dark-text': '#FFFFFF',
+                            'dark-text-secondary': '#B0BEC5',
+                            'dark-border': '#455A64',
+                            'dark-bg': '#1E272F',
+                        }
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="font-inter bg-dseza-light-bg dark:bg-dseza-dark-bg text-dseza-light-text dark:text-dseza-dark-text">
+    
+    <!-- Mobile Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-dseza-dark-secondary shadow-md">
+        <div class="flex items-center justify-between h-16 px-4">
+            <a href="/" aria-label="Trang chủ DSEZA">
+                <img src="https://placehold.co/120x40/416628/FFFFFF?text=DSEZA" alt="DSEZA Logo" class="h-8">
+            </a>
+            <div class="flex items-center gap-2">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors" aria-label="Tìm kiếm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+                <button class="px-3 py-1 bg-dseza-light-secondary dark:bg-dseza-dark-secondary text-sm rounded font-medium">
+                    VIE
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors">
+                    <span class="dark:hidden">☀️</span>
+                    <span class="hidden dark:inline">🌙</span>
+                </button>
+                <button id="menu-toggle" class="p-2 rounded-full hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors" aria-label="Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar (Hidden by default) -->
+        <div id="mobile-search" class="hidden px-4 pb-4">
+            <div class="relative">
+                <input type="text" placeholder="Tìm kiếm thông tin..." 
+                       class="w-full px-4 py-2 pr-10 border border-dseza-light-border dark:border-dseza-dark-border rounded-lg focus:outline-none focus:border-dseza-light-primary dark:focus:border-dseza-dark-primary bg-white dark:bg-dseza-dark-bg">
+                <button class="absolute right-2 top-1/2 -translate-y-1/2">
+                    <svg class="w-5 h-5 text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-white dark:bg-dseza-dark-secondary z-50 shadow-xl">
+        <div class="p-4">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-montserrat font-semibold text-lg">Menu</h2>
+                <button onclick="closeMobileMenu()" class="p-2 rounded-full hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="/" class="block py-3 px-4 rounded-lg hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors">Trang chủ</a>
+                <details class="group">
+                    <summary class="py-3 px-4 rounded-lg hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors cursor-pointer flex items-center justify-between">
+                        <span>Giới thiệu</span>
+                        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="pl-4 space-y-1">
+                        <a href="#" class="block py-2 px-4 text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary">Tổng quan</a>
+                        <a href="#" class="block py-2 px-4 text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary">Lịch sử hình thành</a>
+                        <a href="#" class="block py-2 px-4 text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary hover:text-dseza-light-primary dark:hover:text-dseza-dark-primary">Tầm nhìn - Sứ mệnh</a>
+                    </div>
+                </details>
+                <a href="#" class="block py-3 px-4 rounded-lg hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors">Khu chức năng</a>
+                <a href="#" class="block py-3 px-4 rounded-lg hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors">Thông tin đầu tư</a>
+                <a href="#" class="block py-3 px-4 rounded-lg bg-dseza-light-primary/10 text-dseza-light-primary dark:bg-dseza-dark-primary/10 dark:text-dseza-dark-primary">Tin tức</a>
+                <a href="#" class="block py-3 px-4 rounded-lg hover:bg-dseza-light-secondary dark:hover:bg-dseza-dark-bg transition-colors">Liên hệ</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav class="pt-20 pb-4 px-4 bg-dseza-light-secondary dark:bg-dseza-dark-secondary" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2 text-sm">
+            <li>
+                <a href="/" class="text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">Trang chủ</a>
+            </li>
+            <li class="text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                </svg>
+            </li>
+            <li>
+                <a href="/tin-tuc" class="text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">Tin tức</a>
+            </li>
+            <li class="text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                </svg>
+            </li>
+            <li class="text-dseza-light-text dark:text-dseza-dark-text font-medium truncate" aria-current="page">
+                DSEZA công bố chính sách ưu đãi...
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="px-4 py-6">
+        
+        <!-- Hero Image (16:9 aspect ratio) -->
+        <div class="mb-6">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=338&fit=crop&crop=center&auto=format&q=80" 
+                 alt="Khu công nghệ cao Đà Nẵng" 
+                 class="w-full aspect-video object-cover rounded-lg shadow-lg">
+        </div>
+        
+        <!-- Meta Info Stacked -->
+        <div class="mb-4 space-y-3">
+            <div class="flex items-center gap-3">
+                <span class="inline-block px-3 py-1 bg-dseza-light-accent/20 dark:bg-dseza-dark-accent/20 text-dseza-light-accent dark:text-dseza-dark-accent rounded-full text-sm font-medium">
+                    Chính sách mới
+                </span>
+                <span class="text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    5 phút đọc
+                </span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                     alt="Tác giả" 
+                     class="w-8 h-8 rounded-full">
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Ban Biên tập DSEZA</p>
+                    <p class="text-xs text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">02 tháng 6, 2025</p>
+                </div>
+            </div>
+            
+            <!-- Share Buttons -->
+            <div class="flex items-center gap-3 pt-2 border-t border-dseza-light-border dark:border-dseza-dark-border">
+                <span class="text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">Chia sẻ:</span>
+                <div class="flex gap-2">
+                    <button class="p-2 rounded-full bg-blue-600 text-white" aria-label="Facebook">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </button>
+                    <button class="p-2 rounded-full bg-blue-400 text-white" aria-label="Twitter">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                        </svg>
+                    </button>
+                    <button class="p-2 rounded-full bg-dseza-light-secondary dark:bg-dseza-dark-secondary text-dseza-light-text dark:text-dseza-dark-text" aria-label="Sao chép liên kết">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Article Title -->
+        <h1 class="font-montserrat font-bold text-3xl mb-6 leading-tight">
+            DSEZA công bố chính sách ưu đãi đặc biệt cho doanh nghiệp công nghệ cao
+        </h1>
+        
+        <!-- Article Content -->
+        <article class="prose prose-sm max-w-none">
+            <p class="text-lg leading-relaxed mb-6">
+                UBND thành phố Đà Nẵng vừa ban hành Quyết định số 15/2025/QĐ-UBND về việc ban hành chính sách ưu đãi đặc biệt nhằm thu hút các doanh nghiệp công nghệ cao đầu tư vào Khu công nghệ cao Đà Nẵng và các khu công nghiệp trên địa bàn thành phố.
+            </p>
+            
+            <h2 class="font-montserrat font-bold text-xl mt-8 mb-4 text-dseza-light-primary dark:text-dseza-dark-primary">
+                Những ưu đãi nổi bật
+            </h2>
+            
+            <p class="leading-relaxed mb-6">
+                Theo quyết định mới, các doanh nghiệp công nghệ cao sẽ được hưởng những ưu đãi vượt trội so với các chính sách trước đây, bao gồm miễn thuế thu nhập doanh nghiệp trong 4 năm đầu tiên và giảm 50% thuế suất trong 9 năm tiếp theo.
+            </p>
+            
+            <!-- Mobile Blockquote -->
+            <blockquote class="border-l-4 border-dseza-light-primary dark:border-dseza-dark-primary pl-4 py-3 my-6 bg-dseza-light-secondary/50 dark:bg-dseza-dark-secondary/50 rounded-r-lg">
+                <p class="italic text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary mb-2">
+                    "Chính sách này thể hiện quyết tâm của thành phố Đà Nẵng trong việc xây dựng một trung tâm công nghệ hàng đầu khu vực, thu hút các nhà đầu tư và doanh nghiệp công nghệ cao trong và ngoài nước."
+                </p>
+                <cite class="text-sm font-medium text-dseza-light-primary dark:text-dseza-dark-primary">
+                    - Ông Lê Trung Chinh, Chủ tịch UBND TP Đà Nẵng
+                </cite>
+            </blockquote>
+            
+            <!-- Mobile Inline Image -->
+            <figure class="my-6">
+                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&h=300&fit=crop&crop=center&auto=format&q=80" 
+                     alt="Buổi họp báo công bố chính sách" 
+                     class="w-full aspect-video object-cover rounded-lg shadow-md">
+                <figcaption class="text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary text-center mt-2 italic">
+                    Buổi họp báo công bố chính sách ưu đãi mới
+                </figcaption>
+            </figure>
+            
+            <h3 class="font-montserrat font-semibold text-lg mt-6 mb-3 text-dseza-light-accent dark:text-dseza-dark-accent">
+                Chi tiết các ưu đãi
+            </h3>
+            
+            <!-- Mobile List -->
+            <ul class="space-y-3 mb-6">
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-dseza-light-primary dark:bg-dseza-dark-primary rounded-full mt-2 flex-shrink-0"></span>
+                    <span><strong>Miễn thuế thu nhập doanh nghiệp:</strong> 4 năm đầu tiên, sau đó giảm 50% trong 9 năm tiếp theo</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-dseza-light-primary dark:bg-dseza-dark-primary rounded-full mt-2 flex-shrink-0"></span>
+                    <span><strong>Hỗ trợ thuê đất:</strong> Giảm 50% giá thuê đất trong 10 năm đầu</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-dseza-light-primary dark:bg-dseza-dark-primary rounded-full mt-2 flex-shrink-0"></span>
+                    <span><strong>Hỗ trợ đào tạo nhân lực:</strong> Tài trợ tối đa 80% chi phí đào tạo chuyên môn</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-dseza-light-primary dark:bg-dseza-dark-primary rounded-full mt-2 flex-shrink-0"></span>
+                    <span><strong>Thủ tục hành chính:</strong> Cơ chế một cửa, giải quyết hồ sơ trong 15 ngày làm việc</span>
+                </li>
+            </ul>
+            
+            <p class="leading-relaxed mb-6">
+                Các doanh nghiệp quan tâm có thể nộp hồ sơ đăng ký tại Ban Quản lý Khu công nghệ cao và các KCN Đà Nẵng (DSEZA) hoặc thông qua hệ thống trực tuyến trên website chính thức của DSEZA. Chính sách có hiệu lực từ ngày 1/7/2025.
+            </p>
+        </article>
+
+    </main>
+
+    <!-- Sidebar Content (moved to bottom for mobile) -->
+    <section class="px-4 py-6 bg-dseza-light-secondary dark:bg-dseza-dark-secondary">
+        <h2 class="font-montserrat font-bold text-xl mb-6">Có thể bạn quan tâm</h2>
+        
+        <!-- Recent News -->
+        <div class="space-y-4 mb-8">
+            <article class="bg-white dark:bg-dseza-dark-bg rounded-lg p-4 shadow">
+                <div class="flex gap-3">
+                    <img src="https://images.unsplash.com/photo-1560472355-536de3962603?w=100&h=80&fit=crop&crop=center&auto=format&q=80" 
+                         alt="Samsung mở rộng" 
+                         class="w-24 h-18 object-cover rounded flex-shrink-0">
+                    <div class="flex-1">
+                        <span class="inline-block px-2 py-1 bg-dseza-light-primary/20 dark:bg-dseza-dark-primary/20 text-dseza-light-primary dark:text-dseza-dark-primary rounded text-xs mb-1">Sự kiện</span>
+                        <h3 class="font-medium text-sm leading-tight mb-1">Samsung mở rộng nhà máy sản xuất tại KCN Đà Nẵng</h3>
+                        <p class="text-xs text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">01/06/2025</p>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white dark:bg-dseza-dark-bg rounded-lg p-4 shadow">
+                <div class="flex gap-3">
+                    <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=100&h=80&fit=crop&crop=center&auto=format&q=80" 
+                         alt="Startup công nghệ" 
+                         class="w-24 h-18 object-cover rounded flex-shrink-0">
+                    <div class="flex-1">
+                        <span class="inline-block px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded text-xs mb-1">Doanh nghiệp</span>
+                        <h3 class="font-medium text-sm leading-tight mb-1">10 startup công nghệ mới gia nhập Khu công nghệ cao</h3>
+                        <p class="text-xs text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">31/05/2025</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <!-- Newsletter -->
+        <div class="bg-gradient-to-br from-dseza-light-primary to-dseza-light-accent dark:from-dseza-dark-primary dark:to-dseza-dark-accent rounded-lg p-4 text-white">
+            <h3 class="font-montserrat font-bold mb-2">Nhận tin tức mới nhất</h3>
+            <p class="text-sm mb-3 opacity-90">Đăng ký để nhận thông tin cập nhật</p>
+            <form class="space-y-2">
+                <input type="email" placeholder="Email của bạn" class="w-full px-3 py-2 rounded text-dseza-light-text bg-white/90 placeholder:text-gray-500 text-sm">
+                <button type="submit" class="w-full px-3 py-2 bg-white/20 hover:bg-white/30 text-white font-medium rounded transition-colors text-sm">
+                    Đăng ký
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Related News (Vertical Stack) -->
+    <section class="px-4 py-8">
+        <h2 class="font-montserrat font-bold text-xl mb-6">Tin tức liên quan</h2>
+        
+        <div class="space-y-4">
+            <article class="bg-white dark:bg-dseza-dark-bg rounded-lg overflow-hidden shadow">
+                <img src="https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=200&fit=crop&crop=center&auto=format&q=80" 
+                     alt="Samsung mở rộng" 
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <span class="inline-block px-2 py-1 bg-dseza-light-primary/20 dark:bg-dseza-dark-primary/20 text-dseza-light-primary dark:text-dseza-dark-primary rounded text-xs mb-2">Sự kiện</span>
+                    <h3 class="font-montserrat font-semibold mb-2">Samsung mở rộng nhà máy sản xuất tại KCN Đà Nẵng</h3>
+                    <p class="text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary line-clamp-2 mb-3">
+                        Tập đoàn Samsung vừa công bố kế hoạch mở rộng quy mô nhà máy sản xuất...
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">01/06/2025</span>
+                        <a href="#" class="text-dseza-light-primary dark:text-dseza-dark-primary text-sm font-medium">Đọc thêm →</a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white dark:bg-dseza-dark-bg rounded-lg overflow-hidden shadow">
+                <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=200&fit=crop&crop=center&auto=format&q=80" 
+                     alt="Startup công nghệ" 
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <span class="inline-block px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded text-xs mb-2">Doanh nghiệp</span>
+                    <h3 class="font-montserrat font-semibold mb-2">10 startup công nghệ mới gia nhập Khu công nghệ cao</h3>
+                    <p class="text-sm text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary line-clamp-2 mb-3">
+                        Khu công nghệ cao Đà Nẵng đón nhận 10 startup công nghệ mới trong tháng 5...
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-dseza-light-text-secondary dark:text-dseza-dark-text-secondary">31/05/2025</span>
+                        <a href="#" class="text-dseza-light-primary dark:text-dseza-dark-primary text-sm font-medium">Đọc thêm →</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="text-center mt-6">
+            <a href="/tin-tuc" class="inline-flex items-center gap-2 px-6 py-3 bg-dseza-light-primary dark:bg-dseza-dark-primary text-white font-semibold rounded-lg transition-all">
+                Xem thêm tin tức
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Mobile Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="px-4">
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-3">Về DSEZA</h3>
+                    <p class="text-gray-400 text-sm mb-4">Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng</p>
+                    <img src="https://placehold.co/120x40/416628/FFFFFF?text=DSEZA" alt="DSEZA Logo" class="h-8">
+                </div>
+                
+                <div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-3">Liên hệ</h3>
+                    <div class="space-y-2 text-gray-400 text-sm">
+                        <p>📍 Tầng 18, Trung tâm Hành chính TP, 24 Trần Phú, Đà Nẵng</p>
+                        <p>📞 (0236) 3 840 888</p>
+                        <p>✉️ info@dseza.gov.vn</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-3">Theo dõi chúng tôi</h3>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 mt-6 text-center">
+                <p class="text-gray-400 text-sm">&copy; 2025 DSEZA. Bản quyền thuộc về DSEZA.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        function openMobileMenu() {
+            document.getElementById('mobile-menu-overlay').classList.remove('hidden');
+            document.getElementById('mobile-menu').classList.add('open');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            document.getElementById('mobile-menu').classList.remove('open');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Event listeners
+        document.getElementById('menu-toggle').addEventListener('click', openMobileMenu);
+
+        // Search functionality
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const searchBar = document.getElementById('mobile-search');
+            searchBar.classList.toggle('hidden');
+            if (!searchBar.classList.contains('hidden')) {
+                searchBar.querySelector('input').focus();
+            }
+        });
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            // Save preference
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        });
+    </script>
+</body>
+</html> 

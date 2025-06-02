@@ -91,6 +91,19 @@ const viTranslations: TranslationObject = {
       management: "Hoạt động Ban quản lý",
       other: "Tin khác",
     },
+    detail: {
+      share: "Chia sẻ",
+      relatedNews: "Tin liên quan",
+      recentNews: "Tin tức gần đây",
+      categories: "Danh mục",
+      newsletterSignup: "Đăng ký nhận tin",
+      newsletterDescription: "Nhận thông tin mới nhất về các hoạt động đầu tư và phát triển tại DSEZA",
+      emailPlaceholder: "Nhập email của bạn",
+      subscribe: "Đăng ký",
+      readingTime: "phút đọc",
+      author: "Tác giả",
+      publishDate: "Ngày đăng",
+    },
     sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
         title: "Dự án Khu Công Nghệ Cao Đà Nẵng Mở Rộng Giai Đoạn 2 Chính Thức Khởi Động",
@@ -331,6 +344,19 @@ const enTranslations: TranslationObject = {
       digital: "Digital Transformation",
       management: "Management Activities",
       other: "Other News",
+    },
+    detail: {
+      share: "Share",
+      relatedNews: "Related News",
+      recentNews: "Recent News",
+      categories: "Categories",
+      newsletterSignup: "Sign Up for Newsletter",
+      newsletterDescription: "Get the latest updates on investment and development activities at DSEZA",
+      emailPlaceholder: "Enter your email",
+      subscribe: "Subscribe",
+      readingTime: "minutes read",
+      author: "Author",
+      publishDate: "Published Date",
     },
     sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
