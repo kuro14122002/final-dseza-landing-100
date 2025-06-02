@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import SitemapPage from "./pages/SitemapPage";
 import NewsDetailPage from "./pages/NewsDetailPage";
+import CategoryNewsPage from "./pages/CategoryNewsPage";
 import MobileLayout from "./components/mobile/MobileLayout";
 
 // Create a client
@@ -28,8 +29,10 @@ const App: React.FC = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/sitemap" element={<SitemapPage />} />
-                  <Route path="/news/:articleId" element={<NewsDetailPage />} />
-                  <Route path="/events/:eventId" element={<NewsDetailPage />} />
+                  <Route path="/news" element={<Index />} />
+                  <Route path="/news/category/:categorySlug" element={<CategoryNewsPage />} />
+                  <Route path="/news/:slug" element={<NewsDetailPage />} />
+                  <Route path="/events/:slug" element={<NewsDetailPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

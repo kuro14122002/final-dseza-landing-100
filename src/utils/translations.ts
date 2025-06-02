@@ -84,6 +84,17 @@ const viTranslations: TranslationObject = {
   // News Section
   news: {
     title: "TIN TỨC",
+    subtitle: "Cập nhật thông tin mới nhất về hoạt động đầu tư và phát triển tại DSEZA",
+    viewAll: "Xem tất cả",
+    noFeatured: "Không có tin nổi bật",
+    noArticles: "Không có bài viết nào",
+    categoryNotFound: "Danh mục không tồn tại",
+    categoryNotFoundDesc: "Danh mục bạn đang tìm kiếm không tồn tại.",
+    categoryError: "Có lỗi xảy ra",
+    categoryErrorDesc: "Không thể tải dữ liệu danh mục. Vui lòng thử lại sau.",
+    categoryTotalArticles: "Tổng cộng {count} bài viết",
+    noArticlesInCategory: "Chưa có bài viết nào",
+    noArticlesInCategoryDesc: "Danh mục này chưa có bài viết nào. Vui lòng quay lại sau để xem thêm nội dung mới.",
     categories: {
       investment: "Đầu tư – Hợp tác quốc tế",
       training: "Đào tạo, Ươm tạo khởi nghiệp",
@@ -103,6 +114,10 @@ const viTranslations: TranslationObject = {
       readingTime: "phút đọc",
       author: "Tác giả",
       publishDate: "Ngày đăng",
+      notFound: "Bài viết không tìm thấy",
+      notFoundDesc: "Bài viết bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.",
+      error: "Có lỗi xảy ra",
+      errorDesc: "Không thể tải nội dung bài viết. Vui lòng thử lại sau.",
     },
     sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
@@ -258,6 +273,15 @@ const viTranslations: TranslationObject = {
     lightMode: "Chế độ sáng",
     darkMode: "Chế độ tối",
   },
+
+  // Common elements
+  common: {
+    goBack: "Quay lại",
+    loading: "Đang tải...",
+    error: "Lỗi",
+    retry: "Thử lại",
+    notFound: "Không tìm thấy",
+  },
 };
 
 const enTranslations: TranslationObject = {
@@ -338,6 +362,17 @@ const enTranslations: TranslationObject = {
   // News Section
   news: {
     title: "NEWS",
+    subtitle: "Get the latest updates on investment and development activities at DSEZA",
+    viewAll: "View all",
+    noFeatured: "No featured articles",
+    noArticles: "No articles found",
+    categoryNotFound: "Category not found",
+    categoryNotFoundDesc: "The category you are looking for does not exist.",
+    categoryError: "An error occurred",
+    categoryErrorDesc: "Unable to load category data. Please try again later.",
+    categoryTotalArticles: "Total {count} articles",
+    noArticlesInCategory: "No articles yet",
+    noArticlesInCategoryDesc: "This category doesn't have any articles yet. Please check back later for new content.",
     categories: {
       investment: "Investment & International Cooperation",
       training: "Training & Business Incubation",
@@ -357,6 +392,10 @@ const enTranslations: TranslationObject = {
       readingTime: "minutes read",
       author: "Author",
       publishDate: "Published Date",
+      notFound: "Article not found",
+      notFoundDesc: "The article you are looking for does not exist or has been deleted.",
+      error: "An error occurred",
+      errorDesc: "Unable to load article content. Please try again later.",
     },
     sampleNews: { // Giữ lại sample news nếu có nơi khác dùng, nếu không có thể xóa
       news1: {
@@ -510,6 +549,15 @@ const enTranslations: TranslationObject = {
   themeToggle: {
     lightMode: "Light Mode",
     darkMode: "Dark Mode",
+  },
+
+  // Common elements
+  common: {
+    goBack: "Go Back",
+    loading: "Loading...",
+    error: "Error",
+    retry: "Retry",
+    notFound: "Not Found",
   },
 };
 

@@ -26,27 +26,27 @@ const EventCard = ({ image, date, title, titleEn, excerpt, excerptEn, featured =
   
   return (
     <div className={cn(
-      "relative overflow-hidden rounded-xl group", // Added 'group' for hover effects on children
+      "relative overflow-hidden rounded-xl group",
       isFeature ? 'col-span-2 row-span-2' : ''
     )}>
       <AspectRatio ratio={1/1}>
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-105" // Added image zoom on hover
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 ease-in-out group-hover:scale-105"
           style={{ backgroundImage: `url(${image})` }}
         ></div>
       </AspectRatio>
       {/* Overlay for darkening effect on hover */}
       <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/50"></div>
       
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4">
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-3 lg:p-4">
         <div className="flex items-center gap-2 mb-2 text-white/80">
           <CalendarDays className="h-4 w-4" />
           <span className="text-xs">{date}</span>
         </div>
         <h3 className={cn(
-          "text-white transition-all duration-300 ease-in-out", // Added transition for font weight
-          "group-hover:font-extrabold", // Make title bolder on hover
-          isFeature ? 'text-xl mb-2 font-bold' : 'text-base font-semibold' // Adjusted base font weight
+          "text-white transition-all duration-300 ease-in-out",
+          "group-hover:font-extrabold",
+          isFeature ? 'text-lg lg:text-xl mb-2 font-bold' : 'text-sm lg:text-base font-semibold'
         )}>
           <a href="#" className="hover:underline">{displayTitle}</a>
         </h3>
@@ -110,18 +110,18 @@ const FeaturedEvents: React.FC = () => {
 
   return (
     <section className={cn(
-      "py-12 px-4 sm:px-6 lg:px-8",
+      "py-8 lg:py-10 px-4 sm:px-6 lg:px-8",
       theme === "dark" ? "bg-[#2C363F]" : "bg-[#F2F2F2]"
     )}>
       <div className="container mx-auto">
         <h2 className={cn(
-          "font-montserrat font-bold text-3xl md:text-4xl mb-8 text-center",
+          "font-montserrat font-bold text-2xl md:text-3xl lg:text-4xl mb-6 lg:mb-8 text-center",
           textColor
         )}>
           {t('featuredEvents.title')}
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-6">
           {events.map((event, index) => (
             <EventCard 
               key={event.id}

@@ -22,34 +22,33 @@ const QuickAccessButtons: React.FC = () => {
     {
       textKey: "quickAccess.onlinePublicService",
       href: "https://dichvucong.danang.gov.vn/web/guest/dich-vu-cong",
-      icon: <Briefcase size={48} />
+      icon: <Briefcase size={40} />
     },
     {
       textKey: "quickAccess.administrativeProcedures",
       href: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
-      icon: <FileText size={48} />
+      icon: <FileText size={40} />
     },
     {
       textKey: "quickAccess.publicResults",
       href: "https://dichvucong.danang.gov.vn/web/guest/thu-tuc-hanh-chinh",
-      icon: <SearchCheck size={48} />
+      icon: <SearchCheck size={40} />
     },
     {
       textKey: "quickAccess.feedbackChannel",
       href: "https://dseza.danang.gov.vn/lien-he/",
-      icon: <MessageSquare size={48} />
+      icon: <MessageSquare size={40} />
     },
     {
       textKey: "quickAccess.appointmentScheduling",
       href: "http://49.156.54.87/index.php",
-      icon: <Calendar size={48} />
+      icon: <Calendar size={40} />
     }
   ];
   
   // Get theme-specific styles
   const cardBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
   const cardText = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
-  // const cardHoverBg = theme === "dark" ? "hover:bg-dseza-dark-hover-bg" : "hover:bg-dseza-light-hover-bg"; // Removed, will use new hover below
   const cardBorder = theme === "dark" ? "border-dseza-dark-border" : "border-dseza-light-border";
   const iconColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
 
@@ -61,11 +60,11 @@ const QuickAccessButtons: React.FC = () => {
   
   return (
     <section className={cn(
-      "py-12 md:py-16 px-4 sm:px-6 lg:px-8",
+      "py-8 md:py-12 px-4 sm:px-6 lg:px-8",
       theme === "dark" ? "bg-[#1D262E]" : "bg-[#FFFFFF]"
     )}>
       <div className="container mx-auto max-w-screen-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
           {cards.map((card, index) => (
             <a
               key={index}
@@ -73,27 +72,27 @@ const QuickAccessButtons: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
-                "group", // Added group class
+                "group",
                 cardBg,
                 cardText,
                 cardBorder,
-                cardHoverBgAccent, // Use new hover background
-                cardHoverBorderAccent, // Use new hover border
+                cardHoverBgAccent,
+                cardHoverBorderAccent,
                 "flex flex-col items-center justify-center",
-                "h-72 rounded-xl border transition-all duration-300 ease-in-out", // Added ease-in-out
-                "p-6 text-center hover:scale-103 hover:shadow-xl" // Increased shadow on hover
+                "h-48 sm:h-56 lg:h-64 rounded-xl border transition-all duration-300 ease-in-out",
+                "p-4 lg:p-6 text-center hover:scale-103 hover:shadow-xl"
               )}
             >
               <div className={cn(
                 iconColor,
-                iconHoverColor, // Icon hover color
-                "mb-6 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:-translate-y-1" // Icon animation
+                iconHoverColor,
+                "mb-4 transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:-translate-y-1"
               )}>
                 {card.icon}
               </div>
               <span className={cn(
-                "font-inter font-semibold text-lg line-clamp-3 transition-colors duration-300", // Added transition-colors
-                textHoverColor // Text hover color
+                "font-inter font-semibold text-sm lg:text-base line-clamp-3 transition-colors duration-300",
+                textHoverColor
               )}>
                 {t(card.textKey)}
               </span>
