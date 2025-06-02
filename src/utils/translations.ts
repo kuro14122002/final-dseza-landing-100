@@ -8,6 +8,7 @@ type TranslationObject = {
 // Translation objects for Vietnamese and English
 const viTranslations: TranslationObject = {
   // Common
+  home: "Trang chủ",
   sitemap: "Sơ đồ site",
 
   // Nav Items
@@ -248,6 +249,7 @@ const viTranslations: TranslationObject = {
 
 const enTranslations: TranslationObject = {
   // Common
+  home: "Home",
   sitemap: "Site Map",
 
   // Nav Items

@@ -61,9 +61,7 @@ const TopBar: React.FC = () => {
         <div className="flex items-center">
           {/* Sơ đồ site */}
           <a
-            href="https://dseza.danang.gov.vn/so-do-site"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/sitemap"
             className={cn(
               "flex items-center transition-colors duration-300 mr-6 text-sm",
               isScrolled ? scrolledTextColor : initialTextColor

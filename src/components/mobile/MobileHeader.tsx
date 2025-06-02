@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -414,7 +413,7 @@ const MobileHeader: React.FC = () => {
                     </span>
                     
                     <a
-                      href="https://dseza.danang.gov.vn/so-do-site"
+                      href="/sitemap"
                       className={cn(
                         "font-inter text-xs",
                         getPrimaryColor()
