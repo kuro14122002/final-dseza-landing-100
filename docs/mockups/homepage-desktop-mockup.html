@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSEZA - Homepage Desktop Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        // Tailwind config với DSEZA colors
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dseza': {
+                            // Light mode colors
+                            'light-primary': '#416628',
+                            'light-primary-hover': '#5A8C3E',
+                            'light-secondary': '#F2F2F2',
+                            'light-accent': '#6B8E23',
+                            'light-accent-hover': '#85AC4D',
+                            'light-text': '#000000',
+                            'light-text-secondary': '#545454',
+                            'light-border': '#DCDCDC',
+                            'light-bg': '#FFFFFF',
+                            // Dark mode colors
+                            'dark-primary': '#19DBCF',
+                            'dark-primary-hover': '#66FFEB',
+                            'dark-secondary': '#2C3640',
+                            'dark-accent': '#26A69A',
+                            'dark-accent-hover': '#3CAEA3',
+                            'dark-text': '#FFFFFF',
+                            'dark-text-secondary': '#B0BEC5',
+                            'dark-border': '#455A64',
+                            'dark-bg': '#1E272F',
+                        }
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Dark mode glass */
+        .dark .glass {
+            background: rgba(44, 54, 64, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+    </style>
+</head>
+<body class="font-inter bg-dseza-light-bg text-dseza-light-text">
+    
+    <!-- TopBar -->
+    <div class="glass fixed top-0 left-0 right-0 z-50 h-10">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between text-sm">
+            <!-- Social Links -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-dseza-light-text-secondary hover:text-dseza-light-primary">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-dseza-light-text-secondary hover:text-dseza-light-primary">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="flex items-center gap-6">
+                <span class="text-dseza-light-text-secondary">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    info@dseza.gov.vn
+                </span>
+                <span class="text-dseza-light-text-secondary">
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                    (0236) 3 840 888
+                </span>
+            </div>
+            
+            <!-- Language & Theme -->
+            <div class="flex items-center gap-4">
+                <button class="px-3 py-1 bg-dseza-light-secondary hover:bg-dseza-light-accent hover:text-white rounded transition-all">
+                    VIE
+                </button>
+                <button class="text-dseza-light-text-secondary hover:text-dseza-light-primary">
+                    ☀️
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- NavigationBar -->
+    <nav class="sticky top-10 z-40 bg-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Search -->
+                <div class="flex items-center gap-6">
+                    <img src="/api/placeholder/180/60" alt="DSEZA Logo" class="h-12">
+                    <div class="relative w-80">
+                        <input type="text" placeholder="Tìm kiếm thông tin..." 
+                               class="w-full px-4 py-2 pr-10 border border-dseza-light-border rounded-full focus:outline-none focus:border-dseza-light-primary">
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 text-dseza-light-text-secondary hover:text-dseza-light-primary">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Menu Items -->
+                <div class="flex items-center gap-8">
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Trang chủ</a>
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Giới thiệu</a>
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Khu chức năng</a>
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Thông tin đầu tư</a>
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Tin tức</a>
+                    <a href="#" class="font-montserrat font-medium hover:text-dseza-light-primary transition-colors">Liên hệ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative h-[80vh] mt-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20 z-10"></div>
+        <img src="/api/placeholder/1920/800" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover">
+        
+        <!-- Social Bar -->
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-dseza-light-primary text-white w-14 py-4 rounded-r-lg">
+            <div class="flex flex-col items-center gap-4">
+                <a href="#" class="hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" class="hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="relative z-20 h-full flex items-center">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl text-white">
+                    <h1 class="font-montserrat font-bold text-5xl mb-4">
+                        Khu công nghệ cao và các KCN Đà Nẵng
+                    </h1>
+                    <p class="text-xl mb-8 text-gray-200">
+                        Điểm đến hàng đầu cho các nhà đầu tư và doanh nghiệp công nghệ cao tại Việt Nam
+                    </p>
+                    <div class="flex gap-4">
+                        <button class="px-8 py-3 bg-dseza-light-primary hover:bg-dseza-light-primary-hover text-white font-semibold rounded-lg transition-colors">
+                            Khám phá cơ hội đầu tư
+                        </button>
+                        <button class="px-8 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-lg backdrop-blur transition-colors">
+                            Liên hệ tư vấn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Image Tabs -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-80 p-6">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/20 backdrop-blur p-4 rounded-lg cursor-pointer hover:bg-white/30 transition-colors">
+                    <img src="/api/placeholder/150/100" alt="KCN" class="w-full h-20 object-cover rounded mb-2">
+                    <p class="text-white text-sm font-medium">Khu công nghiệp</p>
+                </div>
+                <div class="bg-white/20 backdrop-blur p-4 rounded-lg cursor-pointer hover:bg-white/30 transition-colors">
+                    <img src="/api/placeholder/150/100" alt="KCNC" class="w-full h-20 object-cover rounded mb-2">
+                    <p class="text-white text-sm font-medium">Khu công nghệ cao</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+            <button class="w-3 h-3 bg-white rounded-full"></button>
+            <button class="w-3 h-3 bg-white/50 rounded-full"></button>
+            <button class="w-3 h-3 bg-white/50 rounded-full"></button>
+            <button class="w-3 h-3 bg-white/50 rounded-full"></button>
+        </div>
+    </section>
+    
+    <!-- Quick Access Buttons -->
+    <section class="py-20 bg-dseza-light-secondary">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-5 gap-6">
+                <!-- Quick Access Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-dseza-light-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-2">Thủ tục đầu tư</h3>
+                    <p class="text-sm text-dseza-light-text-secondary">Hướng dẫn chi tiết các bước thực hiện</p>
+                </div>
+                
+                <!-- Repeat for other quick access buttons -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-dseza-light-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-2">Đăng ký dự án</h3>
+                    <p class="text-sm text-dseza-light-text-secondary">Form đăng ký và hồ sơ cần thiết</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-dseza-light-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-2">Ưu đãi đầu tư</h3>
+                    <p class="text-sm text-dseza-light-text-secondary">Chính sách ưu đãi hấp dẫn</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-dseza-light-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-2">Bản đồ KCN</h3>
+                    <p class="text-sm text-dseza-light-text-secondary">Vị trí và quy hoạch chi tiết</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all cursor-pointer text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-dseza-light-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-montserrat font-semibold text-lg mb-2">Hỗ trợ 24/7</h3>
+                    <p class="text-sm text-dseza-light-text-secondary">Tư vấn trực tuyến mọi lúc</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Events -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Sự kiện nổi bật</h2>
+            
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Main Event -->
+                <div class="col-span-7 relative group cursor-pointer overflow-hidden rounded-lg">
+                    <img src="/api/placeholder/700/400" alt="Main Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute top-4 right-4 bg-dseza-light-primary text-white px-4 py-2 rounded-lg">
+                        <p class="font-semibold">25/06/2025</p>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <h3 class="font-montserrat font-bold text-2xl mb-2">Hội nghị Xúc tiến Đầu tư 2025</h3>
+                        <p class="mb-4">Cơ hội kết nối với hơn 500 nhà đầu tư trong và ngoài nước</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-dseza-light-accent hover:gap-3 transition-all">
+                            Xem thêm
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Side Events -->
+                <div class="col-span-5 space-y-6">
+                    <div class="relative group cursor-pointer overflow-hidden rounded-lg h-[190px]">
+                        <img src="/api/placeholder/500/200" alt="Event 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-dseza-light-primary text-white px-3 py-1 rounded text-sm">
+                            15/06/2025
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                            <h3 class="font-montserrat font-semibold text-lg mb-1">Workshop: Smart City Solutions</h3>
+                            <a href="#" class="text-sm text-dseza-light-accent hover:underline">Xem thêm →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group cursor-pointer overflow-hidden rounded-lg h-[190px]">
+                        <img src="/api/placeholder/500/200" alt="Event 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-dseza-light-primary text-white px-3 py-1 rounded text-sm">
+                            10/06/2025
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                            <h3 class="font-montserrat font-semibold text-lg mb-1">Khánh thành KCN Mở rộng</h3>
+                            <a href="#" class="text-sm text-dseza-light-accent hover:underline">Xem thêm →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- News Section -->
+    <section class="py-20 bg-dseza-light-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="font-montserrat font-bold text-3xl">Tin tức & Cập nhật</h2>
+                <div class="flex gap-4">
+                    <button class="px-6 py-2 bg-dseza-light-primary text-white rounded-lg">Tất cả</button>
+                    <button class="px-6 py-2 bg-white text-dseza-light-text rounded-lg hover:bg-dseza-light-primary hover:text-white transition-colors">Chính sách</button>
+                    <button class="px-6 py-2 bg-white text-dseza-light-text rounded-lg hover:bg-dseza-light-primary hover:text-white transition-colors">Sự kiện</button>
+                    <button class="px-6 py-2 bg-white text-dseza-light-text rounded-lg hover:bg-dseza-light-primary hover:text-white transition-colors">Doanh nghiệp</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Main News -->
+                <div class="col-span-6 bg-white rounded-lg overflow-hidden shadow-lg">
+                    <img src="/api/placeholder/600/300" alt="Main News" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <span class="inline-block px-3 py-1 bg-dseza-light-accent/20 text-dseza-light-accent rounded-full text-sm mb-3">Chính sách mới</span>
+                        <h3 class="font-montserrat font-bold text-xl mb-3">Đà Nẵng công bố chính sách ưu đãi đặc biệt cho doanh nghiệp công nghệ cao</h3>
+                        <p class="text-dseza-light-text-secondary mb-4 line-clamp-3">UBND thành phố Đà Nẵng vừa ban hành quyết định về chính sách ưu đãi đặc biệt nhằm thu hút các doanh nghiệp công nghệ cao...</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-dseza-light-text-secondary">02/06/2025</span>
+                            <a href="#" class="text-dseza-light-primary hover:underline">Đọc thêm →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Side News -->
+                <div class="col-span-6 space-y-4">
+                    <div class="bg-white rounded-lg p-4 shadow flex gap-4">
+                        <img src="/api/placeholder/150/100" alt="News 2" class="w-32 h-24 object-cover rounded">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 bg-dseza-light-primary/20 text-dseza-light-primary rounded text-xs mb-2">Sự kiện</span>
+                            <h4 class="font-montserrat font-semibold mb-1 line-clamp-2">Samsung mở rộng nhà máy sản xuất tại KCN Đà Nẵng</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-dseza-light-text-secondary">01/06/2025</span>
+                                <a href="#" class="text-sm text-dseza-light-primary hover:underline">Xem →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4 shadow flex gap-4">
+                        <img src="/api/placeholder/150/100" alt="News 3" class="w-32 h-24 object-cover rounded">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-600 rounded text-xs mb-2">Doanh nghiệp</span>
+                            <h4 class="font-montserrat font-semibold mb-1 line-clamp-2">10 startup công nghệ mới gia nhập Khu công nghệ cao</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-dseza-light-text-secondary">31/05/2025</span>
+                                <a href="#" class="text-sm text-dseza-light-primary hover:underline">Xem →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-4 shadow flex gap-4">
+                        <img src="/api/placeholder/150/100" alt="News 4" class="w-32 h-24 object-cover rounded">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 bg-purple-100 text-purple-600 rounded text-xs mb-2">Hợp tác</span>
+                            <h4 class="font-montserrat font-semibold mb-1 line-clamp-2">Ký kết hợp tác chiến lược với Khu công nghệ Hàn Quốc</h4>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-dseza-light-text-secondary">30/05/2025</span>
+                                <a href="#" class="text-sm text-dseza-light-primary hover:underline">Xem →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Functional Zones Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Các khu chức năng</h2>
+            
+            <div class="grid grid-cols-12 gap-8">
+                <!-- Zone Details -->
+                <div class="col-span-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="/api/placeholder/800/400" alt="Zone Image" class="w-full h-96 object-cover">
+                        <div class="p-8">
+                            <h3 class="font-montserrat font-bold text-2xl mb-4">Khu công nghệ cao Đà Nẵng</h3>
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <div class="text-center p-4 bg-dseza-light-secondary rounded-lg">
+                                    <p class="text-3xl font-bold text-dseza-light-primary">1,129.76</p>
+                                    <p class="text-sm text-dseza-light-text-secondary">Hecta</p>
+                                </div>
+                                <div class="text-center p-4 bg-dseza-light-secondary rounded-lg">
+                                    <p class="text-3xl font-bold text-dseza-light-primary">85%</p>
+                                    <p class="text-sm text-dseza-light-text-secondary">Tỷ lệ lấp đầy</p>
+                                </div>
+                                <div class="text-center p-4 bg-dseza-light-secondary rounded-lg">
+                                    <p class="text-3xl font-bold text-dseza-light-primary">150+</p>
+                                    <p class="text-sm text-dseza-light-text-secondary">Doanh nghiệp</p>
+                                </div>
+                            </div>
+                            <p class="text-dseza-light-text-secondary leading-relaxed">
+                                Khu công nghệ cao Đà Nẵng là điểm đến lý tưởng cho các doanh nghiệp công nghệ với hạ tầng hiện đại, 
+                                vị trí chiến lược và các chính sách ưu đãi hấp dẫn. Khu vực được quy hoạch bài bản với đầy đủ tiện ích...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Zone Selector -->
+                <div class="col-span-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow border-2 border-dseza-light-primary">
+                            <img src="/api/placeholder/200/150" alt="KCNC" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">Khu công nghệ cao</h4>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">
+                            <img src="/api/placeholder/200/150" alt="KCN" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">KCN Hòa Khánh</h4>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">
+                            <img src="/api/placeholder/200/150" alt="CNTT" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">Khu CNTT tập trung</h4>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">
+                            <img src="/api/placeholder/200/150" alt="Lien Chieu" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">KCN Liên Chiểu</h4>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">
+                            <img src="/api/placeholder/200/150" alt="Hoa Cam" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">KCN Hòa Cầm</h4>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-shadow">
+                            <img src="/api/placeholder/200/150" alt="Free Trade" class="w-full h-24 object-cover rounded mb-3">
+                            <h4 class="font-montserrat font-semibold text-sm">Khu thương mại tự do</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Investment Information -->
+    <section class="py-20 bg-dseza-light-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Thông tin đầu tư</h2>
+            
+            <!-- Tabs -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button class="px-8 py-3 bg-dseza-light-primary text-white rounded-lg font-semibold">
+                    Ưu đãi đầu tư
+                </button>
+                <button class="px-8 py-3 bg-white text-dseza-light-text rounded-lg font-semibold hover:bg-dseza-light-primary hover:text-white transition-colors">
+                    Thủ tục hành chính
+                </button>
+            </div>
+            
+            <!-- Cards Carousel -->
+            <div class="overflow-hidden">
+                <div class="flex gap-6">
+                    <!-- Investment Card -->
+                    <div class="bg-white rounded-lg p-6 shadow-lg min-w-[350px]">
+                        <div class="w-16 h-16 bg-dseza-light-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-montserrat font-semibold text-xl mb-3">Miễn thuế thu nhập</h3>
+                        <p class="text-dseza-light-text-secondary mb-4">Miễn thuế thu nhập doanh nghiệp 4 năm đầu, giảm 50% trong 9 năm tiếp theo</p>
+                        <a href="#" class="text-dseza-light-primary hover:underline inline-flex items-center gap-2">
+                            Tìm hiểu thêm
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-6 shadow-lg min-w-[350px]">
+                        <div class="w-16 h-16 bg-dseza-light-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-montserrat font-semibold text-xl mb-3">Hỗ trợ mặt bằng</h3>
+                        <p class="text-dseza-light-text-secondary mb-4">Cho thuê đất với giá ưu đãi, hỗ trợ xây dựng cơ sở hạ tầng</p>
+                        <a href="#" class="text-dseza-light-primary hover:underline inline-flex items-center gap-2">
+                            Tìm hiểu thêm
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg p-6 shadow-lg min-w-[350px]">
+                        <div class="w-16 h-16 bg-dseza-light-primary/10 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-dseza-light-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-montserrat font-semibold text-xl mb-3">Thủ tục nhanh gọn</h3>
+                        <p class="text-dseza-light-text-secondary mb-4">Cơ chế một cửa, thời gian xử lý hồ sơ nhanh chóng trong 15 ngày</p>
+                        <a href="#" class="text-dseza-light-primary hover:underline inline-flex items-center gap-2">
+                            Tìm hiểu thêm
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Vị trí chiến lược</h2>
+            
+            <div class="grid grid-cols-12 gap-8">
+                <!-- Tab Selector -->
+                <div class="col-span-4">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <button class="w-full text-left p-4 bg-dseza-light-primary text-white rounded-lg mb-4 flex items-center justify-between">
+                            <span class="font-semibold">VR Tour</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                        <button class="w-full text-left p-4 bg-dseza-light-secondary rounded-lg flex items-center justify-between hover:bg-dseza-light-primary hover:text-white transition-colors">
+                            <span class="font-semibold">Bản đồ số</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Content Display -->
+                <div class="col-span-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden h-[500px]">
+                        <img src="/api/placeholder/800/500" alt="VR Tour Preview" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <button class="bg-white/90 hover:bg-white text-dseza-light-primary p-6 rounded-full shadow-xl hover:scale-110 transition-transform">
+                                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Resources Section -->
+    <section class="py-20 bg-dseza-light-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Tài nguyên</h2>
+            
+            <!-- Tabs -->
+            <div class="flex justify-center gap-4 mb-8">
+                <button class="px-8 py-3 bg-dseza-light-primary text-white rounded-lg font-semibold">
+                    Hình ảnh
+                </button>
+                <button class="px-8 py-3 bg-white text-dseza-light-text rounded-lg font-semibold hover:bg-dseza-light-primary hover:text-white transition-colors">
+                    Video
+                </button>
+                <button class="px-8 py-3 bg-white text-dseza-light-text rounded-lg font-semibold hover:bg-dseza-light-primary hover:text-white transition-colors">
+                    Tài liệu
+                </button>
+            </div>
+            
+            <!-- Resources Grid -->
+            <div class="grid grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer">
+                    <img src="/api/placeholder/300/200" alt="Resource 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-1">Khu công nghệ cao - Toàn cảnh</h4>
+                        <p class="text-sm text-dseza-light-text-secondary">15 hình ảnh</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer">
+                    <img src="/api/placeholder/300/200" alt="Resource 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-1">Hạ tầng giao thông</h4>
+                        <p class="text-sm text-dseza-light-text-secondary">23 hình ảnh</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer">
+                    <img src="/api/placeholder/300/200" alt="Resource 3" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-1">Doanh nghiệp tiêu biểu</h4>
+                        <p class="text-sm text-dseza-light-text-secondary">32 hình ảnh</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow cursor-pointer">
+                    <img src="/api/placeholder/300/200" alt="Resource 4" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-1">Sự kiện 2024</h4>
+                        <p class="text-sm text-dseza-light-text-secondary">45 hình ảnh</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Businesses and Partners -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="font-montserrat font-bold text-3xl text-center mb-12">Doanh nghiệp & Đối tác</h2>
+            
+            <!-- Infinite Scroll Carousel -->
+            <div class="overflow-hidden">
+                <div class="flex gap-8 animate-scroll">
+                    <img src="/api/placeholder/200/80" alt="Partner 1" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 2" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 3" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 4" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 5" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 6" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <!-- Duplicate for continuous scroll -->
+                    <img src="/api/placeholder/200/80" alt="Partner 1" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                    <img src="/api/placeholder/200/80" alt="Partner 2" class="h-20 object-contain grayscale hover:grayscale-0 transition-all">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dseza-light-text text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="font-montserrat font-semibold text-xl mb-4">Về DSEZA</h3>
+                    <p class="text-gray-400 mb-4">Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng - Đơn vị quản lý nhà nước về đầu tư và phát triển các khu công nghiệp.</p>
+                    <img src="/api/placeholder/150/50" alt="DSEZA Logo" class="h-10">
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-montserrat font-semibold text-xl mb-4">Liên kết nhanh</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Thủ tục đầu tư</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Chính sách ưu đãi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Bản đồ KCN</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tin tức</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-montserrat font-semibold text-xl mb-4">Liên hệ</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-5 h-5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            </svg>
+                            <span>Tầng 18, Trung tâm Hành chính TP, 24 Trần Phú, Đà Nẵng</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <span>(0236) 3 840 888</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>info@dseza.gov.vn</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Map -->
+                <div>
+                    <h3 class="font-montserrat font-semibold text-xl mb-4">Bản đồ</h3>
+                    <div class="bg-gray-700 rounded-lg h-48 flex items-center justify-center">
+                        <span class="text-gray-500">Google Maps</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 DSEZA - Ban Quản lý Khu công nghệ cao và các KCN Đà Nẵng. Bản quyền thuộc về DSEZA.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <style>
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .animate-scroll {
+            animation: scroll 20s linear infinite;
+        }
+    </style>
+</body>
+</html> 
