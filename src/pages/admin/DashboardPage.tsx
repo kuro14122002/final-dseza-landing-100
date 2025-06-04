@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@/context/ThemeContext';
 import { useTranslation } from '@/utils/translations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import { 
   FileText, 
   Calendar, 
@@ -18,19 +19,97 @@ import {
   PlusCircle
 } from 'lucide-react';
 
+interface StatsData {
+  totalNews: number | string;
+  totalEvents: number | string;
+  totalViewsThisMonth: number | string;
+  activeUsersThisMonth: number | string;
+}
+
 const DashboardPage: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  // State for API data
+  const [statsData, setStatsData] = useState<StatsData | null>(null);
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
 
   // Lấy thông tin admin từ localStorage
   const adminUser = localStorage.getItem('adminUser');
   const user = adminUser ? JSON.parse(adminUser) : null;
 
-  // Mock data for statistics
+  // Fetch statistics data from API
+  useEffect(() => {
+    const fetchStats = async () => {
+      setIsLoadingStats(true);
+      const token = localStorage.getItem('adminUserToken');
+
+      if (!token) {
+        toast.error("Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại.");
+        localStorage.removeItem('adminUser');
+        navigate('/admin/login');
+        setIsLoadingStats(false);
+        return;
+      }
+
+      try {
+        // API endpoint - adjust this URL to match your backend
+        const API_STATS_URL = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost'}/api/v1/stats/overview.php`;
+        
+        const response = await fetch(API_STATS_URL, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          toast.error("Phiên đăng nhập đã hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.");
+          localStorage.removeItem('adminUserToken');
+          localStorage.removeItem('adminUser');
+          navigate('/admin/login');
+          return;
+        }
+
+        const responseData = await response.json();
+
+        if (response.ok && responseData.status === 'success') {
+          setStatsData(responseData.data);
+        } else {
+          console.error('API Error:', responseData);
+          toast.error(responseData.message || "Không thể tải dữ liệu thống kê.");
+          // Set default values if API fails
+          setStatsData({ 
+            totalNews: 'N/A', 
+            totalEvents: 'N/A', 
+            totalViewsThisMonth: 'N/A', 
+            activeUsersThisMonth: 'N/A' 
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch dashboard stats:", error);
+        toast.error("Lỗi kết nối đến máy chủ thống kê.");
+        setStatsData({ 
+          totalNews: 'N/A', 
+          totalEvents: 'N/A', 
+          totalViewsThisMonth: 'N/A', 
+          activeUsersThisMonth: 'N/A' 
+        });
+      } finally {
+        setIsLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, [navigate, t]);
+
+  // Updated stats array with dynamic data
   const stats = [
     {
       title: t('admin.dashboard.totalNews', 'Tổng số Tin tức'),
-      value: '24',
+      value: isLoadingStats ? '...' : (statsData?.totalNews ?? '0'),
       icon: FileText,
       trend: '+12%',
       trendUp: true,
@@ -38,7 +117,7 @@ const DashboardPage: React.FC = () => {
     },
     {
       title: t('admin.dashboard.totalEvents', 'Tổng số Sự kiện'),
-      value: '8',
+      value: isLoadingStats ? '...' : (statsData?.totalEvents ?? '0'),
       icon: Calendar,
       trend: '+8%',
       trendUp: true,
@@ -46,15 +125,15 @@ const DashboardPage: React.FC = () => {
     },
     {
       title: t('admin.dashboard.totalViews', 'Lượt xem (Tháng này)'),
-      value: '15.2K',
+      value: isLoadingStats ? '...' : (statsData?.totalViewsThisMonth ?? '0'),
       icon: Eye,
       trend: '+24%',
       trendUp: true,
       color: theme === 'dark' ? 'text-dseza-dark-primary' : 'text-dseza-light-primary'
     },
     {
-      title: 'Người dùng hoạt động',
-      value: '1.2K',
+      title: t('admin.dashboard.activeUsersThisMonth', 'Người dùng hoạt động'),
+      value: isLoadingStats ? '...' : (statsData?.activeUsersThisMonth ?? '0'),
       icon: Users,
       trend: '+5%',
       trendUp: true,
