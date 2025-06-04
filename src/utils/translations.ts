@@ -240,6 +240,156 @@ const viTranslations: TranslationObject = {
         showing: "Hiển thị {from}-{to} trên {total} mục",
       },
     },
+    search: {
+      placeholder: "Tìm kiếm tin tức...",
+      noResults: "Không tìm thấy kết quả nào",
+      searching: "Đang tìm kiếm...",
+    },
+    userManagement: {
+      title: "Quản lý Người dùng",
+      placeholder: "Coming soon: Tính năng quản lý người dùng đang được phát triển.",
+    },
+    categoryManagement: {
+      title: "Quản lý Danh mục",
+      placeholder: "Coming soon: Tính năng quản lý danh mục đang được phát triển.",
+    },
+    settings: {
+      title: "Cài đặt",
+      placeholder: "Coming soon: Trang cài đặt hệ thống đang được phát triển.",
+    },
+    // NEW: Admin News Form translations
+    newsForm: {
+      title: {
+        create: "Tạo Tin tức mới",
+        edit: "Chỉnh sửa Tin tức",
+      },
+      cardTitle: {
+        create: "Thông tin Tin tức mới",
+        edit: "Cập nhật thông tin Tin tức",
+      },
+      sections: {
+        basicInfo: "Thông tin cơ bản",
+        content: "Nội dung",
+        media: "Hình ảnh",
+        settings: "Cài đặt",
+      },
+      fields: {
+        title: {
+          label: "Tiêu đề (Tiếng Việt)",
+          placeholder: "Nhập tiêu đề bài viết...",
+        },
+        titleEn: {
+          label: "Tiêu đề (Tiếng Anh)",
+          placeholder: "Enter article title in English...",
+        },
+        slug: {
+          label: "Slug (URL)",
+          placeholder: "vi-du-slug-bai-viet",
+          description: "URL thân thiện cho bài viết. Tự động tạo từ tiêu đề, có thể chỉnh sửa.",
+        },
+        excerpt: {
+          label: "Mô tả ngắn (Tiếng Việt)",
+          placeholder: "Nhập mô tả ngắn cho bài viết...",
+        },
+        excerptEn: {
+          label: "Mô tả ngắn (Tiếng Anh)",
+          placeholder: "Enter short description in English...",
+        },
+        content: {
+          label: "Nội dung (Tiếng Việt)",
+          placeholder: "Nhập nội dung chi tiết bài viết...",
+          description: "TODO: Sẽ được thay thế bằng WYSIWYG Editor",
+        },
+        contentEn: {
+          label: "Nội dung (Tiếng Anh)",
+          placeholder: "Enter detailed content in English...",
+          description: "TODO: Sẽ được thay thế bằng WYSIWYG Editor",
+        },
+        image: {
+          label: "Ảnh đại diện",
+          select: "Chọn ảnh",
+          change: "Thay đổi ảnh",
+          remove: "Xóa ảnh",
+          description: "TODO: Sẽ được tích hợp với Media Library",
+        },
+        category: {
+          label: "Danh mục",
+          placeholder: "Chọn danh mục...",
+        },
+        status: {
+          label: "Trạng thái",
+          placeholder: "Chọn trạng thái...",
+        },
+        publishDate: {
+          label: "Ngày xuất bản",
+          placeholder: "Chọn ngày xuất bản",
+        },
+        author: {
+          label: "Tác giả",
+          placeholder: "Nhập tên tác giả...",
+        },
+        readingTime: {
+          label: "Thời gian đọc (Tiếng Việt)",
+          placeholder: "5 phút",
+        },
+        readingTimeEn: {
+          label: "Thời gian đọc (Tiếng Anh)",
+          placeholder: "5 min read",
+        },
+        isFeatured: {
+          label: "Tin nổi bật",
+        },
+      },
+      buttons: {
+        back: "Quay lại",
+        cancel: "Hủy",
+        save: "Lưu thay đổi",
+        create: "Tạo Tin tức",
+        saving: "Đang lưu...",
+      },
+      validation: {
+        title: {
+          required: "Tiêu đề là bắt buộc",
+          maxLength: "Tiêu đề không được vượt quá {count} ký tự",
+        },
+        titleEn: {
+          maxLength: "Tiêu đề tiếng Anh không được vượt quá {count} ký tự",
+        },
+        slug: {
+          required: "Slug là bắt buộc",
+          format: "Slug chỉ được chứa chữ thường, số và dấu gạch ngang",
+        },
+        excerpt: {
+          maxLength: "Mô tả ngắn không được vượt quá {count} ký tự",
+        },
+        excerptEn: {
+          maxLength: "Mô tả ngắn tiếng Anh không được vượt quá {count} ký tự",
+        },
+        content: {
+          required: "Nội dung là bắt buộc",
+        },
+        category: {
+          required: "Danh mục là bắt buộc",
+        },
+        status: {
+          required: "Trạng thái là bắt buộc",
+        },
+        publishDate: {
+          required: "Ngày xuất bản là bắt buộc",
+        },
+        author: {
+          required: "Tác giả là bắt buộc",
+        },
+      },
+      messages: {
+        createSuccess: "Tạo tin tức thành công!",
+        updateSuccess: "Cập nhật tin tức thành công!",
+        createError: "Có lỗi xảy ra khi tạo tin tức",
+        updateError: "Có lỗi xảy ra khi cập nhật tin tức",
+        loadError: "Có lỗi xảy ra khi tải dữ liệu",
+        articleNotFound: "Không tìm thấy bài viết",
+      },
+    },
   },
 
   // Error messages
@@ -635,6 +785,156 @@ const enTranslations: TranslationObject = {
       pagination: {
         itemsPerPage: "Items per page:",
         showing: "Showing {from}-{to} of {total} items",
+      },
+    },
+    search: {
+      placeholder: "Search news...",
+      noResults: "No results found",
+      searching: "Searching...",
+    },
+    userManagement: {
+      title: "User Management",
+      placeholder: "Coming soon: User management feature is under development.",
+    },
+    categoryManagement: {
+      title: "Category Management",
+      placeholder: "Coming soon: Category management feature is under development.",
+    },
+    settings: {
+      title: "Settings",
+      placeholder: "Coming soon: System settings page is under development.",
+    },
+    // NEW: Admin News Form translations
+    newsForm: {
+      title: {
+        create: "Create New News",
+        edit: "Edit News",
+      },
+      cardTitle: {
+        create: "New News Information",
+        edit: "Update News Information",
+      },
+      sections: {
+        basicInfo: "Basic Information",
+        content: "Content",
+        media: "Image",
+        settings: "Settings",
+      },
+      fields: {
+        title: {
+          label: "Title (Vietnamese)",
+          placeholder: "Enter article title...",
+        },
+        titleEn: {
+          label: "Title (English)",
+          placeholder: "Enter article title in English...",
+        },
+        slug: {
+          label: "Slug (URL)",
+          placeholder: "example-article-slug",
+          description: "SEO-friendly URL for the article. Auto-generated from title, can be edited.",
+        },
+        excerpt: {
+          label: "Short Description (Vietnamese)",
+          placeholder: "Enter short description for the article...",
+        },
+        excerptEn: {
+          label: "Short Description (English)",
+          placeholder: "Enter short description in English...",
+        },
+        content: {
+          label: "Content (Vietnamese)",
+          placeholder: "Enter detailed article content...",
+          description: "TODO: Will be replaced with WYSIWYG Editor",
+        },
+        contentEn: {
+          label: "Content (English)",
+          placeholder: "Enter detailed content in English...",
+          description: "TODO: Will be replaced with WYSIWYG Editor",
+        },
+        image: {
+          label: "Featured Image",
+          select: "Select Image",
+          change: "Change Image",
+          remove: "Remove Image",
+          description: "TODO: Will be integrated with Media Library",
+        },
+        category: {
+          label: "Category",
+          placeholder: "Select category...",
+        },
+        status: {
+          label: "Status",
+          placeholder: "Select status...",
+        },
+        publishDate: {
+          label: "Publish Date",
+          placeholder: "Select publish date",
+        },
+        author: {
+          label: "Author",
+          placeholder: "Enter author name...",
+        },
+        readingTime: {
+          label: "Reading Time (Vietnamese)",
+          placeholder: "5 phút",
+        },
+        readingTimeEn: {
+          label: "Reading Time (English)",
+          placeholder: "5 min read",
+        },
+        isFeatured: {
+          label: "Featured News",
+        },
+      },
+      buttons: {
+        back: "Back",
+        cancel: "Cancel",
+        save: "Save Changes",
+        create: "Create News",
+        saving: "Saving...",
+      },
+      validation: {
+        title: {
+          required: "Title is required",
+          maxLength: "Title must not exceed {count} characters",
+        },
+        titleEn: {
+          maxLength: "English title must not exceed {count} characters",
+        },
+        slug: {
+          required: "Slug is required",
+          format: "Slug can only contain lowercase letters, numbers, and hyphens",
+        },
+        excerpt: {
+          maxLength: "Short description must not exceed {count} characters",
+        },
+        excerptEn: {
+          maxLength: "English short description must not exceed {count} characters",
+        },
+        content: {
+          required: "Content is required",
+        },
+        category: {
+          required: "Category is required",
+        },
+        status: {
+          required: "Status is required",
+        },
+        publishDate: {
+          required: "Publish date is required",
+        },
+        author: {
+          required: "Author is required",
+        },
+      },
+      messages: {
+        createSuccess: "News created successfully!",
+        updateSuccess: "News updated successfully!",
+        createError: "An error occurred while creating news",
+        updateError: "An error occurred while updating news",
+        loadError: "An error occurred while loading data",
+        articleNotFound: "Article not found",
       },
     },
   },

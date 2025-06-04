@@ -1,7 +1,8 @@
 // src/services/newsService.ts
-import { NewsArticle, NewsCategory } from '@/types/news';
+import { NewsArticle, NewsCategory, AdminNewsArticle } from '@/types/news';
 
-const MOCK_DELAY = 1000; // Giả lập độ trễ mạng
+// Mock delay constant for simulating API calls
+const MOCK_DELAY = 1000; // Giảm delay để test nhanh hơn
 
 // Dữ liệu mẫu cho categories
 const mockCategories: NewsCategory[] = [
@@ -37,8 +38,8 @@ const mockCategories: NewsCategory[] = [
   }
 ];
 
-// Dữ liệu mẫu cho articles (cập nhật với content field)
-const mockArticles: NewsArticle[] = [
+// Extended mock data for admin articles with all AdminNewsArticle fields
+const mockAdminArticles: AdminNewsArticle[] = [
   {
     id: "inv1",
     slug: "dseza-thu-hut-fdi-100-trieu-usd",
@@ -97,7 +98,12 @@ const mockArticles: NewsArticle[] = [
 
       <h2>Positive impact on local economy</h2>
       <p>The project is expected to create more than 2,000 direct jobs and 5,000 indirect jobs for local workers. Notably, 80% of the jobs created will be for highly qualified engineers and technical staff.</p>
-    `
+    `,
+    // Admin-specific fields
+    status: 'published' as const,
+    author: 'admin@dseza.gov.vn',
+    createdDate: '2025-05-20T00:00:00Z',
+    updatedDate: '2025-05-20T02:30:00Z'
   },
   {
     id: "inv2",
@@ -127,7 +133,11 @@ const mockArticles: NewsArticle[] = [
       <p>During the workshop, many Singaporean companies expressed special interest in the high-tech, logistics and financial services sectors in Da Nang.</p>
 
       <p>Mr. Lee Wei Ming, Chairman of the Singapore Business Association in Vietnam, said: "Da Nang is increasingly asserting its position as an important economic center in Central Vietnam and an ideal bridge for Singaporean businesses to expand their operations in Vietnam."</p>
-    `
+    `,
+    status: 'published' as const,
+    author: 'editor@dseza.gov.vn',
+    createdDate: '2025-05-18T00:00:00Z',
+    updatedDate: '2025-05-18T01:15:00Z'
   },
   {
     id: "inv3",
@@ -153,7 +163,10 @@ const mockArticles: NewsArticle[] = [
 
       <h2>Improving investment environment</h2>
       <p>The city has deployed many new incentive policies, especially in high-tech, renewable energy and sustainable tourism sectors.</p>
-    `
+    `,
+    status: 'draft' as const,
+    author: 'admin@dseza.gov.vn',
+    createdDate: '2025-05-15T00:00:00Z'
   },
   {
     id: "tr1",
@@ -179,7 +192,10 @@ const mockArticles: NewsArticle[] = [
 
       <h2>Priority sectors</h2>
       <p>The program focuses on: AI, IoT, FinTech, HealthTech and GreenTech sectors.</p>
-    `
+    `,
+    status: 'pending' as const,
+    author: 'editor@dseza.gov.vn',
+    createdDate: '2025-05-19T00:00:00Z'
   },
   {
     id: "tr2",
@@ -198,20 +214,23 @@ const mockArticles: NewsArticle[] = [
       <p>Thỏa thuận hợp tác chiến lược giữa DSEZA và Đại học FPT nhằm đào tạo nguồn nhân lực chất lượng cao.</p>
 
       <h2>Nội dung hợp tác</h2>
-      <p>Hai bên sẽ phối hợp trong việc thiết kế chương trình đào tạo, thực tập và tuyển dụng.</p>
+      <p>Chương trình đào tạo bao gồm: lập trình, AI, và quản lý dự án công nghệ.</p>
     `,
     contentEn: `
       <p>Strategic cooperation agreement between DSEZA and FPT University to train high-quality human resources.</p>
 
       <h2>Cooperation content</h2>
-      <p>Both parties will coordinate in designing training programs, internships and recruitment.</p>
-    `
+      <p>Training program includes: programming, AI, and technology project management.</p>
+    `,
+    status: 'published' as const,
+    author: 'admin@dseza.gov.vn',
+    createdDate: '2025-05-16T00:00:00Z'
   },
   {
-    id: "dg1",
-    slug: "trien-khai-he-thong-quan-ly-thong-minh",
-    title: "Triển khai hệ thống quản lý thông minh tại DSEZA",
-    titleEn: "Implementing smart management system at DSEZA",
+    id: "dig1",
+    slug: "dseza-trien-khai-he-thong-quan-ly-thong-minh",
+    title: "DSEZA triển khai hệ thống quản lý thông minh",
+    titleEn: "DSEZA deploys smart management system",
     excerpt: "Hệ thống quản lý thông minh sẽ giúp tối ưu hóa quy trình vận hành và nâng cao hiệu quả quản lý khu vực.",
     excerptEn: "The smart management system will help optimize operational processes and enhance management efficiency in the zone.",
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
@@ -231,9 +250,30 @@ const mockArticles: NewsArticle[] = [
 
       <h2>Key features</h2>
       <p>The system includes: security monitoring, traffic management, and environmental monitoring.</p>
-    `
+    `,
+    status: 'published' as const,
+    author: 'admin@dseza.gov.vn',
+    createdDate: '2025-05-17T00:00:00Z'
   }
 ];
+
+// Re-export NewsArticle data for backward compatibility
+const mockArticles: NewsArticle[] = mockAdminArticles.map(article => ({
+  id: article.id,
+  slug: article.slug,
+  title: article.title,
+  titleEn: article.titleEn,
+  excerpt: article.excerpt,
+  excerptEn: article.excerptEn,
+  imageUrl: article.imageUrl,
+  publishDate: article.publishDate,
+  category: article.category,
+  readingTime: article.readingTime,
+  readingTimeEn: article.readingTimeEn,
+  content: article.content,
+  contentEn: article.contentEn,
+  isFeatured: article.isFeatured,
+}));
 
 // Response type for paginated articles
 export interface PaginatedNewsResponse {
@@ -409,6 +449,162 @@ export const fetchRecentNews = async (
       // Sort by date descending
       articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
       resolve(articles.slice(0, limit));
+    }, MOCK_DELAY);
+  });
+}; 
+
+// =============================================================================
+// ADMIN FUNCTIONS FOR NEWS FORM
+// =============================================================================
+
+// Fetch admin article by ID for editing
+export const fetchAdminNewsArticleById = async (id: string): Promise<AdminNewsArticle | null> => {
+  console.log(`Fetching admin article with ID: ${id}`);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const article = mockAdminArticles.find(a => a.id === id);
+      console.log('Found admin article:', article);
+      resolve(article || null);
+    }, MOCK_DELAY);
+  });
+};
+
+// Create new admin article
+export const createAdminNewsArticle = async (data: any): Promise<AdminNewsArticle> => {
+  console.log('Creating new admin article with data:', data);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        // Generate new ID
+        const newId = `new_${Date.now()}`;
+        
+        // Find category object
+        const category = mockCategories.find(c => c.id === data.category);
+        if (!category) {
+          throw new Error('Category not found');
+        }
+
+        // Create new admin article
+        const newArticle: AdminNewsArticle = {
+          id: newId,
+          slug: data.slug,
+          title: data.title,
+          titleEn: data.titleEn || '',
+          excerpt: data.excerpt || '',
+          excerptEn: data.excerptEn || '',
+          imageUrl: data.imageUrl || '',
+          publishDate: data.publishDate.toISOString(),
+          category: category,
+          isFeatured: data.isFeatured || false,
+          readingTime: data.readingTime || '',
+          readingTimeEn: data.readingTimeEn || '',
+          content: data.content,
+          contentEn: data.contentEn || '',
+          status: data.status,
+          author: data.author,
+          createdDate: new Date().toISOString(),
+        };
+
+        // Add to mock data (in a real app, this would be an API call)
+        mockAdminArticles.unshift(newArticle);
+        
+        // Also add to regular articles for public display
+        const publicArticle: NewsArticle = {
+          id: newArticle.id,
+          slug: newArticle.slug,
+          title: newArticle.title,
+          titleEn: newArticle.titleEn,
+          excerpt: newArticle.excerpt,
+          excerptEn: newArticle.excerptEn,
+          imageUrl: newArticle.imageUrl,
+          publishDate: newArticle.publishDate,
+          category: newArticle.category,
+          readingTime: newArticle.readingTime,
+          readingTimeEn: newArticle.readingTimeEn,
+          content: newArticle.content,
+          contentEn: newArticle.contentEn,
+          isFeatured: newArticle.isFeatured,
+        };
+        mockArticles.unshift(publicArticle);
+
+        console.log('Successfully created admin article:', newArticle);
+        resolve(newArticle);
+      } catch (error) {
+        console.error('Error creating admin article:', error);
+        reject(error);
+      }
+    }, MOCK_DELAY);
+  });
+};
+
+// Update existing admin article
+export const updateAdminNewsArticle = async (id: string, data: any): Promise<AdminNewsArticle> => {
+  console.log(`Updating admin article with ID: ${id}`, data);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        const index = mockAdminArticles.findIndex(a => a.id === id);
+        if (index === -1) {
+          throw new Error('Article not found');
+        }
+
+        // Find category object
+        const category = mockCategories.find(c => c.id === data.category);
+        if (!category) {
+          throw new Error('Category not found');
+        }
+
+        // Update admin article
+        const updatedArticle: AdminNewsArticle = {
+          ...mockAdminArticles[index],
+          slug: data.slug,
+          title: data.title,
+          titleEn: data.titleEn || '',
+          excerpt: data.excerpt || '',
+          excerptEn: data.excerptEn || '',
+          imageUrl: data.imageUrl || '',
+          publishDate: data.publishDate.toISOString(),
+          category: category,
+          isFeatured: data.isFeatured || false,
+          readingTime: data.readingTime || '',
+          readingTimeEn: data.readingTimeEn || '',
+          content: data.content,
+          contentEn: data.contentEn || '',
+          status: data.status,
+          author: data.author,
+          updatedDate: new Date().toISOString(),
+        };
+
+        mockAdminArticles[index] = updatedArticle;
+
+        // Also update in regular articles
+        const publicIndex = mockArticles.findIndex(a => a.id === id);
+        if (publicIndex !== -1) {
+          const updatedPublicArticle: NewsArticle = {
+            id: updatedArticle.id,
+            slug: updatedArticle.slug,
+            title: updatedArticle.title,
+            titleEn: updatedArticle.titleEn,
+            excerpt: updatedArticle.excerpt,
+            excerptEn: updatedArticle.excerptEn,
+            imageUrl: updatedArticle.imageUrl,
+            publishDate: updatedArticle.publishDate,
+            category: updatedArticle.category,
+            readingTime: updatedArticle.readingTime,
+            readingTimeEn: updatedArticle.readingTimeEn,
+            content: updatedArticle.content,
+            contentEn: updatedArticle.contentEn,
+            isFeatured: updatedArticle.isFeatured,
+          };
+          mockArticles[publicIndex] = updatedPublicArticle;
+        }
+
+        console.log('Successfully updated admin article:', updatedArticle);
+        resolve(updatedArticle);
+      } catch (error) {
+        console.error('Error updating admin article:', error);
+        reject(error);
+      }
     }, MOCK_DELAY);
   });
 }; 

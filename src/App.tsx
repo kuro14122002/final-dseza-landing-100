@@ -14,6 +14,7 @@ import CategoryNewsPage from "./pages/CategoryNewsPage";
 import LoginPage from "./pages/admin/LoginPage";
 import DashboardPage from "./pages/admin/DashboardPage";
 import AdminNewsListPage from "./pages/admin/AdminNewsListPage";
+import AdminNewsFormPage from "./pages/admin/AdminNewsFormPage";
 import AdminLayout from "./layouts/AdminLayout";
 import MobileLayout from "./components/mobile/MobileLayout";
 
@@ -37,9 +38,9 @@ const App: React.FC = () => (
                 <Route path="/admin/*" element={<AdminLayout />}>
                   <Route path="dashboard" element={<DashboardPage />} />
                   <Route path="news" element={<AdminNewsListPage />} />
+                  <Route path="news/create" element={<AdminNewsFormPage />} />
+                  <Route path="news/edit/:articleId" element={<AdminNewsFormPage />} />
                   {/* Add more admin routes here when needed */}
-                  {/* <Route path="news/create" element={<CreateNewsPage />} /> */}
-                  {/* <Route path="news/edit/:id" element={<EditNewsPage />} /> */}
                   {/* <Route path="events" element={<EventManagementPage />} /> */}
                   {/* <Route path="events/create" element={<CreateEventPage />} /> */}
                 </Route>

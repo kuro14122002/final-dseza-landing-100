@@ -26,23 +26,25 @@ const AdminHeader: React.FC = () => {
     const pathSegments = location.pathname.split('/').filter(Boolean);
     const breadcrumbs = [];
 
-    // Always start with Admin
-    breadcrumbs.push({
-      label: 'Admin',
-      href: '/admin/dashboard',
-      isLast: false
-    });
+    // Always start with Admin (only if we're not already at dashboard)
+    if (location.pathname !== '/admin/dashboard') {
+      breadcrumbs.push({
+        label: 'Admin',
+        href: '/admin/dashboard',
+        isLast: false
+      });
+    }
 
     // Map path segments to breadcrumb labels
     const pathLabels: Record<string, string> = {
-      dashboard: t('admin.sidebar.dashboard', 'Dashboard'),
-      news: t('admin.sidebar.newsManagement', 'Quản lý Tin tức'),
-      events: t('admin.sidebar.eventManagement', 'Quản lý Sự kiện'),
-      categories: t('admin.sidebar.categoryManagement', 'Quản lý Danh mục'),
-      resources: t('admin.sidebar.resourceManagement', 'Quản lý Tài nguyên'),
-      users: t('admin.sidebar.userManagement', 'Quản lý Người dùng'),
-      create: t('admin.common.create', 'Tạo mới'),
-      edit: t('admin.common.edit', 'Chỉnh sửa')
+      dashboard: t('admin.sidebar.dashboard'),
+      news: t('admin.sidebar.newsManagement'),
+      events: t('admin.sidebar.eventManagement'),
+      categories: t('admin.sidebar.categoryManagement'),
+      resources: t('admin.sidebar.resourceManagement'),
+      users: t('admin.sidebar.userManagement'),
+      create: t('admin.common.create'),
+      edit: t('admin.common.edit')
     };
 
     // Build breadcrumbs from path segments
@@ -50,12 +52,13 @@ const AdminHeader: React.FC = () => {
       const segment = pathSegments[i];
       const isLast = i === pathSegments.length - 1;
       
-      // Skip 'admin' segment as it's already added
+      // Skip 'admin' segment as it's handled above
       if (segment === 'admin') continue;
 
+      const href = '/' + pathSegments.slice(0, i + 1).join('/');
       breadcrumbs.push({
         label: pathLabels[segment] || segment,
-        href: '/' + pathSegments.slice(0, i + 1).join('/'),
+        href,
         isLast
       });
     }
@@ -76,9 +79,11 @@ const AdminHeader: React.FC = () => {
       <div className="flex-1">
         <Breadcrumb>
           <BreadcrumbList>
-            {breadcrumbs.map((breadcrumb, index) => (
-              <React.Fragment key={breadcrumb.href}>
-                <BreadcrumbItem>
+            {breadcrumbs.map((breadcrumb, index) => {
+              const items = [];
+              
+              items.push(
+                <BreadcrumbItem key={`item-${index}`}>
                   {breadcrumb.isLast ? (
                     <BreadcrumbPage className={cn(
                       "font-medium font-montserrat",
@@ -100,13 +105,21 @@ const AdminHeader: React.FC = () => {
                     </BreadcrumbLink>
                   )}
                 </BreadcrumbItem>
-                {!breadcrumb.isLast && (
-                  <BreadcrumbSeparator className={cn(
-                    theme === 'dark' ? 'text-dseza-dark-border' : 'text-dseza-light-border'
-                  )} />
-                )}
-              </React.Fragment>
-            ))}
+              );
+              
+              if (!breadcrumb.isLast) {
+                items.push(
+                  <BreadcrumbSeparator 
+                    key={`separator-${index}`}
+                    className={cn(
+                      theme === 'dark' ? 'text-dseza-dark-border' : 'text-dseza-light-border'
+                    )} 
+                  />
+                );
+              }
+              
+              return items;
+            }).flat()}
           </BreadcrumbList>
         </Breadcrumb>
       </div>

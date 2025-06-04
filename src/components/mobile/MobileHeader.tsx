@@ -432,18 +432,20 @@ const MobileHeader: React.FC = () => {
                     <ThemeToggle />
                   </div>
                   
-                  {/* Login/Register Button */}
+                  {/* Login Button */}
                   <div className="mt-4">
-                    <Button
-                      className={cn(
-                        "w-full py-2.5 px-5 font-inter font-medium text-base rounded-md",
-                        getPrimaryBgColor(),
-                        getPrimaryHoverBgColor(),
-                        theme === "dark" ? "text-dseza-dark-main-bg" : "text-white"
-                      )}
-                    >
-                      Đăng ký / Đăng nhập
-                    </Button>
+                    <a href="/admin/login">
+                      <Button
+                        className={cn(
+                          "w-full py-2.5 px-5 font-inter font-medium text-base rounded-md",
+                          getPrimaryBgColor(),
+                          getPrimaryHoverBgColor(),
+                          theme === "dark" ? "text-dseza-dark-main-bg" : "text-white"
+                        )}
+                      >
+                        Đăng nhập
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
