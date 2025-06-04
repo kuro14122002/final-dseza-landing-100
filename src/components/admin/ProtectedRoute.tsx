@@ -8,12 +8,23 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const navigate = useNavigate();
 
+  const clearAuthData = () => {
+    localStorage.removeItem('adminUser');
+    localStorage.removeItem('adminUserToken');
+  };
+
+  const redirectToLogin = () => {
+    clearAuthData();
+    navigate('/admin/login', { replace: true });
+  };
+
   useEffect(() => {
     const adminUser = localStorage.getItem('adminUser');
+    const adminToken = localStorage.getItem('adminUserToken');
     
-    if (!adminUser) {
+    if (!adminUser || !adminToken) {
       // Redirect to login if not authenticated
-      navigate('/admin/login', { replace: true });
+      redirectToLogin();
       return;
     }
 
@@ -21,8 +32,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       const user = JSON.parse(adminUser);
       // Check if user data is valid
       if (!user.email || !user.loginTime) {
-        localStorage.removeItem('adminUser');
-        navigate('/admin/login', { replace: true });
+        redirectToLogin();
         return;
       }
 
@@ -32,21 +42,46 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
       
       if (now.getTime() - loginTime.getTime() > sessionDuration) {
-        localStorage.removeItem('adminUser');
-        navigate('/admin/login', { replace: true });
+        redirectToLogin();
         return;
       }
+
+      // Optional: Validate JWT token with backend (uncomment if needed)
+      // validateTokenWithBackend(adminToken);
     } catch (error) {
       // Invalid JSON in localStorage
-      localStorage.removeItem('adminUser');
-      navigate('/admin/login', { replace: true });
+      redirectToLogin();
       return;
     }
   }, [navigate]);
 
+  // Optional function to validate token with backend
+  const validateTokenWithBackend = async (token: string) => {
+    try {
+      const API_VALIDATE_URL = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost/api'}/v1/auth/validate.php`;
+      
+      const response = await fetch(API_VALIDATE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        redirectToLogin();
+      }
+    } catch (error) {
+      console.error('Token validation error:', error);
+      // Don't redirect on network errors, only on auth failures
+    }
+  };
+
   // Check authentication state
   const adminUser = localStorage.getItem('adminUser');
-  if (!adminUser) {
+  const adminToken = localStorage.getItem('adminUserToken');
+  
+  if (!adminUser || !adminToken) {
     return null; // Will redirect via useEffect
   }
 

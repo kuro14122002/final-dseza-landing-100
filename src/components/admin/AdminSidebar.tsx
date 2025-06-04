@@ -36,6 +36,7 @@ const AdminSidebar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('adminUser');
+    localStorage.removeItem('adminUserToken');
     toast.success(t('admin.logout.success', 'Đăng xuất thành công!'));
     navigate('/admin/login');
   };

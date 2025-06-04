@@ -48,28 +48,52 @@ const LoginPage: React.FC = () => {
     },
   });
 
-  // Hàm xử lý submit form với logic đăng nhập giả lập
+  // Hàm xử lý submit form với API đăng nhập thực tế
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     
-    // Giả lập API call với độ trễ 1.5 giây
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // API URL - có thể thay đổi dựa trên môi trường deployment
+      const API_LOGIN_URL = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost/api'}/v1/auth/login.php`;
 
-    if (data.email === 'admin@dseza.gov.vn' && data.password === 'adminpassword') {
-      // Lưu thông tin đăng nhập vào localStorage
-      localStorage.setItem('adminUser', JSON.stringify({ 
-        email: data.email, 
-        role: 'admin',
-        loginTime: new Date().toISOString()
-      }));
-      
-      toast.success(t('admin.login.loginSuccess'));
-      navigate('/admin/dashboard');
-    } else {
+      const response = await fetch(API_LOGIN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok && responseData.status === 'success' && responseData.token && responseData.user) {
+        // Lưu JWT token vào localStorage
+        localStorage.setItem('adminUserToken', responseData.token);
+        
+        // Lưu thông tin user vào localStorage
+        localStorage.setItem('adminUser', JSON.stringify({
+          id: responseData.user.id,
+          email: responseData.user.email,
+          role: responseData.user.role,
+          fullName: responseData.user.full_name,
+          loginTime: new Date().toISOString() // Giữ loginTime cho ProtectedRoute
+        }));
+        
+        toast.success(t('admin.login.loginSuccess'));
+        navigate('/admin/dashboard');
+      } else {
+        // Hiển thị lỗi từ API hoặc lỗi chung
+        toast.error(responseData.message || t('admin.login.authError'));
+      }
+    } catch (error) {
+      console.error("Login API call error:", error);
       toast.error(t('admin.login.authError'));
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   // Hàm xử lý forgot password
@@ -291,16 +315,16 @@ const LoginPage: React.FC = () => {
         </CardFooter>
       </Card>
 
-      {/* Demo Credentials Info */}
+      {/* API Integration Info */}
       <div className={cn(
         "mt-8 text-center text-xs animate-fade-in p-4 rounded-lg backdrop-blur-sm",
         theme === 'dark' 
           ? 'text-dseza-dark-secondary-text bg-dseza-dark-secondary/30' 
           : 'text-dseza-light-secondary-text bg-dseza-light-secondary/30'
       )}>
-        <p className="font-medium mb-1">Demo Credentials:</p>
-        <p>Email: admin@dseza.gov.vn</p>
-        <p>Password: adminpassword</p>
+        <p className="font-medium mb-1">API Integration Active</p>
+        <p>Using real authentication via PHP backend</p>
+        <p>Enter your admin credentials to login</p>
       </div>
     </div>
   );
