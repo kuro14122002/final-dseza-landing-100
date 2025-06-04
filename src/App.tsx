@@ -11,6 +11,10 @@ import NotFound from "./pages/NotFound";
 import SitemapPage from "./pages/SitemapPage";
 import NewsDetailPage from "./pages/NewsDetailPage";
 import CategoryNewsPage from "./pages/CategoryNewsPage";
+import LoginPage from "./pages/admin/LoginPage";
+import DashboardPage from "./pages/admin/DashboardPage";
+import AdminNewsListPage from "./pages/admin/AdminNewsListPage";
+import AdminLayout from "./layouts/AdminLayout";
 import MobileLayout from "./components/mobile/MobileLayout";
 
 // Create a client
@@ -25,18 +29,37 @@ const App: React.FC = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <MobileLayout>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/sitemap" element={<SitemapPage />} />
-                  <Route path="/news" element={<Index />} />
-                  <Route path="/news/category/:categorySlug" element={<CategoryNewsPage />} />
-                  <Route path="/news/:slug" element={<NewsDetailPage />} />
-                  <Route path="/events/:slug" element={<NewsDetailPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </MobileLayout>
+              <Routes>
+                {/* Admin Routes - Login Page without Layout */}
+                <Route path="/admin/login" element={<LoginPage />} />
+                
+                {/* Admin Routes - With AdminLayout */}
+                <Route path="/admin/*" element={<AdminLayout />}>
+                  <Route path="dashboard" element={<DashboardPage />} />
+                  <Route path="news" element={<AdminNewsListPage />} />
+                  {/* Add more admin routes here when needed */}
+                  {/* <Route path="news/create" element={<CreateNewsPage />} /> */}
+                  {/* <Route path="news/edit/:id" element={<EditNewsPage />} /> */}
+                  {/* <Route path="events" element={<EventManagementPage />} /> */}
+                  {/* <Route path="events/create" element={<CreateEventPage />} /> */}
+                </Route>
+                
+                {/* Public Routes - With Mobile Layout */}
+                <Route path="/*" element={
+                  <MobileLayout>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/sitemap" element={<SitemapPage />} />
+                      <Route path="/news" element={<Index />} />
+                      <Route path="/news/category/:categorySlug" element={<CategoryNewsPage />} />
+                      <Route path="/news/:slug" element={<NewsDetailPage />} />
+                      <Route path="/events/:slug" element={<NewsDetailPage />} />
+                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </MobileLayout>
+                } />
+              </Routes>
             </BrowserRouter>
           </TooltipProvider>
         </LanguageProvider>

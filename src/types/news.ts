@@ -16,6 +16,14 @@ export interface NewsArticle {
   isFeatured?: boolean; // Để xác định tin nổi bật
 }
 
+// Extended interface for admin panel with additional fields
+export interface AdminNewsArticle extends NewsArticle {
+  status: 'published' | 'draft' | 'pending';
+  author: string;
+  createdDate: string; // ISO 8601 string
+  updatedDate?: string; // ISO 8601 string
+}
+
 export interface NewsCategory {
   id: string;
   slug: string;

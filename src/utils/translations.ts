@@ -10,6 +10,7 @@ const viTranslations: TranslationObject = {
   // Common
   home: "Trang chủ",
   sitemap: "Sơ đồ site",
+  logoDSEZAAlt: "Logo DSEZA",
 
   // Nav Items
   nav: {
@@ -143,6 +144,123 @@ const viTranslations: TranslationObject = {
     area: "Diện tích",
   },
 
+  // Admin Panel
+  admin: {
+    login: {
+      title: "Đăng nhập Quản Trị",
+      description: "Vui lòng nhập thông tin để truy cập.",
+      emailLabel: "Email",
+      emailPlaceholder: "admin@example.com",
+      passwordLabel: "Mật khẩu",
+      passwordPlaceholder: "********",
+      loginButton: "Đăng nhập",
+      loggingInButton: "Đang đăng nhập...",
+      forgotPasswordLink: "Quên mật khẩu?",
+      forgotPasswordWIP: "Chức năng quên mật khẩu đang được phát triển.",
+      authError: "Email hoặc mật khẩu không chính xác.",
+      loginSuccess: "Đăng nhập thành công!",
+      footerNote: "Chỉ dành cho quản trị viên.",
+      showPassword: "Hiện mật khẩu",
+      hidePassword: "Ẩn mật khẩu",
+    },
+    sidebar: {
+      dashboard: "Dashboard",
+      newsManagement: "Quản lý Tin tức",
+      eventManagement: "Quản lý Sự kiện",
+      categoryManagement: "Quản lý Danh mục",
+      resourceManagement: "Quản lý Tài nguyên",
+      userManagement: "Quản lý Người dùng",
+      logout: "Đăng xuất",
+    },
+    logout: {
+      success: "Đăng xuất thành công!",
+    },
+    common: {
+      create: "Tạo mới",
+      edit: "Chỉnh sửa",
+    },
+    dashboard: {
+      welcomeMessage: "Chào mừng trở lại, {email}!",
+      greeting: "Chào buổi sáng",
+      totalNews: "Tổng số Tin tức",
+      totalEvents: "Tổng số Sự kiện",
+      totalViews: "Lượt xem (Tháng này)",
+      createNewNews: "Tạo Tin tức mới",
+      manageAllNews: "Quản lý Tất cả Tin tức",
+      createNewEvent: "Tạo Sự kiện mới",
+      manageAllEvents: "Quản lý Tất cả Sự kiện",
+      sessionInfo: "Thông tin Phiên đăng nhập",
+      userEmail: "Email",
+      loginTime: "Thời gian đăng nhập",
+      userRole: "Vai trò",
+    },
+    newsList: {
+      titlePage: "Quản lý Tin tức",
+      button: {
+        createNew: "Tạo Tin tức mới",
+      },
+      table: {
+        header: {
+          title: "Tiêu đề",
+          category: "Danh mục",
+          author: "Tác giả",
+          status: "Trạng thái",
+          date: "Ngày tạo",
+          actions: "Hành động",
+        },
+      },
+      status: {
+        published: "Đã xuất bản",
+        draft: "Bản nháp",
+        pending: "Chờ duyệt",
+      },
+      actions: {
+        preview: "Xem trước",
+        edit: "Sửa",
+        delete: "Xóa",
+      },
+      searchPlaceholder: "Tìm theo tiêu đề...",
+      filter: {
+        categoryPlaceholder: "Tất cả Danh mục",
+        statusPlaceholder: "Tất cả Trạng thái",
+      },
+      deleteConfirm: {
+        title: "Xác nhận Xóa",
+        message: "Bạn có chắc chắn muốn xóa bài viết này không? Hành động này không thể hoàn tác.",
+        confirmButton: "Xóa",
+        cancelButton: "Hủy",
+      },
+      toast: {
+        deleteSuccess: "Xóa bài viết thành công!",
+        previewWIP: "Chức năng Xem trước đang phát triển.",
+      },
+      noNewsFound: "Không tìm thấy bài viết nào.",
+      pagination: {
+        itemsPerPage: "Số mục mỗi trang:",
+        showing: "Hiển thị {from}-{to} trên {total} mục",
+      },
+    },
+  },
+
+  // Error messages
+  error: {
+    title: "Lỗi",
+    emailInvalid: "Email không hợp lệ.",
+    passwordMinLength: "Mật khẩu phải có ít nhất 8 ký tự.",
+  },
+
+  // Validation messages
+  validation: {
+    email: {
+      required: "Vui lòng nhập email.",
+      invalid: "Email không hợp lệ.",
+    },
+    password: {
+      required: "Vui lòng nhập mật khẩu.",
+      minLength: "Mật khẩu phải có ít nhất {count} ký tự.",
+    },
+  },
+
   // Quick Access Buttons
   quickAccess: {
     onlinePublicService: "Dịch vụ công trực tuyến",
@@ -268,6 +386,7 @@ const viTranslations: TranslationObject = {
   languageSwitcher: {
     vietnamese: "Tiếng Việt",
     english: "English",
+    toggle: "VI/EN",
   },
   themeToggle: {
     lightMode: "Chế độ sáng",
@@ -287,7 +406,8 @@ const viTranslations: TranslationObject = {
 const enTranslations: TranslationObject = {
   // Common
   home: "Home",
-  sitemap: "Site Map",
+  sitemap: "Sitemap",
+  logoDSEZAAlt: "DSEZA Logo",
 
   // Nav Items
   nav: {
@@ -421,6 +541,123 @@ const enTranslations: TranslationObject = {
     area: "Area",
   },
 
+  // Admin Panel
+  admin: {
+    login: {
+      title: "Admin Login",
+      description: "Please enter your information to access.",
+      emailLabel: "Email",
+      emailPlaceholder: "admin@example.com",
+      passwordLabel: "Password",
+      passwordPlaceholder: "********",
+      loginButton: "Login",
+      loggingInButton: "Logging in...",
+      forgotPasswordLink: "Forgot password?",
+      forgotPasswordWIP: "Forgot password feature is under development.",
+      authError: "Invalid email or password.",
+      loginSuccess: "Login successful!",
+      footerNote: "Only for administrators.",
+      showPassword: "Show password",
+      hidePassword: "Hide password",
+    },
+    sidebar: {
+      dashboard: "Dashboard",
+      newsManagement: "News Management",
+      eventManagement: "Event Management",
+      categoryManagement: "Category Management",
+      resourceManagement: "Resource Management",
+      userManagement: "User Management",
+      logout: "Logout",
+    },
+    logout: {
+      success: "Logout successful!",
+    },
+    common: {
+      create: "Create",
+      edit: "Edit",
+    },
+    dashboard: {
+      welcomeMessage: "Welcome back, {email}!",
+      greeting: "Good morning",
+      totalNews: "Total News",
+      totalEvents: "Total Events",
+      totalViews: "Views (This Month)",
+      createNewNews: "Create New News",
+      manageAllNews: "Manage All News",
+      createNewEvent: "Create New Event",
+      manageAllEvents: "Manage All Events",
+      sessionInfo: "Session Information",
+      userEmail: "Email",
+      loginTime: "Login Time",
+      userRole: "Role",
+    },
+    newsList: {
+      titlePage: "News Management",
+      button: {
+        createNew: "Create News",
+      },
+      table: {
+        header: {
+          title: "Title",
+          category: "Category",
+          author: "Author",
+          status: "Status",
+          date: "Created Date",
+          actions: "Actions",
+        },
+      },
+      status: {
+        published: "Published",
+        draft: "Draft",
+        pending: "Pending Approval",
+      },
+      actions: {
+        preview: "Preview",
+        edit: "Edit",
+        delete: "Delete",
+      },
+      searchPlaceholder: "Search by title...",
+      filter: {
+        categoryPlaceholder: "All Categories",
+        statusPlaceholder: "All Statuses",
+      },
+      deleteConfirm: {
+        title: "Confirm Delete",
+        message: "Are you sure you want to delete this article? This action cannot be undone.",
+        confirmButton: "Delete",
+        cancelButton: "Cancel",
+      },
+      toast: {
+        deleteSuccess: "Article deleted successfully!",
+        previewWIP: "Preview feature is under development.",
+      },
+      noNewsFound: "No articles found.",
+      pagination: {
+        itemsPerPage: "Items per page:",
+        showing: "Showing {from}-{to} of {total} items",
+      },
+    },
+  },
+
+  // Error messages
+  error: {
+    title: "Error",
+    emailInvalid: "Invalid email.",
+    passwordMinLength: "Password must be at least 8 characters long.",
+  },
+
+  // Validation messages
+  validation: {
+    email: {
+      required: "Please enter email.",
+      invalid: "Invalid email.",
+    },
+    password: {
+      required: "Please enter password.",
+      minLength: "Password must be at least {count} characters long.",
+    },
+  },
+
   // Quick Access Buttons
   quickAccess: {
     onlinePublicService: "Online Public Services",
@@ -545,6 +782,7 @@ const enTranslations: TranslationObject = {
   languageSwitcher: {
     vietnamese: "Vietnamese",
     english: "English",
+    toggle: "VI/EN",
   },
   themeToggle: {
     lightMode: "Light Mode",
@@ -595,19 +833,33 @@ export const useTranslation = () => {
   const { language } = useLanguage();
 
   /**
-   * Get a translation by key
+   * Get a translation by key with optional parameter interpolation
    * @param key - The translation key (can be a dot notation for nested keys)
-   * @returns The translated string or the key itself if not found
+   * @param params - Optional parameters for interpolation (e.g., { count: 8 })
+   * @returns The translated string with interpolated parameters or the key itself if not found
    */
-  const t = (key: string): string => {
+  const t = (key: string, params?: Record<string, any>): string => {
     const translationSet = translations[language];
-    const translation = getNestedValue(translationSet, key);
+    let translation = getNestedValue(translationSet, key);
+    
     // Fallback to the key itself if translation is not found
     // or if the key points to an object (meaning it's a parent key, not a string leaf)
     if (translation === undefined || typeof translation !== 'string') {
         // console.warn(`Translation key not found or not a string: ${key}`); // Optional: for debugging
         return key;
     }
+
+    // Perform parameter interpolation if params are provided
+    if (params) {
+      Object.keys(params).forEach(paramKey => {
+        const placeholder = `{${paramKey}}`;
+        // Use split and join for safer replacement instead of regex
+        while (translation.includes(placeholder)) {
+          translation = translation.replace(placeholder, String(params[paramKey]));
+        }
+      });
+    }
+    
     return translation;
   };
 
