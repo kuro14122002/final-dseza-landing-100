@@ -8,7 +8,7 @@
  */
 
 // Configuration
-$baseUrl = 'http://localhost/api';  // Adjust this to your server URL
+$baseUrl = 'http://localhost/final-dseza-landing-85/api';  // Adjust this to your server URL
 $testCredentials = [
     'email' => 'admin@dseza.gov.vn',
     'password' => 'password123'

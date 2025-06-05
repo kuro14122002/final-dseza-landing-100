@@ -26,7 +26,7 @@ function testLoginAPI($email, $password, $description) {
     
     // Cấu hình CURL
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/v1/auth/login.php');
+    curl_setopt($ch, CURLOPT_URL, 'http://localhost/final-dseza-landing-85/api/v1/auth/login.php');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
@@ -79,7 +79,7 @@ testLoginAPI('inactive.user@dseza.gov.vn', 'password123', 'Inactive User');
 
 // Test 6: Missing email
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/v1/auth/login.php');
+curl_setopt($ch, CURLOPT_URL, 'http://localhost/final-dseza-landing-85/api/v1/auth/login.php');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['password' => 'password123']));
@@ -98,7 +98,7 @@ echo "<hr>";
 
 // Test 7: Invalid JSON
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'http://localhost/api/v1/auth/login.php');
+curl_setopt($ch, CURLOPT_URL, 'http://localhost/final-dseza-landing-85/api/v1/auth/login.php');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, '{invalid json}');
