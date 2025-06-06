@@ -66,4 +66,16 @@ Trang chủ (/)
     │       ├── Quy trình thực hiện thủ tục hành chính
     │       │   └── Quy trình lĩnh vực đầu tư (https://dseza.danang.gov.vn/danh-sach-tin-tuc/danh-cho-nha-dau-tu/quy-trinh-linh-vuc-dau-tu/)
     │       └── Văn bản cải cách hành chính (https://dseza.danang.gov.vn/danh-sach-tin-tuc/van-ban/van-ban-cai-cach-hanh-chinh/)
+    ├── Tiện ích (#)
+    │   ├── Hỏi đáp | Góp ý
+    │   │   ├── Hỏi | Đáp (https://dseza.danang.gov.vn/hoi-dap/)
+    │   │   ├── Câu hỏi thường gặp (https://dseza.danang.gov.vn/cau-hoi-thuong-gap/)
+    │   │   └── Cổng góp ý TP. Đà Nẵng (https://gopy.danang.gov.vn/)
+    │   ├── Kết nối doanh nghiệp
+    │   │   └── Cà phê cùng DSEZA (https://docs.google.com/forms/d/e/1FAIpQLSc7gyKy8ESi7k9Hxja0Mi9YAnWLf_yU3fQPnyzYp9hWGLLREg/viewform)
+    │   └── Xem thêm
+    │       ├── Lịch công tác (https://dseza.danang.gov.vn/lich-cong-tac/)
+    │       ├── Dữ liệu chuyên ngành (https://dseza.danang.gov.vn/)
+    │       ├── Mua sắm công (https://dseza.danang.gov.vn/)
+    │       └── Làm theo năng lực | Hưởng theo lao động (https://dseza.danang.gov.vn/media/i1kpng1s/t%C3%A0i-li%E1%BB%87u-s%E1%BB%AD-d%E1%BB%A5ng.pdf)
     └── Liên hệ (https://dseza.danang.gov.vn/lien-he/)

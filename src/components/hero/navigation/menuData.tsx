@@ -494,6 +494,81 @@ export const getNavigationMenuItems = (): MenuItem[] => {
       }
     },
     {
+      title: 'nav.utilities',
+      translatable: true,
+      url: '#',
+      megaMenuConfig: {
+        columns: [
+          {
+            title: "Hỏi đáp | Góp ý",
+            titleEn: "Q&A | Feedback",
+            contents: [
+              {
+                title: "Hỏi | Đáp",
+                titleEn: "Q&A",
+                url: "https://dseza.danang.gov.vn/hoi-dap/",
+                iconName: "general-partner"
+              },
+              {
+                title: "Câu hỏi thường gặp",
+                titleEn: "FAQ",
+                url: "https://dseza.danang.gov.vn/cau-hoi-thuong-gap/",
+                iconName: "real-estate"
+              },
+              {
+                title: "Cổng góp ý TP. Đà Nẵng",
+                titleEn: "Da Nang City Feedback Portal",
+                url: "https://gopy.danang.gov.vn/",
+                iconName: "business-development"
+              }
+            ]
+          },
+          {
+            title: "Kết nối doanh nghiệp",
+            titleEn: "Business Connection",
+            contents: [
+              {
+                title: "Cà phê cùng DSEZA",
+                titleEn: "Coffee with DSEZA",
+                url: "https://docs.google.com/forms/d/e/1FAIpQLSc7gyKy8ESi7k9Hxja0Mi9YAnWLf_yU3fQPnyzYp9hWGLLREg/viewform",
+                iconName: "venture-capital"
+              }
+            ]
+          },
+          {
+            title: "Xem thêm",
+            titleEn: "See More",
+            contents: [
+              {
+                title: "Lịch công tác",
+                titleEn: "Work Schedule",
+                url: "https://dseza.danang.gov.vn/lich-cong-tac/",
+                iconName: "investor-relations"
+              },
+              {
+                title: "Dữ liệu chuyên ngành",
+                titleEn: "Specialized Data",
+                url: "https://dseza.danang.gov.vn/",
+                iconName: "wealth-management"
+              },
+              {
+                title: "Mua sắm công",
+                titleEn: "Public Procurement",
+                url: "https://dseza.danang.gov.vn/",
+                iconName: "private-equity"
+              },
+              {
+                title: "Làm theo năng lực | Hưởng theo lao động",
+                titleEn: "Merit-based Work | Performance-based Benefits",
+                url: "https://dseza.danang.gov.vn/media/i1kpng1s/t%C3%A0i-li%E1%BB%87u-s%E1%BB%AD-d%E1%BB%A5ng.pdf",
+                iconName: "family-offices"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       title: "nav.contact",
       translatable: true,
       url: "https://dseza.danang.gov.vn/lien-he/",

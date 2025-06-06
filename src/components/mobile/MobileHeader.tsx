@@ -184,6 +184,36 @@ const mobileMenuData: MobileMenuItem[] = [
     ]
   },
   {
+    id: "tien-ich",
+    title: "Tiện ích",
+    isExpandable: true,
+    items: [
+      {
+        heading: "Hỏi đáp | Góp ý",
+        links: [
+          { title: "Hỏi | Đáp", url: "https://dseza.danang.gov.vn/hoi-dap/" },
+          { title: "Câu hỏi thường gặp", url: "https://dseza.danang.gov.vn/cau-hoi-thuong-gap/" },
+          { title: "Cổng góp ý TP. Đà Nẵng", url: "https://gopy.danang.gov.vn/" }
+        ]
+      },
+      {
+        heading: "Kết nối doanh nghiệp",
+        links: [
+          { title: "Cà phê cùng DSEZA", url: "https://docs.google.com/forms/d/e/1FAIpQLSc7gyKy8ESi7k9Hxja0Mi9YAnWLf_yU3fQPnyzYp9hWGLLREg/viewform" }
+        ]
+      },
+      {
+        heading: "Xem thêm",
+        links: [
+          { title: "Lịch công tác", url: "https://dseza.danang.gov.vn/lich-cong-tac/" },
+          { title: "Dữ liệu chuyên ngành", url: "https://dseza.danang.gov.vn/" },
+          { title: "Mua sắm công", url: "https://dseza.danang.gov.vn/" },
+          { title: "Làm theo năng lực | Hưởng theo lao động", url: "https://dseza.danang.gov.vn/media/i1kpng1s/t%C3%A0i-li%E1%BB%87u-s%E1%BB%AD-d%E1%BB%A5ng.pdf" }
+        ]
+      }
+    ]
+  },
+  {
     id: "lien-he",
     title: "Liên hệ",
     url: "https://dseza.danang.gov.vn/lien-he/"

@@ -129,6 +129,36 @@ const SitemapPage: React.FC = () => {
               {menuItems.map(renderMenuItem)}
             </ul>
           </nav>
+
+          {/* Additional Utilities Section */}
+          <div className="mt-12">
+            <h3 className="text-xl font-semibold mb-2 text-primary">Tiện ích</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <h4 className="font-semibold mb-2">Hỏi đáp | Góp ý</h4>
+                <ul className="list-disc list-inside space-y-1">
+                  <li><a href="https://dseza.danang.gov.vn/hoi-dap/" target="_blank" rel="noopener noreferrer" className="hover:underline">Hỏi | Đáp</a></li>
+                  <li><a href="https://dseza.danang.gov.vn/cau-hoi-thuong-gap/" target="_blank" rel="noopener noreferrer" className="hover:underline">Câu hỏi thường gặp</a></li>
+                  <li><a href="https://gopy.danang.gov.vn/" target="_blank" rel="noopener noreferrer" className="hover:underline">Cổng góp ý TP. Đà Nẵng</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Kết nối doanh nghiệp</h4>
+                <ul className="list-disc list-inside space-y-1">
+                  <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc7gyKy8ESi7k9Hxja0Mi9YAnWLf_yU3fQPnyzYp9hWGLLREg/viewform" target="_blank" rel="noopener noreferrer" className="hover:underline">Cà phê cùng DSEZA</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Xem thêm</h4>
+                <ul className="list-disc list-inside space-y-1">
+                  <li><a href="https://dseza.danang.gov.vn/lich-cong-tac/" target="_blank" rel="noopener noreferrer" className="hover:underline">Lịch công tác</a></li>
+                  <li><a href="https://dseza.danang.gov.vn/" target="_blank" rel="noopener noreferrer" className="hover:underline">Dữ liệu chuyên ngành</a></li>
+                  <li><a href="https://dseza.danang.gov.vn/" target="_blank" rel="noopener noreferrer" className="hover:underline">Mua sắm công</a></li>
+                  <li><a href="https://dseza.danang.gov.vn/media/i1kpng1s/t%C3%A0i-li%E1%BB%87u-s%E1%BB%AD-d%E1%BB%A5ng.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Làm theo năng lực | Hưởng theo lao động</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
