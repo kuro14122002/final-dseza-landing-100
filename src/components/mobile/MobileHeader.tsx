@@ -40,8 +40,8 @@ const mobileMenuData: MobileMenuItem[] = [
       {
         heading: "Giới thiệu",
         links: [
-          { title: "Thư ngỏ", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/thu-ngo/" },
-          { title: "Tổng quan về Đà Nẵng", url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/" },
+          { title: "Thư ngỏ", url: "/gioi-thieu/thu-ngo" },
+          { title: "Tổng quan về Đà Nẵng", url: "/gioi-thieu/tong-quan-ve-da-nang" },
           { 
             title: "Tổng quan về Ban Quản lý", 
             url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/gioi-thieu/tong-quan-ve-ban-quan-ly/",

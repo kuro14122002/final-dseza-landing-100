@@ -19,13 +19,13 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               {
                 title: "Thư ngỏ",
                 titleEn: "Welcome Letter",
-                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/thu-ngo/",
+                url: "/gioi-thieu/thu-ngo",
                 iconName: "general-partner"
               },
               {
                 title: "Tổng quan về Đà Nẵng",
                 titleEn: "Overview of Da Nang",
-                url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/tong-quan-ve-tpda-nang/",
+                url: "/gioi-thieu/tong-quan-ve-da-nang",
                 iconName: "real-estate"
               },
               {
@@ -37,17 +37,17 @@ export const getNavigationMenuItems = (): MenuItem[] => {
                   {
                     title: "Chức năng, nhiệm vụ",
                     titleEn: "Functions and Duties",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/chuc-nang-nhiem-vu-quyen-han-ban-quan-ly/"
+                    url: "/tong-quan-ban-quan-ly/chuc-nang-nhiem-vu"
                   },
                   {
                     title: "Các phòng ban",
                     titleEn: "Departments",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/cac-phong-ban/"
+                    url: "/tong-quan-ban-quan-ly/cac-phong-ban"
                   },
                   {
                     title: "Đơn vị trực thuộc",
                     titleEn: "Affiliated Units",
-                    url: "https://dseza.danang.gov.vn/chi-tiet-tin-tuc/don-vi-truc-thuoc/"
+                    url: "/tong-quan-ban-quan-ly/don-vi-truc-thuoc"
                   },
                 ]
               },

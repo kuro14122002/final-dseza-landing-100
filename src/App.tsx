@@ -17,6 +17,11 @@ import AdminNewsListPage from "./pages/admin/AdminNewsListPage";
 import AdminNewsFormPage from "./pages/admin/AdminNewsFormPage";
 import AdminLayout from "./layouts/AdminLayout";
 import MobileLayout from "./components/mobile/MobileLayout";
+import WelcomeLetterPage from "./pages/Introduction/WelcomeLetterPage";
+import DanangOverviewPage from "./pages/Introduction/DanangOverviewPage";
+import { FunctionsDutiesPage } from "./pages/Introduction/FunctionsDutiesPage";
+import { DepartmentsPage } from "./pages/Introduction/DepartmentsPage";
+import { AffiliatedUnitsPage } from "./pages/Introduction/AffiliatedUnitsPage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -55,6 +60,11 @@ const App: React.FC = () => (
                       <Route path="/news/category/:categorySlug" element={<CategoryNewsPage />} />
                       <Route path="/news/:slug" element={<NewsDetailPage />} />
                       <Route path="/events/:slug" element={<NewsDetailPage />} />
+                      <Route path="/gioi-thieu/thu-ngo" element={<WelcomeLetterPage />} />
+                      <Route path="/gioi-thieu/tong-quan-ve-da-nang" element={<DanangOverviewPage />} />
+                      <Route path="/tong-quan-ban-quan-ly/chuc-nang-nhiem-vu" element={<FunctionsDutiesPage />} />
+                      <Route path="/tong-quan-ban-quan-ly/cac-phong-ban" element={<DepartmentsPage />} />
+                      <Route path="/tong-quan-ban-quan-ly/don-vi-truc-thuoc" element={<AffiliatedUnitsPage />} />
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
