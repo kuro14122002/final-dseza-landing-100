@@ -4,7 +4,7 @@ return [
     'port' => 3306,
     'database' => 'dseza_investment_hub',
     'username' => 'root',
-    'password' => 'Kuroko1412@@',
+    'password' => '',
     'charset' => 'utf8mb4',
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
