@@ -13,7 +13,7 @@ return [
     'port' => (int) EnvLoader::get('DB_PORT', 3306),
     'database' => EnvLoader::get('DB_DATABASE', 'dseza_investment_hub'),
     'username' => EnvLoader::get('DB_USERNAME', 'root'),
-    'password' => EnvLoader::get('DB_PASSWORD', 'Kuroko1412@@'),
+    'password' => EnvLoader::get('DB_PASSWORD', ''),
     'charset' => EnvLoader::get('DB_CHARSET', 'utf8mb4'),
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
