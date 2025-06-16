@@ -68,19 +68,19 @@ Dự án **Cổng thông tin điện tử Ban Quản lý Khu công nghệ cao v�
 
 ### **2.1. Mục tiêu chính**
 
-**Mục tiêu ngắn hạn (3-6 tháng):**
+**Mục tiêu ngắn hạn:**
 - ✅ Hoàn thiện Core Content Management System
 - 🔄 Triển khai đầy đủ Public Website với API integration
 - 🔄 Implement Events và Documents Management
 - 🔄 Xây dựng Search và Filter system
 
-**Mục tiêu trung hạn (6-12 tháng):**
+**Mục tiêu trung hạn:**
 - 📋 Tích hợp hệ thống thống kê doanh nghiệp
 - 📋 Triển khai multi-language support
 - 📋 Implement user interaction features (Q&A, Comments)
 - 📋 Đảm bảo accessibility compliance
 
-**Mục tiêu dài hạn (1-2 năm):**
+**Mục tiêu dài hạn:**
 - 📋 Tích hợp với EMC và các hệ thống chính phủ số
 - 📋 Data migration từ hệ thống cũ
 - 📋 Advanced analytics và reporting
