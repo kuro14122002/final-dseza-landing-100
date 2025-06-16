@@ -1,8 +1,21 @@
 // src/services/newsService.ts
+import axios from 'axios';
 import { NewsArticle, NewsCategory, AdminNewsArticle } from '@/types/news';
 
-// Mock delay constant for simulating API calls
-const MOCK_DELAY = 1000; // Giảm delay để test nhanh hơn
+// API Base URL
+const API_BASE_URL = 'http://localhost/final-dseza-landing-85/api';
+
+// Create axios instance with default config
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Mock delay constant for fallback (can be removed in production)
+const MOCK_DELAY = 1000;
 
 // Dữ liệu mẫu cho categories
 const mockCategories: NewsCategory[] = [
@@ -285,9 +298,23 @@ export interface PaginatedNewsResponse {
 
 // API functions
 export const fetchNewsCategories = async (): Promise<NewsCategory[]> => {
-  return new Promise(resolve => 
-    setTimeout(() => resolve(mockCategories), MOCK_DELAY)
-  );
+  try {
+    const response = await api.get('/news/categories');
+    
+    // Transform API response to match frontend interface
+    return response.data.map((category: any) => ({
+      id: category.id.toString(),
+      slug: category.slug,
+      name: category.name_vi,
+      nameEn: category.name_en,
+    }));
+  } catch (error) {
+    console.error('Error fetching news categories:', error);
+    // Fallback to mock data for development
+    return new Promise(resolve => 
+      setTimeout(() => resolve(mockCategories), MOCK_DELAY)
+    );
+  }
 };
 
 // UPDATED: Enhanced fetchNewsArticles with pagination support
@@ -297,41 +324,124 @@ export const fetchNewsArticles = async (
   limit: number = 9, 
   featured?: boolean
 ): Promise<PaginatedNewsResponse> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      let articles = [...mockArticles];
-      
-      if (categoryId && categoryId !== 'all') {
-        articles = articles.filter(article => article.category.id === categoryId);
-      }
-      
-      if (featured !== undefined) {
-        articles = articles.filter(article => article.isFeatured === featured);
-      }
+  try {
+    const params = new URLSearchParams();
+    params.append('page', page.toString());
+    params.append('limit', limit.toString());
+    
+    if (categoryId && categoryId !== 'all') {
+      params.append('category_id', categoryId);
+    }
+    
+    if (featured !== undefined) {
+      params.append('featured', featured.toString());
+    }
 
-      // Sort by publish date descending
-      articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    const response = await api.get(`/news?${params.toString()}`);
+    const data = response.data;
+    
+    // Transform API response to match frontend interface
+    const transformedArticles = data.articles.map((article: any) => ({
+      id: article.id.toString(),
+      slug: article.slug,
+      title: article.title_vi,
+      titleEn: article.title_en,
+      excerpt: article.summary_vi,
+      excerptEn: article.summary_en,
+      imageUrl: article.thumbnail_url,
+      publishDate: article.published_at,
+      category: {
+        id: article.category_id?.toString() || '',
+        slug: article.category_slug || '',
+        name: article.category_name_vi || '',
+        nameEn: article.category_name_en || '',
+      },
+      readingTime: article.reading_time_vi,
+      readingTimeEn: article.reading_time_en,
+      content: article.content_vi,
+      contentEn: article.content_en,
+      isFeatured: Boolean(article.is_featured),
+    }));
 
-      const totalArticles = articles.length;
-      const totalPages = Math.ceil(totalArticles / limit);
-      const startIndex = (page - 1) * limit;
-      const paginatedArticles = articles.slice(startIndex, startIndex + limit);
+    return {
+      articles: transformedArticles,
+      totalArticles: data.totalArticles,
+      totalPages: data.totalPages,
+      currentPage: data.currentPage
+    };
+  } catch (error) {
+    console.error('Error fetching news articles:', error);
+    // Fallback to mock data for development
+    return new Promise(resolve => {
+      setTimeout(() => {
+        let articles = [...mockArticles];
+        
+        if (categoryId && categoryId !== 'all') {
+          articles = articles.filter(article => article.category.id === categoryId);
+        }
+        
+        if (featured !== undefined) {
+          articles = articles.filter(article => article.isFeatured === featured);
+        }
 
-      resolve({
-        articles: paginatedArticles,
-        totalArticles,
-        totalPages,
-        currentPage: page
-      });
-    }, MOCK_DELAY);
-  });
+        // Sort by publish date descending
+        articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+
+        const totalArticles = articles.length;
+        const totalPages = Math.ceil(totalArticles / limit);
+        const startIndex = (page - 1) * limit;
+        const paginatedArticles = articles.slice(startIndex, startIndex + limit);
+
+        resolve({
+          articles: paginatedArticles,
+          totalArticles,
+          totalPages,
+          currentPage: page
+        });
+      }, MOCK_DELAY);
+    });
+  }
 };
 
 export const fetchFeaturedArticle = async (): Promise<NewsArticle | null> => {
-  const featured = mockArticles.find(article => article.isFeatured);
-  return new Promise(resolve => 
-    setTimeout(() => resolve(featured || null), MOCK_DELAY)
-  );
+  try {
+    const response = await api.get('/news/featured');
+    const article = response.data;
+    
+    if (!article) {
+      return null;
+    }
+    
+    // Transform API response to match frontend interface
+    return {
+      id: article.id.toString(),
+      slug: article.slug,
+      title: article.title_vi,
+      titleEn: article.title_en,
+      excerpt: article.summary_vi,
+      excerptEn: article.summary_en,
+      imageUrl: article.thumbnail_url,
+      publishDate: article.published_at,
+      category: {
+        id: article.category_id?.toString() || '',
+        slug: article.category_slug || '',
+        name: article.category_name_vi || '',
+        nameEn: article.category_name_en || '',
+      },
+      readingTime: article.reading_time_vi,
+      readingTimeEn: article.reading_time_en,
+      content: article.content_vi,
+      contentEn: article.content_en,
+      isFeatured: Boolean(article.is_featured),
+    };
+  } catch (error) {
+    console.error('Error fetching featured article:', error);
+    // Fallback to mock data for development
+    const featured = mockArticles.find(article => article.isFeatured);
+    return new Promise(resolve => 
+      setTimeout(() => resolve(featured || null), MOCK_DELAY)
+    );
+  }
 };
 
 export const fetchRegularNews = async (
@@ -352,13 +462,34 @@ export const fetchRegularNews = async (
 // NEW: Fetch category info by slug for CategoryNewsPage
 export const fetchCategoryInfoBySlug = async (categorySlug: string): Promise<NewsCategory | null> => {
   console.log(`Fetching category with slug: ${categorySlug}`); // Debug log
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const category = mockCategories.find(c => c.slug === categorySlug);
-      console.log('Found category:', category); // Debug log
-      resolve(category || null);
-    }, MOCK_DELAY);
-  });
+  try {
+    const response = await api.get(`/news/categories/${categorySlug}`);
+    const category = response.data;
+    
+    if (!category) {
+      return null;
+    }
+    
+    const transformedCategory = {
+      id: category.id.toString(),
+      slug: category.slug,
+      name: category.name_vi,
+      nameEn: category.name_en,
+    };
+    
+    console.log('Found category:', transformedCategory); // Debug log
+    return transformedCategory;
+  } catch (error) {
+    console.error('Error fetching category by slug:', error);
+    // Fallback to mock data for development
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const category = mockCategories.find(c => c.slug === categorySlug);
+        console.log('Found category (fallback):', category); // Debug log
+        resolve(category || null);
+      }, MOCK_DELAY);
+    });
+  }
 };
 
 // NEW: Fetch articles by category slug with pagination
@@ -369,54 +500,134 @@ export const fetchArticlesByCategorySlug = async (
 ): Promise<PaginatedNewsResponse> => {
   console.log(`Fetching articles for category slug: ${categorySlug}, page: ${page}`); // Debug log
   
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // First find the category
-      const category = mockCategories.find(c => c.slug === categorySlug);
-      
-      if (!category) {
+  try {
+    const params = new URLSearchParams();
+    params.append('page', page.toString());
+    params.append('limit', limit.toString());
+    
+    const response = await api.get(`/news/category/${categorySlug}?${params.toString()}`);
+    const data = response.data;
+    
+    // Transform API response to match frontend interface
+    const transformedArticles = data.articles.map((article: any) => ({
+      id: article.id.toString(),
+      slug: article.slug,
+      title: article.title_vi,
+      titleEn: article.title_en,
+      excerpt: article.summary_vi,
+      excerptEn: article.summary_en,
+      imageUrl: article.thumbnail_url,
+      publishDate: article.published_at,
+      category: {
+        id: article.category_id?.toString() || '',
+        slug: article.category_slug || '',
+        name: article.category_name_vi || '',
+        nameEn: article.category_name_en || '',
+      },
+      readingTime: article.reading_time_vi,
+      readingTimeEn: article.reading_time_en,
+      content: article.content_vi,
+      contentEn: article.content_en,
+      isFeatured: Boolean(article.is_featured),
+    }));
+
+    console.log(`Found ${data.totalArticles} articles, returning page ${page} with ${transformedArticles.length} articles`); // Debug log
+
+    return {
+      articles: transformedArticles,
+      totalArticles: data.totalArticles,
+      totalPages: data.totalPages,
+      currentPage: data.currentPage
+    };
+  } catch (error) {
+    console.error('Error fetching articles by category slug:', error);
+    // Fallback to mock data for development
+    return new Promise(resolve => {
+      setTimeout(() => {
+        // First find the category
+        const category = mockCategories.find(c => c.slug === categorySlug);
+        
+        if (!category) {
+          resolve({
+            articles: [],
+            totalArticles: 0,
+            totalPages: 0,
+            currentPage: page
+          });
+          return;
+        }
+
+        // Filter articles by category
+        let articles = mockArticles.filter(article => article.category.id === category.id);
+        
+        // Sort by publish date descending
+        articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+
+        const totalArticles = articles.length;
+        const totalPages = Math.ceil(totalArticles / limit);
+        const startIndex = (page - 1) * limit;
+        const paginatedArticles = articles.slice(startIndex, startIndex + limit);
+
+        console.log(`Found ${totalArticles} articles (fallback), returning page ${page} with ${paginatedArticles.length} articles`); // Debug log
+
         resolve({
-          articles: [],
-          totalArticles: 0,
-          totalPages: 0,
+          articles: paginatedArticles,
+          totalArticles,
+          totalPages,
           currentPage: page
         });
-        return;
-      }
-
-      // Filter articles by category
-      let articles = mockArticles.filter(article => article.category.id === category.id);
-      
-      // Sort by publish date descending
-      articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
-
-      const totalArticles = articles.length;
-      const totalPages = Math.ceil(totalArticles / limit);
-      const startIndex = (page - 1) * limit;
-      const paginatedArticles = articles.slice(startIndex, startIndex + limit);
-
-      console.log(`Found ${totalArticles} articles, returning page ${page} with ${paginatedArticles.length} articles`); // Debug log
-
-      resolve({
-        articles: paginatedArticles,
-        totalArticles,
-        totalPages,
-        currentPage: page
-      });
-    }, MOCK_DELAY);
-  });
+      }, MOCK_DELAY);
+    });
+  }
 };
 
 // Fetch article by slug for detail page
 export const fetchNewsArticleBySlug = async (slug: string): Promise<NewsArticle | null> => {
   console.log(`Fetching article with slug: ${slug}`); // Debug log
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const article = mockArticles.find(a => a.slug === slug);
-      console.log('Found article:', article); // Debug log
-      resolve(article || null);
-    }, MOCK_DELAY);
-  });
+  try {
+    const response = await api.get(`/news/${slug}`);
+    const article = response.data;
+    
+    if (!article) {
+      return null;
+    }
+    
+    // Transform API response to match frontend interface
+    const transformedArticle = {
+      id: article.id.toString(),
+      slug: article.slug,
+      title: article.title_vi,
+      titleEn: article.title_en,
+      excerpt: article.summary_vi,
+      excerptEn: article.summary_en,
+      imageUrl: article.thumbnail_url,
+      publishDate: article.published_at,
+      category: {
+        id: article.category_id?.toString() || '',
+        slug: article.category_slug || '',
+        name: article.category_name_vi || '',
+        nameEn: article.category_name_en || '',
+      },
+      readingTime: article.reading_time_vi,
+      readingTimeEn: article.reading_time_en,
+      content: article.content_vi,
+      contentEn: article.content_en,
+      isFeatured: Boolean(article.is_featured),
+    };
+    
+    console.log('Found article:', transformedArticle); // Debug log
+    return transformedArticle;
+  } catch (error) {
+    console.error('Error fetching article by slug:', error);
+    // Fallback to mock data for development
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const article = mockArticles.find(a => a.slug === slug);
+        console.log('Found article (fallback):', article); // Debug log
+        resolve(article || null);
+      }, MOCK_DELAY);
+    });
+  }
 };
 
 // Fetch related news (same category, exclude current article)
