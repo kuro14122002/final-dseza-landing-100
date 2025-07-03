@@ -17,15 +17,19 @@ import { useTranslation } from '@/utils/translations';
 import { useTheme } from '@/context/ThemeContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { cn } from '@/lib/utils';
+import authService from '@/services/authService';
 
-// Định nghĩa Zod Schema sử dụng t() cho messages
+// Định nghĩa Zod Schema sử dụng t() cho messages - support both email and username
 const getLoginSchema = (t: (key: string, params?: any) => string) => z.object({
   email: z.string()
     .min(1, { message: t('validation.email.required') })
-    .email({ message: t('validation.email.invalid') }),
+    .refine((value) => {
+      // Allow both email format and username (no @ symbol)
+      return value.includes('@') ? z.string().email().safeParse(value).success : value.length >= 3;
+    }, { message: t('validation.email.invalid') }),
   password: z.string()
     .min(1, { message: t('validation.password.required') })
-    .min(8, { message: t('validation.password.minLength', { count: 8 }) }),
+    .min(6, { message: t('validation.password.minLength', { count: 6 }) }),
 });
 
 type LoginFormValues = z.infer<ReturnType<typeof getLoginSchema>>;
@@ -53,44 +57,12 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // API URL - có thể thay đổi dựa trên môi trường deployment
-      const API_LOGIN_URL = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost/api'}/v1/auth/login.php`;
-
-      const response = await fetch(API_LOGIN_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        }),
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok && responseData.status === 'success' && responseData.token && responseData.user) {
-        // Lưu JWT token vào localStorage
-        localStorage.setItem('adminUserToken', responseData.token);
-        
-        // Lưu thông tin user vào localStorage
-        localStorage.setItem('adminUser', JSON.stringify({
-          id: responseData.user.id,
-          email: responseData.user.email,
-          role: responseData.user.role,
-          fullName: responseData.user.full_name,
-          loginTime: new Date().toISOString() // Giữ loginTime cho ProtectedRoute
-        }));
-        
-        toast.success(t('admin.login.loginSuccess'));
-        navigate('/admin/dashboard');
-      } else {
-        // Hiển thị lỗi từ API hoặc lỗi chung
-        toast.error(responseData.message || t('admin.login.authError'));
-      }
-    } catch (error) {
-      console.error("Login API call error:", error);
-      toast.error(t('admin.login.authError'));
+      await authService.login(data.email, data.password);
+      toast.success(t('admin.login.loginSuccess'));
+      navigate('/admin/dashboard');
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast.error(error.message || t('admin.login.authError'));
     } finally {
       setIsLoading(false);
     }
@@ -197,12 +169,12 @@ const LoginPage: React.FC = () => {
                   theme === 'dark' ? 'text-dseza-dark-main-text' : 'text-dseza-light-main-text'
                 )}
               >
-                {t('admin.login.emailLabel')}
+                Email hoặc Tên đăng nhập
               </Label>
               <Input
                 id="email"
-                type="email"
-                placeholder={t('admin.login.emailPlaceholder')}
+                type="text"
+                placeholder="admin@dseza.gov.vn hoặc admin"
                 {...form.register('email')}
                 className={cn(
                   "transition-all duration-200 focus:ring-2",

@@ -7,6 +7,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MobileNewsSectionProps, NewsArticle } from "@/types/news";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, RefreshCw, ExternalLink } from "lucide-react";
 
 /**
  * Individual news article card component
@@ -124,116 +127,293 @@ const NewsCardSkeleton: React.FC = () => {
 };
 
 /**
- * Mobile-specific news section with filtering tabs
+ * Mobile News Card Component
  */
-const MobileNewsSection: React.FC<MobileNewsSectionProps> = ({
+const MobileNewsCard: React.FC<{ article: any }> = ({ article }) => {
+  const { theme } = useTheme();
+  const { language } = useLanguage();
+
+  // Theme-specific styles
+  const cardBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+  const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
+  const titleHoverColor = theme === "dark" ? "hover:text-dseza-dark-primary-accent" : "hover:text-dseza-light-primary-accent";
+
+  // Use translated content if available
+  const displayTitle = language === 'en' && article.titleEn ? article.titleEn : article.title;
+  const displayExcerpt = language === 'en' && article.excerptEn ? article.excerptEn : article.excerpt;
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString(language === 'en' ? 'en-GB' : 'vi-VN');
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return dateString;
+    }
+  };
+
+  return (
+    <a
+      href={`/news/${article.slug}`}
+      className={cn(
+        "block rounded-xl overflow-hidden transition-all duration-300 hover:transform hover:-translate-y-1",
+        cardBg,
+        theme === "dark" ? "hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)]" : "hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+      )}
+    >
+      <div className="aspect-[16/9] overflow-hidden">
+        <img
+          src={article.imageUrl}
+          alt={displayTitle}
+          className="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+          loading="lazy"
+          onError={(e) => {
+            // Fallback to placeholder if image fails to load
+            const target = e.target as HTMLImageElement;
+            target.src = '/placeholder.svg';
+          }}
+        />
+      </div>
+      <div className="p-4">
+        <p className={cn("text-xs mb-2", secondaryTextColor)}>{formatDate(article.publishDate)}</p>
+        <h3 className={cn(
+          "font-montserrat font-semibold mb-2 line-clamp-2 transition-colors duration-300 text-sm",
+          textColor,
+          titleHoverColor
+        )}>
+          {displayTitle}
+        </h3>
+        <p className={cn("text-xs line-clamp-2 mb-2", secondaryTextColor)}>
+          {displayExcerpt}
+        </p>
+        {article.readingTime && (
+          <p className={cn("text-xs", secondaryTextColor)}>
+            {language === 'en' && article.readingTimeEn ? article.readingTimeEn : article.readingTime}
+          </p>
+        )}
+      </div>
+    </a>
+  );
+};
+
+/**
+ * Mobile News Card Skeleton
+ */
+const MobileNewsCardSkeleton: React.FC = () => {
+  const { theme } = useTheme();
+  const cardBg = theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg";
+
+  return (
+    <div className={cn("rounded-xl overflow-hidden", cardBg)}>
+      <Skeleton className="aspect-[16/9] w-full" />
+      <div className="p-4">
+        <Skeleton className="h-3 w-24 mb-2" />
+        <Skeleton className="h-4 w-full mb-1" />
+        <Skeleton className="h-4 w-3/4 mb-2" />
+        <Skeleton className="h-3 w-full" />
+        <Skeleton className="h-3 w-2/3 mt-1" />
+        <Skeleton className="h-3 w-16 mt-2" />
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Mobile Error State Component
+ */
+const MobileNewsErrorState: React.FC<{ 
+  error?: string; 
+  onRetry?: () => void; 
+  showRetry?: boolean;
+}> = ({ 
+  error = "Không thể tải tin tức. Vui lòng thử lại sau.", 
+  onRetry, 
+  showRetry = true 
+}) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+
+  return (
+    <div className="flex flex-col items-center justify-center py-8 px-4">
+      <Alert className="mb-4">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription className={textColor}>
+          {error}
+        </AlertDescription>
+      </Alert>
+      {showRetry && onRetry && (
+        <Button
+          variant="outline"
+          onClick={onRetry}
+          className="flex items-center gap-2"
+          size="sm"
+        >
+          <RefreshCw className="h-3 w-3" />
+          {t('common.retry')}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+/**
+ * Mobile Empty State Component
+ */
+const MobileNewsEmptyState: React.FC<{ message?: string }> = ({ 
+  message = "Hiện tại chưa có tin tức nào." 
+}) => {
+  const { theme } = useTheme();
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+  const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
+
+  return (
+    <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
+      <div className={cn("w-12 h-12 rounded-full flex items-center justify-center mb-3", 
+        theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg")}>
+        <ExternalLink className={cn("w-6 h-6", secondaryTextColor)} />
+      </div>
+      <h3 className={cn("text-base font-semibold mb-1", textColor)}>
+        Chưa có tin tức
+      </h3>
+      <p className={cn("text-sm", secondaryTextColor)}>
+        {message}
+      </p>
+    </div>
+  );
+};
+
+/**
+ * Mobile News Section Component
+ */
+const MobileNewsSection: React.FC<MobileNewsSectionProps & { 
+  error?: string; 
+  onRetry?: () => void;
+}> = ({
   newsArticles,
   categories,
   activeCategoryId,
   onCategoryChange,
-  isLoading
+  isLoading,
+  error,
+  onRetry
 }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const { language } = useLanguage();
 
-  // Theme-specific styles for the section container
-  const sectionBg = theme === "dark" ? "bg-[#1E272F]" : "bg-white";
-  const titleText = theme === "dark" ? "text-white" : "text-black";
-  const buttonText = theme === "dark" ? "text-[#19DBCF]" : "text-[#416628]";
-  const buttonBorder = theme === "dark" ? "border-[#19DBCF]" : "border-[#416628]";
-  const buttonHoverBg = theme === "dark" ? "hover:bg-[#19DBCF]/10" : "hover:bg-[#416628]/10";
+  // Theme-specific styles
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+  const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
+  const buttonColor = theme === "dark" ? "text-dseza-dark-primary-accent border-dseza-dark-primary-accent hover:bg-dseza-dark-primary-accent/10" : "text-dseza-light-primary-accent border-dseza-light-primary-accent hover:bg-dseza-light-primary-accent/10";
+  const activeBg = theme === "dark" ? "bg-dseza-dark-primary-accent text-white" : "bg-dseza-light-primary-accent text-white";
 
-  const activeCategory = categories.find(cat => cat.id === activeCategoryId);
-  const displayCategoryName = language === 'en' && activeCategory?.nameEn ? activeCategory.nameEn : activeCategory?.name;
+  // Handle error state
+  if (error && !isLoading) {
+    return (
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <h2 className={cn("text-xl font-bold font-montserrat mb-2", textColor)}>
+              {t('news.title')}
+            </h2>
+            <p className={cn("text-sm", secondaryTextColor)}>
+              {t('news.subtitle')}
+            </p>
+          </div>
+          <MobileNewsErrorState error={error} onRetry={onRetry} />
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className={cn("py-6 px-4", sectionBg)}>
-      <div className="container mx-auto max-w-6xl">
-        {/* Section Title */}
-        <h2 className={cn("font-montserrat font-bold text-2xl md:text-3xl mb-4", titleText)}>
-          {t("news.title")}
-        </h2>
-
-        {/* Category Tabs using shadcn/ui Tabs component */}
-        <Tabs 
-          value={activeCategoryId} 
-          onValueChange={onCategoryChange}
-          className="w-full"
-        >
-          {/* Tabs List (horizontal scrollable for categories) */}
-          <TabsList className={cn(
-            "grid w-full grid-cols-2 md:grid-cols-5 h-auto p-1 mb-4",
-            theme === "dark" ? "bg-[#2C3640]" : "bg-[#F2F2F2]"
-          )}>
-            {categories.map((category) => {
-              const displayName = language === 'en' && category.nameEn ? category.nameEn : category.name;
-              
-              return (
-                <TabsTrigger
-                  key={category.id}
-                  value={category.id}
-                  className={cn(
-                    "text-xs sm:text-sm font-inter font-medium py-2 px-2 sm:px-3 rounded-md whitespace-nowrap",
-                    "transition-all duration-200",
-                    "data-[state=active]:text-white",
-                    theme === "dark" 
-                      ? "text-[#B0BEC5] data-[state=active]:bg-[#19DBCF]" 
-                      : "text-[#545454] data-[state=active]:bg-[#416628]",
-                    "data-[state=inactive]:hover:bg-opacity-80"
-                  )}
-                  disabled={isLoading}
-                >
-                  {displayName}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-
-          {/* Tab Contents */}
-          {categories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="mt-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {isLoading ? (
-                  // Loading skeletons
-                  Array.from({ length: 4 }).map((_, index) => (
-                    <NewsCardSkeleton key={index} />
-                  ))
-                ) : newsArticles.length > 0 ? (
-                  // Display news articles
-                  newsArticles.map((article) => (
-                    <NewsCard key={article.id} {...article} />
-                  ))
-                ) : (
-                  // No articles message
-                  <div className="col-span-full text-center py-8">
-                    <p className={cn("text-lg", theme === "dark" ? "text-[#B0BEC5]" : "text-[#545454]")}>
-                      {t("news.noArticles") || "Không có bài viết nào"}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
-
-        {/* View All Button */}
-        <div className="text-center mt-6">
-          <a
-            href={`/news/category/${activeCategory?.slug || 'all'}`}
-            className={cn(
-              "inline-flex items-center px-6 py-3 border rounded-lg font-medium transition-all duration-300",
-              buttonText,
-              buttonBorder,
-              buttonHoverBg
-            )}
-          >
-            {t("news.viewAll") || "Xem tất cả"} {displayCategoryName && `${displayCategoryName.toLowerCase()}`}
-            <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+    <section className="py-12">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-6">
+          <h2 className={cn("text-xl font-bold font-montserrat mb-2", textColor)}>
+            {t('news.title')}
+          </h2>
+          <p className={cn("text-sm", secondaryTextColor)}>
+            {t('news.subtitle')}
+          </p>
         </div>
+
+        {/* Category Filter - Mobile horizontal scroll */}
+        <div className="mb-6">
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <button
+              onClick={() => onCategoryChange("all")}
+              className={cn(
+                "flex-shrink-0 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 border whitespace-nowrap",
+                activeCategoryId === "all" ? activeBg : cn("border-transparent", buttonColor)
+              )}
+              disabled={isLoading}
+            >
+              {t('news.categories.all')}
+            </button>
+            {Array.isArray(categories) && categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => onCategoryChange(category.id)}
+                className={cn(
+                  "flex-shrink-0 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 border whitespace-nowrap",
+                  activeCategoryId === category.id ? activeBg : cn("border-transparent", buttonColor)
+                )}
+                disabled={isLoading}
+              >
+                {language === 'en' && category.nameEn ? category.nameEn : category.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <MobileNewsCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : (
+          <>
+            {/* Check if we have any content to show */}
+            {newsArticles.length === 0 ? (
+              <MobileNewsEmptyState 
+                message={activeCategoryId === "all" 
+                  ? "Hiện tại chưa có tin tức nào." 
+                  : "Hiện tại chưa có tin tức nào trong danh mục này."
+                } 
+              />
+            ) : (
+              <>
+                {/* News Articles Grid */}
+                <div className="grid grid-cols-1 gap-4 mb-6">
+                  {newsArticles.map((article) => (
+                    <MobileNewsCard key={article.id} article={article} />
+                  ))}
+                </div>
+
+                {/* View All Button */}
+                <div className="text-center">
+                  <a
+                    href="/news"
+                    className={cn(
+                      "inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 border text-sm",
+                      buttonColor
+                    )}
+                  >
+                    {t('news.viewAll')}
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </div>
     </section>
   );

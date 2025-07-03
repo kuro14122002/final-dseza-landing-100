@@ -5,6 +5,8 @@ import { useTranslation } from '@/utils/translations';
 import { useTheme } from '@/context/ThemeContext';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import AdminPageLayout from '@/components/admin/AdminPageLayout';
+import AdminTableLayout from '@/components/admin/AdminTableLayout';
 
 // Shadcn/UI Components
 import {
@@ -581,78 +583,64 @@ const AdminNewsListPage: React.FC = () => {
     );
   };
 
+  const breadcrumbs = [
+    { label: 'Quản trị nội dung', href: '/admin/dashboard' },
+    { label: 'Tin tức & Bài viết' }
+  ];
+
+  const filters = [
+    {
+      label: 'Danh mục',
+      value: selectedCategory,
+      onValueChange: setSelectedCategory,
+      options: [
+        { label: 'Tất cả danh mục', value: 'all' },
+        ...mockCategories.map(category => ({ label: category.name, value: category.id }))
+      ]
+    },
+    {
+      label: 'Trạng thái',
+      value: selectedStatus,
+      onValueChange: setSelectedStatus,
+      options: [
+        { label: 'Tất cả trạng thái', value: 'all' },
+        { label: 'Đã xuất bản', value: 'published' },
+        { label: 'Bản nháp', value: 'draft' },
+        { label: 'Chờ duyệt', value: 'pending' }
+      ]
+    },
+    {
+      label: 'Số lượng',
+      value: itemsPerPage.toString(),
+      onValueChange: (value: string) => setItemsPerPage(Number(value)),
+      options: [
+        { label: '10', value: '10' },
+        { label: '20', value: '20' },
+        { label: '50', value: '50' }
+      ]
+    }
+  ];
+
   return (
-    <div className={cn(
-      "space-y-6",
-      theme === 'dark' ? 'text-white' : 'text-gray-900'
-    )}>
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-2xl font-bold">
-          {t('admin.newsList.titlePage')}
-        </h1>
-        <Button onClick={handleCreateNew} className="w-full sm:w-auto">
+    <AdminPageLayout
+      title={t('admin.newsList.titlePage')}
+      description="Quản lý danh sách tin tức và bài viết"
+      breadcrumbs={breadcrumbs}
+      actions={
+        <Button onClick={handleCreateNew}>
           <Plus className="h-4 w-4 mr-2" />
           {t('admin.newsList.button.createNew')}
         </Button>
-      </div>
-
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg border">
-        {/* Search */}
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder={t('admin.newsList.searchPlaceholder')}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-
-        {/* Category Filter */}
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-48">
-            <SelectValue placeholder={t('admin.newsList.filter.categoryPlaceholder')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('admin.newsList.filter.categoryPlaceholder')}</SelectItem>
-            {mockCategories.map(category => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        {/* Status Filter */}
-        <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-          <SelectTrigger className="w-full sm:w-48">
-            <SelectValue placeholder={t('admin.newsList.filter.statusPlaceholder')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('admin.newsList.filter.statusPlaceholder')}</SelectItem>
-            <SelectItem value="published">{t('admin.newsList.status.published')}</SelectItem>
-            <SelectItem value="draft">{t('admin.newsList.status.draft')}</SelectItem>
-            <SelectItem value="pending">{t('admin.newsList.status.pending')}</SelectItem>
-          </SelectContent>
-        </Select>
-
-        {/* Items per page */}
-        <Select value={itemsPerPage.toString()} onValueChange={(value) => setItemsPerPage(Number(value))}>
-          <SelectTrigger className="w-full sm:w-32">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Table */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg border overflow-hidden">
+      }
+    >
+      <AdminTableLayout
+        searchValue={searchTerm}
+        onSearchChange={setSearchTerm}
+        searchPlaceholder={t('admin.newsList.searchPlaceholder')}
+        filters={filters}
+        totalItems={filteredArticles.length}
+        selectedItems={selectedArticles.length}
+      >
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -793,22 +781,22 @@ const AdminNewsListPage: React.FC = () => {
             </TableBody>
           </Table>
         </div>
-      </div>
-
-      {/* Pagination and Info */}
-      {filteredArticles.length > 0 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            {t('admin.newsList.pagination.showing', {
-              from: startIndex + 1,
-              to: Math.min(endIndex, filteredArticles.length),
-              total: filteredArticles.length
-            })}
+        
+        {/* Pagination and Info */}
+        {filteredArticles.length > 0 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6">
+            <div className="text-sm text-muted-foreground">
+              {t('admin.newsList.pagination.showing', {
+                from: startIndex + 1,
+                to: Math.min(endIndex, filteredArticles.length),
+                total: filteredArticles.length
+              })}
+            </div>
+            {totalPages > 1 && renderPagination()}
           </div>
-          {totalPages > 1 && renderPagination()}
-        </div>
-      )}
-    </div>
+        )}
+      </AdminTableLayout>
+    </AdminPageLayout>
   );
 };
 

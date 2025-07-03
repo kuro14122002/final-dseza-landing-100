@@ -6,6 +6,9 @@ import { useTranslation } from "@/utils/translations";
 import { useLanguage } from "@/context/LanguageContext";
 import { NewsSectionProps, NewsArticle } from "@/types/news";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, RefreshCw, ExternalLink } from "lucide-react";
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -31,8 +34,13 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, size = "medium" }) => {
 
   // Format date
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(language === 'en' ? 'en-GB' : 'vi-VN');
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString(language === 'en' ? 'en-GB' : 'vi-VN');
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return dateString;
+    }
   };
 
   // Size-based styling
@@ -103,6 +111,11 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, size = "medium" }) => {
           alt={displayTitle}
           className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
           loading="lazy"
+          onError={(e) => {
+            // Fallback to placeholder if image fails to load
+            const target = e.target as HTMLImageElement;
+            target.src = '/placeholder.svg';
+          }}
         />
       </div>
       <div className={getPadding()}>
@@ -181,15 +194,84 @@ const NewsCardSkeleton: React.FC<{ size?: "large" | "medium" | "small" }> = ({ s
 };
 
 /**
+ * Error component for when news loading fails
+ */
+const NewsErrorState: React.FC<{ 
+  error?: string; 
+  onRetry?: () => void; 
+  showRetry?: boolean;
+}> = ({ 
+  error = "Không thể tải tin tức. Vui lòng thử lại sau.", 
+  onRetry, 
+  showRetry = true 
+}) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+
+  return (
+    <div className="flex flex-col items-center justify-center py-12 px-4">
+      <Alert className="max-w-md mb-4">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription className={textColor}>
+          {error}
+        </AlertDescription>
+      </Alert>
+      {showRetry && onRetry && (
+        <Button
+          variant="outline"
+          onClick={onRetry}
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className="h-4 w-4" />
+          {t('common.retry')}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+/**
+ * Empty state component for when no news articles are available
+ */
+const NewsEmptyState: React.FC<{ message?: string }> = ({ 
+  message = "Hiện tại chưa có tin tức nào." 
+}) => {
+  const { theme } = useTheme();
+  const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
+  const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
+
+  return (
+    <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+      <div className={cn("w-16 h-16 rounded-full flex items-center justify-center mb-4", 
+        theme === "dark" ? "bg-dseza-dark-secondary-bg" : "bg-dseza-light-secondary-bg")}>
+        <ExternalLink className={cn("w-8 h-8", secondaryTextColor)} />
+      </div>
+      <h3 className={cn("text-lg font-semibold mb-2", textColor)}>
+        Chưa có tin tức
+      </h3>
+      <p className={cn("text-sm", secondaryTextColor)}>
+        {message}
+      </p>
+    </div>
+  );
+};
+
+/**
  * News section with category filters
  */
-const NewsSection: React.FC<NewsSectionProps> = ({
+const NewsSection: React.FC<NewsSectionProps & { 
+  error?: string; 
+  onRetry?: () => void;
+}> = ({
   featuredArticle,
   regularNews,
   categories,
   activeCategoryId,
   onCategoryChange,
-  isLoading
+  isLoading,
+  error,
+  onRetry
 }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
@@ -198,116 +280,147 @@ const NewsSection: React.FC<NewsSectionProps> = ({
   // Theme-specific styles
   const textColor = theme === "dark" ? "text-dseza-dark-main-text" : "text-dseza-light-main-text";
   const secondaryTextColor = theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text";
-  const accentColor = theme === "dark" ? "text-dseza-dark-primary-accent" : "text-dseza-light-primary-accent";
-  const buttonText = theme === "dark" ? "text-[#19DBCF]" : "text-[#416628]";
-  const buttonBorder = theme === "dark" ? "border-[#19DBCF]" : "border-[#416628]";
-  const buttonHoverBg = theme === "dark" ? "hover:bg-[#19DBCF]/10" : "hover:bg-[#416628]/10";
+  const buttonColor = theme === "dark" ? "text-dseza-dark-primary-accent border-dseza-dark-primary-accent hover:bg-dseza-dark-primary-accent/10" : "text-dseza-light-primary-accent border-dseza-light-primary-accent hover:bg-dseza-light-primary-accent/10";
+  const activeBg = theme === "dark" ? "bg-dseza-dark-primary-accent text-white" : "bg-dseza-light-primary-accent text-white";
 
-  const activeCategory = categories.find(cat => cat.id === activeCategoryId);
-  const displayCategoryName = language === 'en' && activeCategory?.nameEn ? activeCategory.nameEn : activeCategory?.name;
+  // Handle error state
+  if (error && !isLoading) {
+    return (
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="text-center mb-8">
+            <h2 className={cn("text-2xl lg:text-3xl font-bold font-montserrat mb-4", textColor)}>
+              {t('news.title')}
+            </h2>
+            <p className={cn("text-sm lg:text-base", secondaryTextColor)}>
+              {t('news.subtitle')}
+            </p>
+          </div>
+          <NewsErrorState error={error} onRetry={onRetry} />
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 lg:py-20">
+      <div className="container mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="mb-8">
-          <h2 className={cn("text-3xl sm:text-4xl font-montserrat font-bold mb-3", textColor)}>
-            {t("news.title")}
+        <div className="text-center mb-8">
+          <h2 className={cn("text-2xl lg:text-3xl font-bold font-montserrat mb-4", textColor)}>
+            {t('news.title')}
           </h2>
-          <p className={cn("text-lg", secondaryTextColor)}>
-            {t("news.subtitle") || "Cập nhật thông tin mới nhất về hoạt động đầu tư và phát triển tại DSEZA"}
+          <p className={cn("text-sm lg:text-base", secondaryTextColor)}>
+            {t('news.subtitle')}
           </p>
         </div>
 
-        {/* Category Filter Buttons */}
-        <div className="mb-6">
-          <div className="flex flex-wrap gap-2 sm:gap-3">
-            {categories.map((category) => {
-              const isActive = category.id === activeCategoryId;
-              const displayName = language === 'en' && category.nameEn ? category.nameEn : category.name;
-              
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => onCategoryChange(category.id)}
-                  className={cn(
-                    "px-3 py-2 sm:px-4 sm:py-2 rounded-full text-sm font-medium transition-all duration-300",
-                    isActive
-                      ? cn(
-                          "text-white",
-                          theme === "dark" ? "bg-[#19DBCF]" : "bg-[#416628]"
-                        )
-                      : cn(
-                          "border",
-                          buttonText,
-                          buttonBorder,
-                          buttonHoverBg,
-                          theme === "dark" ? "bg-transparent" : "bg-transparent"
-                        )
-                  )}
-                  disabled={isLoading}
-                >
-                  {displayName}
-                </button>
-              );
-            })}
-          </div>
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <button
+            onClick={() => onCategoryChange("all")}
+            className={cn(
+              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border",
+              activeCategoryId === "all" ? activeBg : cn("border-transparent", buttonColor)
+            )}
+            disabled={isLoading}
+          >
+            {t('news.categories.all')}
+          </button>
+          {Array.isArray(categories) && categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => onCategoryChange(category.id)}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border",
+                activeCategoryId === category.id ? activeBg : cn("border-transparent", buttonColor)
+              )}
+              disabled={isLoading}
+            >
+              {language === 'en' && category.nameEn ? category.nameEn : category.name}
+            </button>
+          ))}
         </div>
 
-        {/* News Grid - New responsive layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Featured Article - Takes up more space */}
-          <div className="lg:col-span-8">
-            {isLoading ? (
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Featured article skeleton */}
+            <div className="lg:col-span-2">
               <NewsCardSkeleton size="large" />
-            ) : featuredArticle ? (
-              <NewsCard article={featuredArticle} size="large" />
-            ) : (
-              <div className={cn("text-center py-12", secondaryTextColor)}>
-                {t("news.noFeatured") || "Không có tin nổi bật"}
-              </div>
-            )}
-          </div>
-
-          {/* Regular News - Sidebar */}
-          <div className="lg:col-span-4">
-            <div className="space-y-4">
-              {isLoading ? (
-                <>
-                  <NewsCardSkeleton size="small" />
-                  <NewsCardSkeleton size="small" />
-                  <NewsCardSkeleton size="small" />
-                </>
-              ) : regularNews.length > 0 ? (
-                regularNews.map((article) => (
-                  <NewsCard key={article.id} article={article} size="small" />
-                ))
-              ) : (
-                <div className={cn("text-center py-8", secondaryTextColor)}>
-                  {t("news.noArticles") || "Không có bài viết nào"}
-                </div>
-              )}
+            </div>
+            {/* Regular articles skeleton */}
+            <div className="space-y-6">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <NewsCardSkeleton key={index} size="medium" />
+              ))}
             </div>
           </div>
-        </div>
+        ) : (
+          <>
+            {/* Check if we have any content to show */}
+            {!featuredArticle && regularNews.length === 0 ? (
+              <NewsEmptyState 
+                message={activeCategoryId === "all" 
+                  ? "Hiện tại chưa có tin tức nào." 
+                  : "Hiện tại chưa có tin tức nào trong danh mục này."
+                } 
+              />
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Featured Article */}
+                {featuredArticle && (
+                  <div className="lg:col-span-2">
+                    <NewsCard article={featuredArticle} size="large" />
+                  </div>
+                )}
+
+                {/* Regular Articles */}
+                <div className={cn(
+                  "space-y-6",
+                  !featuredArticle && "lg:col-span-3"
+                )}>
+                  {regularNews.length > 0 ? (
+                    <>
+                      {!featuredArticle && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {regularNews.map((article) => (
+                            <NewsCard key={article.id} article={article} size="medium" />
+                          ))}
+                        </div>
+                      )}
+                      {featuredArticle && regularNews.map((article) => (
+                        <NewsCard key={article.id} article={article} size="small" />
+                      ))}
+                    </>
+                  ) : featuredArticle ? (
+                    <div className={cn("text-center py-8", secondaryTextColor)}>
+                      <p className="text-sm">
+                        Không có tin tức khác trong danh mục này.
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
         {/* View All Button */}
-        <div className="mt-8 text-center">
-          <a
-            href={`/news/category/${activeCategory?.slug || 'all'}`}
-            className={cn(
-              "inline-flex items-center px-6 py-3 border rounded-lg font-medium transition-all duration-300",
-              buttonText,
-              buttonBorder,
-              buttonHoverBg
-            )}
-          >
-            {t("news.viewAll") || "Xem tất cả"} {displayCategoryName && `${displayCategoryName.toLowerCase()}`}
-            <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
+        {!isLoading && (featuredArticle || regularNews.length > 0) && (
+          <div className="text-center mt-8">
+            <a
+              href="/news"
+              className={cn(
+                "inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 border",
+                buttonColor
+              )}
+            >
+              {t('news.viewAll')}
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

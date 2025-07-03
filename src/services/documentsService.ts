@@ -1,10 +1,10 @@
 import { LegalDocument, DocumentFormData, DocumentsApiResponse, DocumentApiResponse } from '@/types/documents';
 
-const API_BASE_URL = 'http://localhost/final-dseza-landing-85/api/v1/admin/documents';
+const API_BASE_URL = 'http://localhost/final-dseza-landing-85/api/admin/documents';
 
 // Get authentication token from localStorage
 const getAuthToken = (): string | null => {
-  return localStorage.getItem('auth_token');
+  return localStorage.getItem('adminUserToken');
 };
 
 // Create headers with authentication
@@ -57,7 +57,7 @@ export const fetchDocuments = async (params: {
 
 // Fetch single document by ID
 export const fetchDocumentById = async (id: number): Promise<DocumentApiResponse> => {
-  const response = await fetch(`${API_BASE_URL}/${id}`, {
+  const response = await fetch(`http://localhost/final-dseza-landing-85/api/documents/${id}`, {
     method: 'GET',
     headers: createHeaders()
   });

@@ -25,3 +25,42 @@ export const formatTime = (date: Date): string => {
   
   return `${hours}:${minutes}`;
 };
+
+/**
+ * General purpose date formatter
+ * @param dateString - The date string to format
+ * @param language - Language preference ('vi' or 'en')
+ * @param includeTime - Whether to include time in the output
+ * @returns A formatted date string
+ */
+export const formatDate = (dateString: string, language: string = 'vi', includeTime: boolean = false): string => {
+  const date = new Date(dateString);
+  
+  if (language === 'en') {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      ...(includeTime && {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      })
+    };
+    return date.toLocaleDateString('en-US', options);
+  } else {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    
+    let result = `${day}/${month}/${year}`;
+    
+    if (includeTime) {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      result += ` ${hours}:${minutes}`;
+    }
+    
+    return result;
+  }
+};

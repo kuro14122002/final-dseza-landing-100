@@ -27,6 +27,9 @@ import MobileHeader from "@/components/mobile/MobileHeader";
 // Footer Component
 import Footer from "@/components/Footer";
 
+// SEO Component
+import SEOHead from "@/components/SEO/SEOHead";
+
 // Skeleton Components
 import { NewsDetailPageSkeleton } from "@/components/skeletons/NewsDetailPageSkeleton";
 
@@ -139,6 +142,7 @@ const NewsDetailPage: React.FC = () => {
 
       try {
         // Fetch main article
+        console.log(`Loading article with slug: ${slug}`);
         const article = await fetchNewsArticleBySlug(slug);
         
         if (!article) {
@@ -148,12 +152,22 @@ const NewsDetailPage: React.FC = () => {
         }
 
         setArticleData(article);
+        console.log('Article loaded successfully:', article.title);
 
         // Fetch related data
         const [related, recent, categoriesData] = await Promise.all([
-          fetchRelatedNews(slug, article.category.id, 4),
-          fetchRecentNews(slug, 5),
-          fetchNewsCategories()
+          fetchRelatedNews(slug, article.category.id, 4).catch(err => {
+            console.warn('Failed to load related news:', err);
+            return [];
+          }),
+          fetchRecentNews(slug, 5).catch(err => {
+            console.warn('Failed to load recent news:', err);
+            return [];
+          }),
+          fetchNewsCategories().catch(err => {
+            console.warn('Failed to load categories:', err);
+            return [];
+          })
         ]);
 
         setRelatedNews(related);
@@ -162,7 +176,8 @@ const NewsDetailPage: React.FC = () => {
 
       } catch (err) {
         console.error('Error loading article:', err);
-        setError("Failed to load article");
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load article';
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }
@@ -275,6 +290,27 @@ const NewsDetailPage: React.FC = () => {
 
   return (
     <div className={cn("min-h-screen", bgColor)}>
+      {/* SEO Head */}
+      {articleData && (
+        <SEOHead
+          title={displayTitle}
+          description={articleData.excerpt || (language === 'en' && articleData.excerptEn ? articleData.excerptEn : articleData.excerpt)}
+          keywords={`${displayCategory}, DSEZA, Đà Nẵng, tin tức, news`}
+          image={articleData.imageUrl}
+          type="article"
+          author="DSEZA"
+          publishDate={articleData.publishDate}
+          modifiedDate={articleData.updatedAt || articleData.publishDate}
+          articleSection={displayCategory}
+          tags={[displayCategory || '', 'DSEZA', 'Đà Nẵng']}
+          organizationName="DSEZA - Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng"
+          organizationUrl="https://dseza.danang.gov.vn"
+          organizationLogo="https://dseza.danang.gov.vn/media/lightlogo3.png"
+          organizationAddress="Đà Nẵng, Việt Nam"
+          organizationPhone="0236.3847.707"
+          organizationEmail="info@dseza.danang.gov.vn"
+        />
+      )}
       {/* Header */}
       {isMobile ? (
         <MobileHeader />

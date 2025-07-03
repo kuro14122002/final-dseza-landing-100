@@ -12,6 +12,8 @@ const viTranslations: TranslationObject = {
   sitemap: "Sơ đồ site",
   logoDSEZAAlt: "Logo DSEZA",
 
+
+
   // Nav Items
   nav: {
     intro: "Giới thiệu",
@@ -49,6 +51,17 @@ const viTranslations: TranslationObject = {
     workforce: "Nguồn nhân lực",
     infrastructure: "Cơ sở hạ tầng",
     environment: "Môi trường",
+  },
+
+  // Investment Guide Section
+  investmentGuide: {
+    subtitle: 'Tất cả thông tin cần thiết để bắt đầu hành trình đầu tư của bạn tại Đà Nẵng, từ thủ tục, chính sách đến các dịch vụ hỗ trợ.',
+    proceduresDesc: 'Hướng dẫn chi tiết quy trình, hồ sơ và các bước cần thiết để thực hiện một dự án đầu tư.',
+    incentivesDesc: 'Khám phá các chính sách ưu đãi về thuế, đất đai và các hỗ trợ khác cho nhà đầu tư.',
+    workforceDesc: 'Thông tin về thị trường lao động, chất lượng nguồn nhân lực và các chương trình đào tạo.',
+    infrastructureDesc: 'Tổng quan về hạ tầng giao thông, điện, nước và viễn thông tại các khu công nghiệp.',
+    environmentDesc: 'Tìm hiểu về môi trường kinh doanh, chỉ số năng lực cạnh tranh và cam kết từ chính quyền.',
+    servicesDesc: 'Các dịch vụ hỗ trợ doanh nghiệp như tài chính, ngân hàng, logistics và tư vấn pháp lý.'
   },
 
   // Footer
@@ -98,6 +111,7 @@ const viTranslations: TranslationObject = {
     noArticlesInCategory: "Chưa có bài viết nào",
     noArticlesInCategoryDesc: "Danh mục này chưa có bài viết nào. Vui lòng quay lại sau để xem thêm nội dung mới.",
     categories: {
+      all: "Tất cả",
       investment: "Đầu tư – Hợp tác quốc tế",
       training: "Đào tạo, Ươm tạo khởi nghiệp",
       digital: "Chuyển đổi số",
@@ -137,12 +151,55 @@ const viTranslations: TranslationObject = {
     }
   },
 
+  // Search Section
+  search: {
+    title: "Tìm kiếm",
+    searchPlaceholder: "Tìm kiếm tin tức, văn bản...",
+    recentSearches: "Tìm kiếm gần đây",
+    quickResults: "Kết quả nhanh",
+    viewAllResults: "Xem tất cả kết quả",
+    noResults: "Không tìm thấy kết quả",
+    resultsFor: "Kết quả tìm kiếm cho",
+    foundResults: "Tìm thấy {count} kết quả trong {time} giây",
+    filters: "Bộ lọc",
+    allTypes: "Tất cả",
+    news: "Tin tức",
+    documents: "Văn bản",
+    document: "Văn bản",
+    errorTitle: "Không thể tìm kiếm",
+    tryAgain: "Thử lại",
+    noResultsTitle: "Không tìm thấy kết quả",
+    noResultsMessage: "Không có kết quả nào khớp với từ khóa tìm kiếm của bạn.",
+    suggestions: "Gợi ý",
+    suggestion1: "Kiểm tra chính tả từ khóa",
+    suggestion2: "Thử sử dụng từ khóa khác",
+    suggestion3: "Sử dụng từ khóa ngắn gọn hơn",
+  },
+
+  // Pagination
+  pagination: {
+    previous: "Trước",
+    next: "Tiếp",
+  },
+
   // Functional Zones Section
   functionalZones: {
     title: "KHU CÔNG NGHỆ CAO, TRUNG TÂM VI MẠCH BÁN DẪN VÀ TRÍ TUỆ NHÂN TẠO, CÁC KHU CÔNG NGHIỆP, KHU CNTT TẬP TRUNG, KHU THƯƠNG MẠI TỰ DO",
     enterprises: "Doanh nghiệp",
     occupancyRate: "Tỉ lệ lấp đầy",
     area: "Diện tích",
+  },
+
+  // Validation messages
+  validation: {
+    email: {
+      required: "Email hoặc tên đăng nhập là bắt buộc",
+      invalid: "Email hoặc tên đăng nhập không hợp lệ"
+    },
+    password: {
+      required: "Mật khẩu là bắt buộc",
+      minLength: "Mật khẩu phải có ít nhất {count} ký tự"
+    }
   },
 
   // Admin Panel
@@ -164,8 +221,29 @@ const viTranslations: TranslationObject = {
       showPassword: "Hiện mật khẩu",
       hidePassword: "Ẩn mật khẩu",
     },
-    sidebar: {
+    nav: {
       dashboard: "Dashboard",
+      news: "Tin tức",
+      documents: "Tài liệu",
+      categories: "Danh mục",
+    },
+    dashboard: {
+      greeting: "Chào mừng trở lại!",
+      welcomeMessage: "Chào mừng trở lại, {email}!",
+      totalNews: "Tổng số Tin tức",
+      totalEvents: "Tổng số Sự kiện",
+      totalViews: "Lượt xem (Tháng này)",
+      activeUsersThisMonth: "Người dùng hoạt động",
+      createNewNews: "Tạo Tin tức mới",
+      manageAllNews: "Quản lý Tất cả Tin tức",
+      createNewEvent: "Tạo Sự kiện mới",
+      manageAllEvents: "Quản lý Tất cả Sự kiện",
+      sessionInfo: "Thông tin Phiên đăng nhập",
+      userEmail: "Email",
+      userRole: "Vai trò",
+      loginTime: "Thời gian đăng nhập",
+    },
+    sidebar: {
       newsManagement: "Quản lý Tin tức",
       eventManagement: "Quản lý Sự kiện",
       categoryManagement: "Quản lý Danh mục",
@@ -179,22 +257,6 @@ const viTranslations: TranslationObject = {
     common: {
       create: "Tạo mới",
       edit: "Chỉnh sửa",
-    },
-    dashboard: {
-      welcomeMessage: "Chào mừng trở lại, {email}!",
-      greeting: "Chào buổi sáng",
-      totalNews: "Tổng số Tin tức",
-      totalEvents: "Tổng số Sự kiện",
-      totalViews: "Lượt xem (Tháng này)",
-      activeUsersThisMonth: "Người dùng hoạt động",
-      createNewNews: "Tạo Tin tức mới",
-      manageAllNews: "Quản lý Tất cả Tin tức",
-      createNewEvent: "Tạo Sự kiện mới",
-      manageAllEvents: "Quản lý Tất cả Sự kiện",
-      sessionInfo: "Thông tin Phiên đăng nhập",
-      userEmail: "Email",
-      loginTime: "Thời gian đăng nhập",
-      userRole: "Vai trò",
     },
     newsList: {
       titlePage: "Quản lý Tin tức",
@@ -237,10 +299,6 @@ const viTranslations: TranslationObject = {
         previewWIP: "Chức năng Xem trước đang phát triển.",
       },
       noNewsFound: "Không tìm thấy bài viết nào.",
-      pagination: {
-        itemsPerPage: "Số mục mỗi trang:",
-        showing: "Hiển thị {from}-{to} trên {total} mục",
-      },
     },
     search: {
       placeholder: "Tìm kiếm tin tức...",
@@ -317,6 +375,7 @@ const viTranslations: TranslationObject = {
         category: {
           label: "Danh mục",
           placeholder: "Chọn danh mục...",
+          noCategories: "Không có danh mục nào",
         },
         status: {
           label: "Trạng thái",
@@ -399,18 +458,6 @@ const viTranslations: TranslationObject = {
     title: "Lỗi",
     emailInvalid: "Email không hợp lệ.",
     passwordMinLength: "Mật khẩu phải có ít nhất 8 ký tự.",
-  },
-
-  // Validation messages
-  validation: {
-    email: {
-      required: "Vui lòng nhập email.",
-      invalid: "Email không hợp lệ.",
-    },
-    password: {
-      required: "Vui lòng nhập mật khẩu.",
-      minLength: "Mật khẩu phải có ít nhất {count} ký tự.",
-    },
   },
 
   // Quick Access Buttons
@@ -561,6 +608,8 @@ const enTranslations: TranslationObject = {
   sitemap: "Sitemap",
   logoDSEZAAlt: "DSEZA Logo",
 
+
+
   // Nav Items
   nav: {
     intro: "Introduction",
@@ -598,6 +647,17 @@ const enTranslations: TranslationObject = {
     workforce: "Human Resources",
     infrastructure: "Infrastructure",
     environment: "Environment",
+  },
+
+  // Investment Guide Section
+  investmentGuide: {
+    subtitle: 'All the necessary information to start your investment journey in Da Nang, from procedures and policies to support services.',
+    proceduresDesc: 'Detailed guide on processes, required documents, and necessary steps to implement an investment project.',
+    incentivesDesc: 'Explore incentive policies on taxes, land, and other support for investors.',
+    workforceDesc: 'Information on the labor market, human resource quality, and training programs.',
+    infrastructureDesc: 'Overview of transport, electricity, water, and telecommunications infrastructure in industrial zones.',
+    environmentDesc: 'Learn about the business environment, competitiveness index, and commitments from the authorities.',
+    servicesDesc: 'Support services for businesses such as finance, banking, logistics, and legal consulting.'
   },
 
   // Footer
@@ -786,10 +846,6 @@ const enTranslations: TranslationObject = {
         previewWIP: "Preview feature is under development.",
       },
       noNewsFound: "No articles found.",
-      pagination: {
-        itemsPerPage: "Items per page:",
-        showing: "Showing {from}-{to} of {total} items",
-      },
     },
     search: {
       placeholder: "Search news...",
@@ -866,6 +922,7 @@ const enTranslations: TranslationObject = {
         category: {
           label: "Category",
           placeholder: "Select category...",
+          noCategories: "No categories available",
         },
         status: {
           label: "Status",

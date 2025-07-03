@@ -5,6 +5,118 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* TinyMCE Performance Optimizations */
+.tox .tox-edit-area {
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+.tox .tox-edit-area__iframe {
+  /* Improve scrolling performance */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Fix for touch events in TinyMCE */
+.tox-tinymce {
+  touch-action: manipulation !important;
+}
+
+.tox .tox-toolbar,
+.tox .tox-menubar,
+.tox .tox-statusbar {
+  /* Prevent unnecessary reflows */
+  contain: layout style;
+}
+
+/* Optimize mobile touch handling */
+@media (hover: none) and (pointer: coarse) {
+  .tox .tox-toolbar__group {
+    touch-action: manipulation;
+  }
+  
+  .tox .tox-tbtn {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Custom scrollbar for better performance */
+.tox .tox-edit-area__iframe::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tox .tox-edit-area__iframe::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tox .tox-edit-area__iframe::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.tox .tox-edit-area__iframe::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Remove outline on focus for better UX */
+.tox .tox-tbtn:focus,
+.tox .tox-split-button:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* Ensure smooth animations */
+.tox .tox-collection__item {
+  transition: background-color 0.15s ease-in-out;
+}
+
+/* Optimize font rendering */
+.tox {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mobile-first optimizations */
+@media (max-width: 768px) {
+  .tox .tox-toolbar-overlord {
+    /* Reduce toolbar complexity on mobile */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tox .tox-toolbar__group {
+    flex-shrink: 0;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -226,17 +338,33 @@
     @apply text-red-500 font-medium;
   }
 
-  /* Admin form specific styles */
+  /* Admin Panel specific styles */
+  .admin-sidebar-nav-item {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .admin-sidebar-nav-item:hover {
+    @apply transform translate-x-1;
+  }
+  
+  .admin-card-hover {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .admin-card-hover:hover {
+    @apply transform scale-105 shadow-xl;
+  }
+
   .admin-form {
     @apply space-y-6;
   }
 
   .admin-form .form-section {
-    @apply space-y-4;
+    @apply space-y-4 p-6 rounded-lg border;
   }
 
   .admin-form .form-section-title {
-    @apply text-lg font-semibold border-b pb-2 mb-4;
+    @apply text-lg font-montserrat font-semibold mb-4;
   }
 
   .admin-form .form-field {
@@ -244,52 +372,52 @@
   }
 
   .admin-form .form-field label {
-    @apply text-sm font-medium;
+    @apply text-sm font-medium font-inter;
   }
 
   .admin-form .form-field input,
   .admin-form .form-field textarea,
   .admin-form .form-field select {
-    @apply w-full;
+    @apply w-full px-3 py-2 border rounded-md font-inter transition-colors;
   }
 
   .admin-form .form-field .error-message {
-    @apply text-sm text-red-500 mt-1;
+    @apply text-sm text-red-600 dark:text-red-400 font-inter;
   }
 
   .admin-form .form-field .help-text {
-    @apply text-xs text-muted-foreground mt-1;
+    @apply text-sm font-inter opacity-70;
   }
 
   /* Image preview styles */
   .image-preview {
-    @apply relative inline-block border rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800;
+    @apply relative inline-block rounded-lg overflow-hidden border;
   }
 
   .image-preview img {
-    @apply w-full object-cover;
+    @apply w-full h-32 object-cover;
   }
 
   .image-preview .remove-button {
-    @apply absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full transition-colors;
+    @apply absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full opacity-80 hover:opacity-100;
   }
 
-  /* Loading skeleton improvements */
+  /* Skeleton styles for admin forms */
   .skeleton-admin-form {
-    @apply space-y-6;
+    @apply space-y-4 animate-pulse;
   }
 
   .skeleton-admin-form .skeleton-section {
-    @apply space-y-4;
+    @apply h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-2;
   }
 
-  /* Button improvements */
+  /* Button groups */
   .admin-form .button-group {
     @apply flex items-center justify-between pt-6 border-t;
   }
 
   .admin-form .button-group .primary-actions {
-    @apply flex items-center space-x-2;
+    @apply flex gap-3;
   }
 }
 
@@ -300,4 +428,107 @@
 
 .font-roboto {
   font-family: 'Roboto', sans-serif;
+}
+
+/* Layout Shift Prevention */
+.admin-dashboard-container {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+.admin-stats-grid {
+  contain: layout style;
+  min-height: 140px;
+}
+
+.admin-card {
+  contain: layout style;
+  will-change: contents;
+}
+
+.admin-loading-skeleton {
+  contain: strict;
+  pointer-events: none;
+}
+
+/* Performance Optimizations for Dashboard */
+.dashboard-section {
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.performance-monitor {
+  contain: layout style;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Prevent flash of unstyled content */
+.admin-content {
+  opacity: 0;
+  animation: fadeInAdmin 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeInAdmin {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fixed dimensions for dynamic content */
+.admin-quick-actions {
+  min-height: 300px;
+  contain: layout style;
+}
+
+.admin-activity-section {
+  min-height: 500px;
+  contain: layout style;
+}
+
+/* GPU acceleration for animations */
+.admin-card-hover {
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Optimize skeleton loading */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite ease-in-out;
+  will-change: background-position;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.1) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+}
+
+/* Remove conflicting animations */
+.admin-loading-skeleton .animate-pulse {
+  animation: none !important;
+}
+
+/* Prevent layout shifts on loading states */
+.loading-placeholder {
+  contain: size layout style;
+  height: 100%;
+  width: 100%;
 }

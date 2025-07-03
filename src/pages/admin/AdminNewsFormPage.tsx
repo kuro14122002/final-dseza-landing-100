@@ -1,20 +1,31 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { format } from 'date-fns';
 import {
   ArrowLeft,
   Calendar,
-  Image as ImageIcon,
-  Eye,
+  Upload,
   Save,
   X,
-  Upload,
-  Trash2,
   Loader2,
+  FileText,
+  Eye,
+  Image as ImageIcon,
+  Video,
+  File as FileIcon,
+  Plus,
+  Trash2,
+  RotateCcw,
+  Download,
+  ExternalLink,
+  Paperclip,
+  GripVertical,
+  Eye as PreviewIcon
 } from 'lucide-react';
+import AdminPageLayout from '@/components/admin/AdminPageLayout';
 
 // Shadcn UI components
 import { Button } from '@/components/ui/button';
@@ -23,862 +34,1012 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 
 // Custom hooks & utils
-import { useTranslation } from '@/utils/translations';
-import { useTheme } from '@/context/ThemeContext';
 import { cn } from '@/lib/utils';
 
 // Types
 import { AdminNewsArticle, NewsCategory } from '@/types/news';
+import { MediaFile, MediaUploadResponse } from '@/types/media';
 
-// Services - will be created/extended
+// Services
 import { 
-  fetchNewsCategories, 
   fetchAdminNewsArticleById,
   createAdminNewsArticle,
-  updateAdminNewsArticle 
+  updateAdminNewsArticle,
+  fetchNewsCategories
 } from '@/services/newsService';
+import { uploadFile, uploadMultipleFiles, fetchMediaFiles } from '@/services/mediaService';
 
-// Validation schema
-const getNewsFormSchema = (t: (key: string, params?: any) => string) => z.object({
+// Enhanced validation schema with file attachments
+const newsFormSchema = z.object({
   title: z.string()
-    .min(1, { message: t('admin.newsForm.validation.title.required') })
-    .max(200, { message: t('admin.newsForm.validation.title.maxLength', { count: 200 }) }),
+    .min(1, { message: 'Tiêu đề là bắt buộc' })
+    .max(500, { message: 'Tiêu đề không được quá 500 ký tự' }),
   titleEn: z.string()
-    .max(200, { message: t('admin.newsForm.validation.titleEn.maxLength', { count: 200 }) })
+    .max(500, { message: 'Tiêu đề tiếng Anh không được quá 500 ký tự' })
     .optional(),
-  slug: z.string()
-    .min(1, { message: t('admin.newsForm.validation.slug.required') })
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { message: t('admin.newsForm.validation.slug.format') }),
   excerpt: z.string()
-    .max(500, { message: t('admin.newsForm.validation.excerpt.maxLength', { count: 500 }) })
-    .optional(),
+    .min(1, { message: 'Tóm tắt là bắt buộc' })
+    .max(1000, { message: 'Tóm tắt không được quá 1000 ký tự' }),
   excerptEn: z.string()
-    .max(500, { message: t('admin.newsForm.validation.excerptEn.maxLength', { count: 500 }) })
+    .max(1000, { message: 'Tóm tắt tiếng Anh không được quá 1000 ký tự' })
     .optional(),
   content: z.string()
-    .min(1, { message: t('admin.newsForm.validation.content.required') }),
+    .min(1, { message: 'Nội dung là bắt buộc' }),
   contentEn: z.string().optional(),
-  imageUrl: z.string().optional(),
-  category: z.string()
-    .min(1, { message: t('admin.newsForm.validation.category.required') }),
-  isFeatured: z.boolean().default(false),
-  status: z.enum(['draft', 'pending', 'published'], {
-    required_error: t('admin.newsForm.validation.status.required'),
-  }),
-  publishDate: z.date({
-    required_error: t('admin.newsForm.validation.publishDate.required'),
-  }),
+  categoryId: z.string()
+    .min(1, { message: 'Danh mục là bắt buộc' }),
+  imageUrl: z.string()
+    .optional()
+    .refine((val) => !val || z.string().url().safeParse(val).success, {
+      message: 'URL hình ảnh không hợp lệ'
+    }),
+  status: z.enum(['published', 'draft', 'pending']),
+  isFeatured: z.boolean().optional(),
+  publishDate: z.string().optional(),
   author: z.string()
-    .min(1, { message: t('admin.newsForm.validation.author.required') }),
-  readingTime: z.string().optional(),
-  readingTimeEn: z.string().optional(),
+    .min(1, { message: 'Tác giả là bắt buộc' }),
+  tags: z.string().optional(),
+  attachments: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    url: z.string(),
+    type: z.string(),
+    size: z.number()
+  })).optional()
 });
 
-type NewsFormValues = z.infer<ReturnType<typeof getNewsFormSchema>>;
+type NewsFormValues = z.infer<typeof newsFormSchema>;
+
+interface UploadProgress {
+  [key: string]: number;
+}
+
+interface AttachedFile {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+  size: number;
+  preview?: string;
+}
 
 const AdminNewsFormPage: React.FC = () => {
-  const { t } = useTranslation();
-  const { theme } = useTheme();
   const navigate = useNavigate();
   const { articleId } = useParams();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const editorRef = useRef<any>(null);
   
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [existingArticle, setExistingArticle] = useState<AdminNewsArticle | null>(null);
   const [categories, setCategories] = useState<NewsCategory[]>([]);
-  const [imagePreview, setImagePreview] = useState<string>('');
+  
+  // Image upload states
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
+  const [isDragOver, setIsDragOver] = useState(false);
+  
+  // File attachments states
+  const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
+  const [uploadProgress, setUploadProgress] = useState<UploadProgress>({});
+  const [isUploading, setIsUploading] = useState(false);
+  
+  // Media gallery states
+  const [showMediaGallery, setShowMediaGallery] = useState(false);
+  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
+  const [loadingMedia, setLoadingMedia] = useState(false);
 
   const isEditMode = Boolean(articleId);
   
-  // Memoize the schema to prevent re-creation on every render
-  const newsFormSchema = useMemo(() => getNewsFormSchema(t), [t]);
-  
-  // Memoize the resolver as well
-  const formResolver = useMemo(() => zodResolver(newsFormSchema), [newsFormSchema]);
-
   const form = useForm<NewsFormValues>({
-    resolver: formResolver,
+    resolver: zodResolver(newsFormSchema),
     defaultValues: {
       title: '',
       titleEn: '',
-      slug: '',
       excerpt: '',
       excerptEn: '',
       content: '',
       contentEn: '',
+      categoryId: '',
       imageUrl: '',
-      category: '',
-      isFeatured: false,
       status: 'draft',
-      publishDate: new Date(),
+      isFeatured: false,
+      publishDate: '',
       author: '',
-      readingTime: '',
-      readingTimeEn: '',
+      tags: '',
+      attachments: []
     },
   });
 
-  // Auto-generate slug from title
-  const generateSlug = useCallback((title: string) => {
-    return title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
-      .replace(/[đ]/g, 'd')
-      .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
-      .replace(/\s+/g, '-') // Replace spaces with hyphens
-      .replace(/-+/g, '-') // Replace multiple hyphens with single
-      .trim();
+  // Load categories
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const categoriesData = await fetchNewsCategories();
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error loading categories:', error);
+        toast.error('Không thể tải danh sách danh mục');
+      }
+    };
+
+    loadCategories();
   }, []);
 
-  // Combine all watched values into a single useWatch to reduce re-renders
-  const watchedValues = useWatch({
-    control: form.control,
-    name: ['title', 'category', 'status', 'publishDate', 'isFeatured']
-  });
-
-  const [watchedTitle, watchedCategory, watchedStatus, watchedPublishDate, watchedIsFeatured] = watchedValues;
-
-  // Debounced slug generation effect - only run when title changes and not in edit mode
+  // Load article data for edit mode
   useEffect(() => {
-    if (watchedTitle && !isEditMode && dataLoaded) {
-      const generatedSlug = generateSlug(watchedTitle);
-      form.setValue('slug', generatedSlug, { 
-        shouldValidate: false, 
-        shouldDirty: false,
-        shouldTouch: false 
-      });
-    }
-  }, [watchedTitle, generateSlug, isEditMode, dataLoaded, form]);
+    const loadArticleData = async () => {
+      if (!isEditMode || !articleId) {
+        setIsInitialLoading(false);
+        return;
+      }
 
-  // Memoize form functions to prevent recreation on every render
-  const formReset = useCallback((data: NewsFormValues) => {
-    form.reset(data);
-  }, [form]);
-
-  const formSetValue = useCallback((field: keyof NewsFormValues, value: any) => {
-    form.setValue(field, value);
-  }, [form]);
-
-  // Load initial data - Fixed dependency array
-  useEffect(() => {
-    let isMounted = true; // Cleanup flag to prevent state updates after unmount
-    
-    const loadInitialData = async () => {
-      if (!isMounted) return;
-      
-      setIsInitialLoading(true);
-      setDataLoaded(false);
-      
       try {
-        // Load categories first
-        const categoryData = await fetchNewsCategories();
-        if (!isMounted) return;
-        setCategories(categoryData);
-
-        // Load article data for edit mode
-        if (isEditMode && articleId) {
-          const articleData = await fetchAdminNewsArticleById(articleId);
-          if (!isMounted) return;
-          
-          if (articleData) {
-            // Populate form with existing data
-            const formData: NewsFormValues = {
-              title: articleData.title,
-              titleEn: articleData.titleEn || '',
-              slug: articleData.slug,
-              excerpt: articleData.excerpt,
-              excerptEn: articleData.excerptEn || '',
-              content: articleData.content || '',
-              contentEn: articleData.contentEn || '',
-              imageUrl: articleData.imageUrl,
-              category: articleData.category.id,
-              isFeatured: articleData.isFeatured || false,
-              status: articleData.status,
-              publishDate: new Date(articleData.publishDate),
-              author: articleData.author,
-              readingTime: articleData.readingTime || '',
-              readingTimeEn: articleData.readingTimeEn || '',
-            };
-            
-            formReset(formData);
-            
-            if (articleData.imageUrl) {
-              setImagePreview(articleData.imageUrl);
-            }
-          } else {
-            toast.error(t('admin.newsForm.messages.articleNotFound'));
-            navigate('/admin/news');
-            return;
-          }
-        } else if (!isEditMode) {
-          // Set default author for create mode
-          const adminUser = localStorage.getItem('adminUser');
-          if (adminUser && isMounted) {
-            const user = JSON.parse(adminUser);
-            formSetValue('author', user.email);
-          }
+        setIsInitialLoading(true);
+        const article = await fetchAdminNewsArticleById(articleId);
+        
+        if (!article) {
+          toast.error('Không tìm thấy bài viết');
+          navigate('/admin/news');
+          return;
         }
         
-        if (isMounted) {
-          setDataLoaded(true);
+        setExistingArticle(article);
+        setImagePreview(article.imageUrl);
+        
+        // Load existing attachments
+        if (article.attachments) {
+          setAttachedFiles(article.attachments);
         }
+        
+        // Populate form
+        form.reset({
+          title: article.title,
+          titleEn: article.titleEn || '',
+          excerpt: article.excerpt,
+          excerptEn: article.excerptEn || '',
+          content: article.content || '',
+          contentEn: article.contentEn || '',
+          categoryId: article.category.id,
+          imageUrl: article.imageUrl,
+          status: article.status,
+          isFeatured: article.isFeatured || false,
+          publishDate: article.publishDate,
+          author: article.author,
+          tags: article.tags || '',
+          attachments: article.attachments || []
+        });
+        
       } catch (error) {
-        if (isMounted) {
-          console.error('Error loading initial data:', error);
-          toast.error(t('admin.newsForm.messages.loadError'));
-        }
+        console.error('Error loading article:', error);
+        toast.error('Không thể tải thông tin bài viết');
+        navigate('/admin/news');
       } finally {
-        if (isMounted) {
-          setIsInitialLoading(false);
-        }
+        setIsInitialLoading(false);
       }
     };
 
-    loadInitialData();
-    
-    // Cleanup function
-    return () => {
-      isMounted = false;
-    };
-  }, [articleId, isEditMode, navigate, t, formReset, formSetValue]);
+    loadArticleData();
+  }, [isEditMode, articleId, form, navigate]);
 
-  // Handle image selection
-  const handleImageSelect = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  // Load media gallery
+  const loadMediaGallery = useCallback(async () => {
+    try {
+      setLoadingMedia(true);
+      const response = await fetchMediaFiles({ type: 'image', limit: 50 });
+      setMediaFiles(response.data.files);
+    } catch (error) {
+      console.error('Error loading media gallery:', error);
+      toast.error('Không thể tải thư viện media');
+    } finally {
+      setLoadingMedia(false);
+    }
+  }, []);
+
+  // Handle main image upload
+  const handleImageChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      await handleImageUpload(file);
+    }
+  }, []);
+
+  const handleImageUpload = useCallback(async (file: File) => {
+    // Validate file
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Hình ảnh không được quá 10MB');
+      return;
+    }
+    
+    if (!file.type.startsWith('image/')) {
+      toast.error('Chỉ cho phép file hình ảnh');
+      return;
+    }
+    
+    try {
+      setIsUploading(true);
       setSelectedImage(file);
+      
+      // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
-        const result = e.target?.result as string;
-        setImagePreview(result);
-        formSetValue('imageUrl', result); // For now, use base64 - TODO: Upload to server
+        setImagePreview(e.target?.result as string);
       };
       reader.readAsDataURL(file);
-    }
-  }, [formSetValue]);
 
-  // Handle image removal
-  const handleImageRemove = useCallback(() => {
-    setSelectedImage(null);
-    setImagePreview('');
-    formSetValue('imageUrl', '');
-  }, [formSetValue]);
-
-  // Memoized form setValue callbacks - consolidated into single functions
-  const handleSelectChange = useCallback((field: keyof NewsFormValues) => {
-    return (value: string | boolean) => {
-      formSetValue(field, value);
-    };
-  }, [formSetValue]);
-
-  const handleDateChange = useCallback((date: Date | undefined) => {
-    if (date) formSetValue('publishDate', date);
-  }, [formSetValue]);
-
-  // Handle form submission
-  const onSubmit = useCallback(async (data: NewsFormValues) => {
-    setIsLoading(true);
-    try {
-      console.log('Form submitted with data:', data);
+      // Upload to server
+      const response = await uploadFile(file, 'news-images', (progress) => {
+        setUploadProgress(prev => ({ ...prev, mainImage: progress.percentage }));
+      });
       
-      // TODO: Replace with actual API calls
-      if (isEditMode && articleId) {
-        await updateAdminNewsArticle(articleId, data);
-        toast.success(t('admin.newsForm.messages.updateSuccess'));
-      } else {
-        await createAdminNewsArticle(data);
-        toast.success(t('admin.newsForm.messages.createSuccess'));
+      // Update form with uploaded URL
+      form.setValue('imageUrl', response.url);
+      toast.success('Tải lên hình ảnh thành công!');
+      
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Không thể tải lên hình ảnh');
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(prev => ({ ...prev, mainImage: 0 }));
+    }
+  }, [form]);
+
+  // Handle drag and drop for main image
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    
+    const files = Array.from(e.dataTransfer.files);
+    const imageFile = files.find(file => file.type.startsWith('image/'));
+    
+    if (imageFile) {
+      await handleImageUpload(imageFile);
+    }
+  }, [handleImageUpload]);
+
+  // Handle file attachments
+  const handleFileAttachment = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) return;
+
+    try {
+      setIsUploading(true);
+      
+      const uploadPromises = files.map(async (file, index) => {
+        const fileId = `file-${Date.now()}-${index}`;
+        
+        // Add to progress tracking
+        setUploadProgress(prev => ({ ...prev, [fileId]: 0 }));
+        
+        try {
+          const response = await uploadFile(file, 'news-attachments', (progress) => {
+            setUploadProgress(prev => ({ ...prev, [fileId]: progress.percentage }));
+          });
+          
+          return {
+            id: fileId,
+            name: file.name,
+            url: response.url,
+            type: file.type,
+            size: file.size,
+            preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined
+          };
+        } catch (error) {
+          console.error(`Error uploading ${file.name}:`, error);
+          toast.error(`Không thể tải lên file ${file.name}`);
+          return null;
+        } finally {
+          // Remove from progress tracking
+          setUploadProgress(prev => {
+            const { [fileId]: removed, ...rest } = prev;
+            return rest;
+          });
+        }
+      });
+      
+      const results = await Promise.all(uploadPromises);
+      const successfulUploads = results.filter(Boolean) as AttachedFile[];
+      
+      if (successfulUploads.length > 0) {
+        setAttachedFiles(prev => [...prev, ...successfulUploads]);
+        toast.success(`Đã tải lên ${successfulUploads.length} file thành công!`);
       }
       
-      navigate('/admin/news');
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error(
-        isEditMode 
-          ? t('admin.newsForm.messages.updateError')
-          : t('admin.newsForm.messages.createError')
-      );
+      console.error('Error uploading files:', error);
+      toast.error('Có lỗi xảy ra khi tải lên file');
+    } finally {
+      setIsUploading(false);
+      // Clear input
+      if (event.target) {
+        event.target.value = '';
+      }
+    }
+  }, []);
+
+  // Remove attached file
+  const removeAttachedFile = useCallback((fileId: string) => {
+    setAttachedFiles(prev => prev.filter(file => file.id !== fileId));
+    toast.success('Đã xóa file đính kèm');
+  }, []);
+
+  // Remove main image
+  const handleRemoveImage = useCallback(() => {
+    setSelectedImage(null);
+    setImagePreview('');
+    form.setValue('imageUrl', '');
+    toast.success('Đã xóa hình ảnh');
+  }, [form]);
+
+  // Insert image from gallery into content
+  const insertImageToContent = useCallback((imageUrl: string, altText: string = '') => {
+    if (editorRef.current) {
+      const imageHtml = `<img src="${imageUrl}" alt="${altText}" style="max-width: 100%; height: auto;" />`;
+      editorRef.current.insertContent(imageHtml);
+      setShowMediaGallery(false);
+      toast.success('Đã chèn hình ảnh vào nội dung');
+    }
+  }, []);
+
+  // Handle form submission
+  const onSubmit = async (data: NewsFormValues) => {
+    try {
+      setIsLoading(true);
+      
+      // Validate attachments
+      if (attachedFiles.length > 10) {
+        toast.error('Chỉ được đính kèm tối đa 10 file');
+        return;
+      }
+
+      const formData = {
+        ...data,
+        slug: data.title.toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-+|-+$/g, ''),
+        readingTime: calculateReadingTime(data.content),
+        attachments: attachedFiles
+      };
+
+      let result: AdminNewsArticle;
+      
+      if (isEditMode && articleId) {
+        result = await updateAdminNewsArticle(articleId, formData);
+        toast.success('Cập nhật bài viết thành công!');
+      } else {
+        result = await createAdminNewsArticle(formData);
+        toast.success('Tạo bài viết thành công!');
+      }
+      
+      // Navigate to news list
+      navigate('/admin/news');
+      
+    } catch (error) {
+      console.error('Error saving article:', error);
+      toast.error(isEditMode ? 'Không thể cập nhật bài viết' : 'Không thể tạo bài viết');
     } finally {
       setIsLoading(false);
     }
-  }, [isEditMode, articleId, navigate, t]);
+  };
 
-  // Handle cancel/back navigation
-  const handleCancel = useCallback(() => {
+  // Calculate reading time
+  const calculateReadingTime = (content: string): string => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return `${minutes} phút đọc`;
+  };
+
+  // Format file size
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Handle back navigation
+  const handleBack = () => {
     navigate('/admin/news');
-  }, [navigate]);
+  };
 
-  // Improved loading state - only show skeleton when actually loading
-  if (isInitialLoading || !dataLoaded) {
-    return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="space-y-6">
-          <div className="flex items-center space-x-4">
-            <Skeleton className="h-10 w-24" />
-            <Skeleton className="h-8 w-64" />
-          </div>
-          <Card>
-            <CardHeader>
-              <Skeleton className="h-6 w-48" />
-            </CardHeader>
-            <CardContent className="space-y-8">
-              {/* Basic Information Section Skeleton */}
-              <div className="space-y-6">
-                <Skeleton className="h-6 w-40" />
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="space-y-2">
-                    <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-10 w-full" />
-                  </div>
-                ))}
-              </div>
-              
-              {/* Content Section Skeleton */}
-              <div className="space-y-6">
-                <Skeleton className="h-6 w-32" />
-                {Array.from({ length: 2 }).map((_, i) => (
-                  <div key={i} className="space-y-2">
-                    <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-40 w-full" />
-                  </div>
-                ))}
-              </div>
-              
-              {/* Settings Section Skeleton */}
-              <div className="space-y-6">
-                <Skeleton className="h-6 w-28" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="space-y-2">
-                      <Skeleton className="h-4 w-20" />
-                      <Skeleton className="h-10 w-full" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Action buttons skeleton */}
-              <div className="flex items-center justify-between pt-6">
-                <Skeleton className="h-10 w-20" />
-                <Skeleton className="h-10 w-24" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+  const breadcrumbs = [
+    { label: 'Quản trị nội dung', href: '/admin/dashboard' },
+    { label: 'Tin tức & Bài viết', href: '/admin/news' },
+    { label: isEditMode ? 'Chỉnh sửa bài viết' : 'Tạo bài viết' }
+  ];
+
+  const headerActions = (
+    <div className="flex items-center gap-2">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={handleBack}
+      >
+        Hủy
+      </Button>
+      <Button
+        type="submit"
+        form="news-form"
+        disabled={isLoading || isUploading}
+      >
+        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        <Save className="mr-2 h-4 w-4" />
+        {isEditMode ? 'Cập nhật' : 'Tạo mới'}
+      </Button>
+    </div>
+  );
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleCancel}
-              className="flex items-center space-x-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>{t('admin.newsForm.buttons.back')}</span>
-            </Button>
-            <h1 className={cn(
-              "text-2xl font-bold",
-              theme === 'dark' ? 'text-dseza-dark-main-text' : 'text-dseza-light-main-text'
-            )}>
-              {isEditMode 
-                ? t('admin.newsForm.title.edit')
-                : t('admin.newsForm.title.create')
-              }
-            </h1>
-          </div>
-        </div>
+    <AdminPageLayout
+      title={isEditMode ? 'Chỉnh sửa bài viết' : 'Tạo bài viết'}
+      description={existingArticle ? `ID: ${existingArticle.id}` : 'Tạo bài viết tin tức mới'}
+      breadcrumbs={breadcrumbs}
+      actions={headerActions}
+      showBackButton={true}
+      backUrl="/admin/news"
+      isLoading={isInitialLoading}
+      className="max-w-6xl"
+    >
+      {/* Upload Progress Alert */}
+      {isUploading && Object.keys(uploadProgress).length > 0 && (
+        <Alert className="mb-6">
+          <Upload className="h-4 w-4" />
+          <AlertDescription>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span>Đang tải lên file...</span>
+                <span className="text-sm text-muted-foreground">
+                  {Math.round(Object.values(uploadProgress).reduce((a, b) => a + b, 0) / Object.keys(uploadProgress).length)}%
+                </span>
+              </div>
+              {Object.entries(uploadProgress).map(([fileId, progress]) => (
+                <div key={fileId} className="space-y-1">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>{fileId.includes('mainImage') ? 'Hình ảnh chính' : fileId}</span>
+                    <span>{Math.round(progress)}%</span>
+                  </div>
+                  <Progress value={progress} className="h-2" />
+                </div>
+              ))}
+            </div>
+          </AlertDescription>
+        </Alert>
+      )}
 
-        {/* Main Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <span>
-                {isEditMode 
-                  ? t('admin.newsForm.cardTitle.edit') 
-                  : t('admin.newsForm.cardTitle.create')
-                }
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Basic Information Section */}
-              <div className="space-y-6">
-                <h2 className={cn(
-                  "text-lg font-semibold border-b pb-2",
-                  theme === 'dark' 
-                    ? 'text-dseza-dark-main-text border-dseza-dark-border' 
-                    : 'text-dseza-light-main-text border-dseza-light-border'
-                )}>
-                  {t('admin.newsForm.sections.basicInfo')}
-                </h2>
-
-                {/* Title (Vietnamese) */}
+      {/* Form */}
+      <form id="news-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Basic Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Thông tin cơ bản</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Title */}
                 <div className="space-y-2">
-                  <Label htmlFor="title" className="required">
-                    {t('admin.newsForm.fields.title.label')}
-                  </Label>
+                  <Label htmlFor="title">Tiêu đề *</Label>
                   <Input
                     id="title"
                     {...form.register('title')}
-                    placeholder={t('admin.newsForm.fields.title.placeholder')}
-                    disabled={isLoading}
+                    placeholder="Nhập tiêu đề bài viết..."
                   />
                   {form.formState.errors.title && (
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-destructive">
                       {form.formState.errors.title.message}
                     </p>
                   )}
                 </div>
 
-                {/* Title (English) */}
+                {/* Title English */}
                 <div className="space-y-2">
-                  <Label htmlFor="titleEn">
-                    {t('admin.newsForm.fields.titleEn.label')}
-                  </Label>
+                  <Label htmlFor="titleEn">Tiêu đề tiếng Anh</Label>
                   <Input
                     id="titleEn"
                     {...form.register('titleEn')}
-                    placeholder={t('admin.newsForm.fields.titleEn.placeholder')}
-                    disabled={isLoading}
+                    placeholder="Enter article title in English..."
                   />
-                  {form.formState.errors.titleEn && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.titleEn.message}
-                    </p>
-                  )}
                 </div>
 
-                {/* Slug */}
+                {/* Excerpt */}
                 <div className="space-y-2">
-                  <Label htmlFor="slug" className="required">
-                    {t('admin.newsForm.fields.slug.label')}
-                  </Label>
-                  <Input
-                    id="slug"
-                    {...form.register('slug')}
-                    placeholder={t('admin.newsForm.fields.slug.placeholder')}
-                    disabled={isLoading}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {t('admin.newsForm.fields.slug.description')}
-                  </p>
-                  {form.formState.errors.slug && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.slug.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Excerpt (Vietnamese) */}
-                <div className="space-y-2">
-                  <Label htmlFor="excerpt">
-                    {t('admin.newsForm.fields.excerpt.label')}
-                  </Label>
+                  <Label htmlFor="excerpt">Tóm tắt *</Label>
                   <Textarea
                     id="excerpt"
                     {...form.register('excerpt')}
-                    placeholder={t('admin.newsForm.fields.excerpt.placeholder')}
+                    placeholder="Nhập tóm tắt bài viết..."
                     rows={3}
-                    disabled={isLoading}
                   />
                   {form.formState.errors.excerpt && (
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-destructive">
                       {form.formState.errors.excerpt.message}
                     </p>
                   )}
                 </div>
 
-                {/* Excerpt (English) */}
+                {/* Excerpt English */}
                 <div className="space-y-2">
-                  <Label htmlFor="excerptEn">
-                    {t('admin.newsForm.fields.excerptEn.label')}
-                  </Label>
+                  <Label htmlFor="excerptEn">Tóm tắt tiếng Anh</Label>
                   <Textarea
                     id="excerptEn"
                     {...form.register('excerptEn')}
-                    placeholder={t('admin.newsForm.fields.excerptEn.placeholder')}
+                    placeholder="Enter article excerpt in English..."
                     rows={3}
-                    disabled={isLoading}
                   />
-                  {form.formState.errors.excerptEn && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.excerptEn.message}
-                    </p>
-                  )}
                 </div>
-              </div>
 
-              {/* Content Section */}
-              <div className="space-y-6">
-                <h2 className={cn(
-                  "text-lg font-semibold border-b pb-2",
-                  theme === 'dark' 
-                    ? 'text-dseza-dark-main-text border-dseza-dark-border' 
-                    : 'text-dseza-light-main-text border-dseza-light-border'
-                )}>
-                  {t('admin.newsForm.sections.content')}
-                </h2>
-
-                {/* Content (Vietnamese) */}
+                {/* Tags */}
                 <div className="space-y-2">
-                  <Label htmlFor="content" className="required">
-                    {t('admin.newsForm.fields.content.label')}
-                  </Label>
-                  {/* TODO: Replace with WYSIWYG Editor */}
-                  <Textarea
-                    id="content"
-                    {...form.register('content')}
-                    placeholder={t('admin.newsForm.fields.content.placeholder')}
-                    rows={10}
-                    disabled={isLoading}
-                    className="min-h-[200px]"
+                  <Label htmlFor="tags">Thẻ tag</Label>
+                  <Input
+                    id="tags"
+                    {...form.register('tags')}
+                    placeholder="Nhập các thẻ tag, cách nhau bằng dấu phẩy..."
                   />
-                  <p className="text-xs text-muted-foreground">
-                    {t('admin.newsForm.fields.content.description')}
+                  <p className="text-sm text-muted-foreground">
+                    Ví dụ: kinh tế, đầu tư, công nghệ
                   </p>
-                  {form.formState.errors.content && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.content.message}
-                    </p>
-                  )}
                 </div>
+              </CardContent>
+            </Card>
 
-                {/* Content (English) */}
-                <div className="space-y-2">
-                  <Label htmlFor="contentEn">
-                    {t('admin.newsForm.fields.contentEn.label')}
-                  </Label>
-                  {/* TODO: Replace with WYSIWYG Editor */}
-                  <Textarea
-                    id="contentEn"
-                    {...form.register('contentEn')}
-                    placeholder={t('admin.newsForm.fields.contentEn.placeholder')}
-                    rows={10}
-                    disabled={isLoading}
-                    className="min-h-[200px]"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {t('admin.newsForm.fields.contentEn.description')}
-                  </p>
-                  {form.formState.errors.contentEn && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.contentEn.message}
-                    </p>
-                  )}
+            {/* Content Editor */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Nội dung bài viết</CardTitle>
+                  <div className="flex items-center gap-2">
+                    <Dialog open={showMediaGallery} onOpenChange={setShowMediaGallery}>
+                      <DialogTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={loadMediaGallery}
+                        >
+                          <ImageIcon className="h-4 w-4 mr-2" />
+                          Thư viện ảnh
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl">
+                        <DialogHeader>
+                          <DialogTitle>Chọn hình ảnh từ thư viện</DialogTitle>
+                        </DialogHeader>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-h-96 overflow-y-auto">
+                          {loadingMedia ? (
+                            Array.from({ length: 8 }).map((_, i) => (
+                              <Skeleton key={i} className="aspect-square" />
+                            ))
+                          ) : (
+                            mediaFiles.map((file) => (
+                              <div
+                                key={file.id}
+                                className="relative group cursor-pointer border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                onClick={() => insertImageToContent(file.url, file.alt)}
+                              >
+                                <img
+                                  src={file.thumbnailUrl || file.url}
+                                  alt={file.alt || file.originalName}
+                                  className="w-full aspect-square object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                  <Plus className="h-6 w-6 text-white" />
+                                </div>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
                 </div>
-              </div>
-
-              {/* Media Section */}
-              <div className="space-y-6">
-                <h2 className={cn(
-                  "text-lg font-semibold border-b pb-2",
-                  theme === 'dark' 
-                    ? 'text-dseza-dark-main-text border-dseza-dark-border' 
-                    : 'text-dseza-light-main-text border-dseza-light-border'
-                )}>
-                  {t('admin.newsForm.sections.media')}
-                </h2>
-
-                {/* Featured Image */}
-                <div className="space-y-4">
-                  <Label>{t('admin.newsForm.fields.image.label')}</Label>
+              </CardHeader>
+              <CardContent>
+                <Tabs defaultValue="vi" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="vi">Tiếng Việt</TabsTrigger>
+                    <TabsTrigger value="en">English</TabsTrigger>
+                  </TabsList>
                   
-                  {/* Image Preview */}
-                  {imagePreview && (
-                    <div className="relative inline-block">
-                      <img 
-                        src={imagePreview} 
-                        alt="Preview" 
-                        className="w-full max-w-md h-48 object-cover rounded-lg border"
+                  <TabsContent value="vi" className="space-y-2">
+                    <Label htmlFor="content">Nội dung *</Label>
+                    <div className="border rounded-lg">
+                      <Textarea
+                        id="content"
+                        {...form.register('content')}
+                        placeholder="Nhập nội dung bài viết..."
+                        rows={12}
+                        className="border-0 resize-none"
                       />
+                    </div>
+                    {form.formState.errors.content && (
+                      <p className="text-sm text-destructive">
+                        {form.formState.errors.content.message}
+                      </p>
+                    )}
+                  </TabsContent>
+                  
+                  <TabsContent value="en" className="space-y-2">
+                    <Label htmlFor="contentEn">Nội dung tiếng Anh</Label>
+                    <div className="border rounded-lg">
+                      <Textarea
+                        id="contentEn"
+                        {...form.register('contentEn')}
+                        placeholder="Enter article content in English..."
+                        rows={12}
+                        className="border-0 resize-none"
+                      />
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+
+            {/* File Attachments */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>File đính kèm</CardTitle>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploading}
+                  >
+                    <Paperclip className="h-4 w-4 mr-2" />
+                    Thêm file
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  onChange={handleFileAttachment}
+                  className="hidden"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar"
+                />
+                
+                {/* File List */}
+                {attachedFiles.length > 0 && (
+                  <div className="space-y-2">
+                    {attachedFiles.map((file) => (
+                      <div
+                        key={file.id}
+                        className="flex items-center gap-3 p-3 border rounded-lg"
+                      >
+                        <div className="flex-shrink-0">
+                          {file.type.startsWith('image/') ? (
+                            <ImageIcon className="h-6 w-6 text-blue-500" />
+                          ) : file.type.startsWith('video/') ? (
+                            <Video className="h-6 w-6 text-purple-500" />
+                          ) : (
+                            <FileIcon className="h-6 w-6 text-gray-500" />
+                          )}
+                        </div>
+                        
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">
+                            {file.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {formatFileSize(file.size)}
+                          </p>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => window.open(file.url, '_blank')}
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeAttachedFile(file.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {attachedFiles.length === 0 && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <FileIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                    <p>Chưa có file đính kèm</p>
+                    <p className="text-sm">Nhấn "Thêm file" để đính kèm tài liệu</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Featured Image */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Hình ảnh đại diện</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Image URL */}
+                <div className="space-y-2">
+                  <Label htmlFor="imageUrl">URL hình ảnh</Label>
+                  <Input
+                    id="imageUrl"
+                    {...form.register('imageUrl')}
+                    placeholder="https://example.com/image.jpg"
+                    onChange={(e) => {
+                      form.setValue('imageUrl', e.target.value);
+                      setImagePreview(e.target.value);
+                    }}
+                  />
+                </div>
+
+                {/* Drag & Drop Upload */}
+                <div className="space-y-2">
+                  <Label>Hoặc tải lên hình ảnh</Label>
+                  <div
+                    className={cn(
+                      "border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer",
+                      isDragOver 
+                        ? "border-primary bg-primary/5" 
+                        : "border-muted-foreground/25 hover:border-primary/50"
+                    )}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onClick={() => document.getElementById('image-upload')?.click()}
+                  >
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <p className="text-sm text-muted-foreground">
+                      Kéo thả hoặc nhấn để chọn hình ảnh
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tối đa 10MB, định dạng JPG, PNG, WebP
+                    </p>
+                  </div>
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </div>
+
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label>Xem trước</Label>
                       <Button
                         type="button"
-                        variant="destructive"
+                        variant="ghost"
                         size="sm"
-                        onClick={handleImageRemove}
-                        className="absolute top-2 right-2"
+                        onClick={handleRemoveImage}
                       >
-                        <X className="w-4 h-4" />
+                        <X className="h-4 w-4" />
                       </Button>
                     </div>
+                    <div className="border rounded-lg overflow-hidden">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Publish Settings */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Cài đặt xuất bản</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Status */}
+                <div className="space-y-2">
+                  <Label>Trạng thái *</Label>
+                  <Select
+                    value={form.watch('status')}
+                    onValueChange={(value: 'published' | 'draft' | 'pending') => 
+                      form.setValue('status', value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="draft">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-gray-400" />
+                          Bản nháp
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="pending">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                          Chờ duyệt
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="published">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-green-400" />
+                          Đã xuất bản
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Category */}
+                <div className="space-y-2">
+                  <Label>Danh mục *</Label>
+                  <Select
+                    value={form.watch('categoryId')}
+                    onValueChange={(value) => form.setValue('categoryId', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn danh mục..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.categoryId && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.categoryId.message}
+                    </p>
                   )}
-                  
-                  {/* Image Upload */}
-                  <div className="flex items-center space-x-4">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageSelect}
-                      className="hidden"
-                      id="image-upload"
-                      disabled={isLoading}
-                    />
-                    <Label 
-                      htmlFor="image-upload"
-                      className="cursor-pointer"
-                    >
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="flex items-center space-x-2"
-                        asChild
-                      >
-                        <span>
-                          <Upload className="w-4 h-4" />
-                          <span>
-                            {imagePreview 
-                              ? t('admin.newsForm.fields.image.change') 
-                              : t('admin.newsForm.fields.image.select')
-                            }
-                          </span>
-                        </span>
-                      </Button>
-                    </Label>
-                    {imagePreview && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={handleImageRemove}
-                        className="flex items-center space-x-2"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        <span>{t('admin.newsForm.fields.image.remove')}</span>
-                      </Button>
-                    )}
-                  </div>
-                  
-                  <p className="text-xs text-muted-foreground">
-                    {t('admin.newsForm.fields.image.description')}
-                  </p>
-                </div>
-              </div>
-
-              {/* Settings Section */}
-              <div className="space-y-6">
-                <h2 className={cn(
-                  "text-lg font-semibold border-b pb-2",
-                  theme === 'dark' 
-                    ? 'text-dseza-dark-main-text border-dseza-dark-border' 
-                    : 'text-dseza-light-main-text border-dseza-light-border'
-                )}>
-                  {t('admin.newsForm.sections.settings')}
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Category */}
-                  <div className="space-y-2">
-                    <Label className="required">
-                      {t('admin.newsForm.fields.category.label')}
-                    </Label>
-                    <Select
-                      value={watchedCategory}
-                      onValueChange={handleSelectChange('category')}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('admin.newsForm.fields.category.placeholder')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map((category) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {form.formState.errors.category && (
-                      <p className="text-sm text-red-500">
-                        {form.formState.errors.category.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Status */}
-                  <div className="space-y-2">
-                    <Label className="required">
-                      {t('admin.newsForm.fields.status.label')}
-                    </Label>
-                    <Select
-                      value={watchedStatus}
-                      onValueChange={handleSelectChange('status')}
-                      disabled={isLoading}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('admin.newsForm.fields.status.placeholder')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="draft">
-                          {t('admin.newsList.status.draft')}
-                        </SelectItem>
-                        <SelectItem value="pending">
-                          {t('admin.newsList.status.pending')}
-                        </SelectItem>
-                        <SelectItem value="published">
-                          {t('admin.newsList.status.published')}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {form.formState.errors.status && (
-                      <p className="text-sm text-red-500">
-                        {form.formState.errors.status.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Publish Date */}
-                  <div className="space-y-2">
-                    <Label className="required">
-                      {t('admin.newsForm.fields.publishDate.label')}
-                    </Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !watchedPublishDate && "text-muted-foreground"
-                          )}
-                          disabled={isLoading}
-                        >
-                          <Calendar className="mr-2 h-4 w-4" />
-                          {watchedPublishDate ? (
-                            format(watchedPublishDate, 'dd/MM/yyyy')
-                          ) : (
-                            <span>{t('admin.newsForm.fields.publishDate.placeholder')}</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <CalendarComponent
-                          mode="single"
-                          selected={watchedPublishDate}
-                          onSelect={handleDateChange}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    {form.formState.errors.publishDate && (
-                      <p className="text-sm text-red-500">
-                        {form.formState.errors.publishDate.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Author */}
-                  <div className="space-y-2">
-                    <Label htmlFor="author" className="required">
-                      {t('admin.newsForm.fields.author.label')}
-                    </Label>
-                    <Input
-                      id="author"
-                      {...form.register('author')}
-                      placeholder={t('admin.newsForm.fields.author.placeholder')}
-                      disabled={isLoading}
-                    />
-                    {form.formState.errors.author && (
-                      <p className="text-sm text-red-500">
-                        {form.formState.errors.author.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Reading Time (Vietnamese) */}
-                  <div className="space-y-2">
-                    <Label htmlFor="readingTime">
-                      {t('admin.newsForm.fields.readingTime.label')}
-                    </Label>
-                    <Input
-                      id="readingTime"
-                      {...form.register('readingTime')}
-                      placeholder={t('admin.newsForm.fields.readingTime.placeholder')}
-                      disabled={isLoading}
-                    />
-                  </div>
-
-                  {/* Reading Time (English) */}
-                  <div className="space-y-2">
-                    <Label htmlFor="readingTimeEn">
-                      {t('admin.newsForm.fields.readingTimeEn.label')}
-                    </Label>
-                    <Input
-                      id="readingTimeEn"
-                      {...form.register('readingTimeEn')}
-                      placeholder={t('admin.newsForm.fields.readingTimeEn.placeholder')}
-                      disabled={isLoading}
-                    />
-                  </div>
                 </div>
 
-                {/* Featured Checkbox */}
+                {/* Author */}
+                <div className="space-y-2">
+                  <Label htmlFor="author">Tác giả *</Label>
+                  <Input
+                    id="author"
+                    {...form.register('author')}
+                    placeholder="Nhập tên tác giả..."
+                  />
+                  {form.formState.errors.author && (
+                    <p className="text-sm text-destructive">
+                      {form.formState.errors.author.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Publish Date */}
+                <div className="space-y-2">
+                  <Label>Ngày xuất bản</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          'w-full justify-start text-left font-normal',
+                          !form.watch('publishDate') && 'text-muted-foreground'
+                        )}
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        {form.watch('publishDate') ? (
+                          format(new Date(form.watch('publishDate')), 'dd/MM/yyyy')
+                        ) : (
+                          'Chọn ngày xuất bản'
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={form.watch('publishDate') ? new Date(form.watch('publishDate')) : undefined}
+                        onSelect={(date) => {
+                          if (date) {
+                            form.setValue('publishDate', date.toISOString());
+                          }
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                {/* Featured */}
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="isFeatured"
-                    checked={watchedIsFeatured}
-                    onCheckedChange={handleSelectChange('isFeatured')}
-                    disabled={isLoading}
+                    checked={form.watch('isFeatured')}
+                    onCheckedChange={(checked) => 
+                      form.setValue('isFeatured', checked as boolean)
+                    }
                   />
-                  <Label htmlFor="isFeatured">
-                    {t('admin.newsForm.fields.isFeatured.label')}
+                  <Label htmlFor="isFeatured" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Bài viết nổi bật
                   </Label>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
 
-              {/* Form Actions */}
-              <div className="flex items-center justify-between pt-6 border-t">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleCancel}
-                  disabled={isLoading}
-                >
-                  {t('admin.newsForm.buttons.cancel')}
-                </Button>
-                
-                <div className="flex items-center space-x-2">
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="flex items-center space-x-2"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Save className="w-4 h-4" />
-                    )}
-                    <span>
-                      {isLoading 
-                        ? t('admin.newsForm.buttons.saving')
-                        : isEditMode 
-                          ? t('admin.newsForm.buttons.save')
-                          : t('admin.newsForm.buttons.create')
-                      }
-                    </span>
-                  </Button>
+            {/* Statistics */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Thống kê</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Thời gian đọc:</span>
+                  <span>{calculateReadingTime(form.watch('content') || '')}</span>
                 </div>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Số từ:</span>
+                  <span>{form.watch('content')?.split(/\s+/).length || 0}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">File đính kèm:</span>
+                  <span>{attachedFiles.length}</span>
+                </div>
+                {existingArticle && (
+                  <>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Ngày tạo:</span>
+                      <span>{format(new Date(existingArticle.createdAt), 'dd/MM/yyyy')}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Cập nhật cuối:</span>
+                      <span>{format(new Date(existingArticle.updatedAt), 'dd/MM/yyyy')}</span>
+                    </div>
+                  </>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </form>
+    </AdminPageLayout>
   );
 };
 
-export default AdminNewsFormPage; 
+export default AdminNewsFormPage;

@@ -76,7 +76,7 @@ const AdminDocumentListPage: React.FC = () => {
   
   // Filter and search states
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedDocumentType, setSelectedDocumentType] = useState<string>('');
+  const [selectedDocumentType, setSelectedDocumentType] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'title' | 'created_at' | 'issued_date'>('created_at');
   const [sortDirection, setSortDirection] = useState<'ASC' | 'DESC'>('DESC');
   
@@ -94,7 +94,7 @@ const AdminDocumentListPage: React.FC = () => {
         page: currentPage,
         limit: itemsPerPage,
         searchTerm: searchTerm || undefined,
-        documentType: selectedDocumentType || undefined,
+        documentType: (selectedDocumentType && selectedDocumentType !== 'all') ? selectedDocumentType : undefined,
         sortBy,
         sortDirection
       });
@@ -136,7 +136,7 @@ const AdminDocumentListPage: React.FC = () => {
         doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (doc.description && doc.description.toLowerCase().includes(searchTerm.toLowerCase()));
       
-      const matchesType = !selectedDocumentType || doc.document_type === selectedDocumentType;
+      const matchesType = selectedDocumentType === 'all' || !selectedDocumentType || doc.document_type === selectedDocumentType;
       
       return matchesSearch && matchesType;
     });
@@ -339,7 +339,7 @@ const AdminDocumentListPage: React.FC = () => {
             <SelectValue placeholder="Loại văn bản" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Tất cả loại văn bản</SelectItem>
+            <SelectItem value="all">Tất cả loại văn bản</SelectItem>
             {DOCUMENT_TYPES.map((type) => (
               <SelectItem key={type} value={type}>
                 {type}

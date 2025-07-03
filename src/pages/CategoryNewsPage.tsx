@@ -198,6 +198,7 @@ const CategoryNewsPage: React.FC = () => {
       setError(null);
 
       try {
+        console.log(`Loading category data for slug: ${categorySlug}, page: ${currentPage}`);
         // Fetch category info first
         const category = await fetchCategoryInfoBySlug(categorySlug);
         
@@ -208,14 +209,17 @@ const CategoryNewsPage: React.FC = () => {
         }
 
         setCategoryInfo(category);
+        console.log('Category loaded successfully:', category.name);
 
         // Fetch articles for this category
         const response = await fetchArticlesByCategorySlug(categorySlug, currentPage, ITEMS_PER_PAGE);
         setPaginatedResponse(response);
+        console.log(`Loaded ${response.articles.length} articles for page ${currentPage}`);
 
       } catch (err) {
         console.error('Error loading category data:', err);
-        setError("Failed to load category data");
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load category data';
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }

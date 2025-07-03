@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Hoặc "mysql", "sqlite" tùy theo cơ sở dữ liệu bạn sử dụng
+  url      = env("DATABASE_URL")
+}
+
+// Enum cho loại MenuItem
+enum MenuItemType {
+  PAGE
+  CATEGORY
+  CUSTOM
+}
+
+// Model Page - Quản lý trang tĩnh
+model Page {
+  id          String   @id @default(cuid())
+  title       String   // Tiêu đề trang
+  slug        String   @unique // Đường dẫn URL duy nhất
+  content     String   @db.Text // Nội dung trang, hỗ trợ HTML dài
+  isPublished Boolean  @default(false) // Trạng thái xuất bản
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Quan hệ: Page có thể được tham chiếu bởi nhiều MenuItem
+  menuItems   MenuItem[]
+
+  @@map("pages")
+}
+
+// Model Menu - Quản lý menu
+model Menu {
+  id        String   @id @default(cuid())
+  name      String   // Tên định danh cho menu
+  location  String   @unique // Vị trí định danh duy nhất (ví dụ: "HEADER_PRIMARY")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Quan hệ: Menu có nhiều MenuItem
+  menuItems MenuItem[]
+
+  @@map("menus")
+}
+
+// Model MenuItem - Quản lý các mục trong menu
+model MenuItem {
+  id       String       @id @default(cuid())
+  label    String       // Nhãn hiển thị
+  type     MenuItemType // Loại liên kết (PAGE, CATEGORY, CUSTOM)
+  url      String?      // URL tùy chỉnh (cho loại CUSTOM)
+  order    Int          // Thứ tự sắp xếp
+  parentId String?      // ID của MenuItem cha (cho menu lồng nhau)
+
+  // Quan hệ: MenuItem thuộc về một Menu
+  menuId   String
+  menu     Menu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  // Quan hệ: MenuItem có thể tham chiếu đến một Page (khi type là PAGE)
+  pageId   String?
+  page     Page? @relation(fields: [pageId], references: [id], onDelete: SetNull)
+
+  // Quan hệ tự tham chiếu: MenuItem có thể có parent và children
+  parent   MenuItem?  @relation("MenuItemHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children MenuItem[] @relation("MenuItemHierarchy")
+
+  // Index để tối ưu hóa truy vấn
+  @@index([menuId, order])
+  @@index([parentId])
+  @@map("menu_items")
+} 

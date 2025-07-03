@@ -5,7 +5,12 @@ export interface LegalDocument {
   description?: string;
   file_path: string;
   document_type: string;
+  document_field?: string; // Lĩnh vực
+  issuing_agency?: string; // Cơ quan ban hành
+  issuing_level?: string; // Cấp ban hành
+  document_number?: string; // Số văn bản
   issued_date?: string; // Date string in YYYY-MM-DD format
+  effective_date?: string; // Ngày có hiệu lực  
   created_at: string; // ISO 8601 string
   updated_at?: string; // ISO 8601 string
 }
@@ -15,7 +20,12 @@ export interface DocumentFormData {
   title: string;
   description?: string;
   document_type: string;
+  document_field?: string;
+  issuing_agency?: string;
+  issuing_level?: string;
+  document_number?: string;
   issued_date?: string;
+  effective_date?: string;
   file?: File;
 }
 

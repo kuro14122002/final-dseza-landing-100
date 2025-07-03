@@ -39,6 +39,10 @@ import {
   createDocument,
   updateDocument 
 } from '@/services/documentsService';
+import { getCategoriesByType } from '@/services/categoryService';
+
+// Category types
+import { Category } from '@/types/categories';
 
 // Validation schema
 const documentFormSchema = z.object({
@@ -50,7 +54,12 @@ const documentFormSchema = z.object({
     .optional(),
   document_type: z.string()
     .min(1, { message: 'Loại văn bản là bắt buộc' }),
+  document_field: z.string().optional(),
+  issuing_agency: z.string().optional(),
+  issuing_level: z.string().optional(),
+  document_number: z.string().optional(),
   issued_date: z.string().optional(),
+  effective_date: z.string().optional(),
   file: z.any().optional(),
 });
 
@@ -65,6 +74,11 @@ const AdminDocumentFormPage: React.FC = () => {
   const [existingDocument, setExistingDocument] = useState<LegalDocument | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [existingFilePath, setExistingFilePath] = useState<string>('');
+  
+  // Categories state
+  const [documentFields, setDocumentFields] = useState<Category[]>([]);
+  const [issuingAgencies, setIssuingAgencies] = useState<Category[]>([]);
+  const [issuingLevels, setIssuingLevels] = useState<Category[]>([]);
 
   const isEditMode = Boolean(documentId);
   
@@ -74,9 +88,35 @@ const AdminDocumentFormPage: React.FC = () => {
       title: '',
       description: '',
       document_type: '',
+      document_field: '',
+      issuing_agency: '',
+      issuing_level: '',
+      document_number: '',
       issued_date: '',
+      effective_date: '',
     },
   });
+
+  // Load categories
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const [fields, agencies, levels] = await Promise.all([
+          getCategoriesByType('document_field'),
+          getCategoriesByType('issuing_agency'),
+          getCategoriesByType('issuing_level'),
+        ]);
+        
+        setDocumentFields(fields);
+        setIssuingAgencies(agencies);
+        setIssuingLevels(levels);
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    };
+
+    loadCategories();
+  }, []);
 
   // Load document data for edit mode
   useEffect(() => {
@@ -99,7 +139,12 @@ const AdminDocumentFormPage: React.FC = () => {
           title: document.title,
           description: document.description || '',
           document_type: document.document_type,
+          document_field: document.document_field || '',
+          issuing_agency: document.issuing_agency || '',
+          issuing_level: document.issuing_level || '',
+          document_number: document.document_number || '',
           issued_date: document.issued_date || '',
+          effective_date: document.effective_date || '',
         });
         
       } catch (error) {
@@ -156,7 +201,12 @@ const AdminDocumentFormPage: React.FC = () => {
         title: data.title,
         description: data.description,
         document_type: data.document_type,
+        document_field: data.document_field === 'none' ? undefined : data.document_field,
+        issuing_agency: data.issuing_agency === 'none' ? undefined : data.issuing_agency,
+        issuing_level: data.issuing_level === 'none' ? undefined : data.issuing_level,
+        document_number: data.document_number,
         issued_date: data.issued_date,
+        effective_date: data.effective_date,
         file: selectedFile || undefined,
       };
 
@@ -300,6 +350,82 @@ const AdminDocumentFormPage: React.FC = () => {
               {form.formState.errors.document_type && (
                 <p className="text-sm text-red-500">{form.formState.errors.document_type.message}</p>
               )}
+            </div>
+
+            {/* Additional Fields Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Document Field */}
+              <div className="space-y-2">
+                <Label>Lĩnh vực</Label>
+                <Select 
+                  value={form.watch('document_field') || 'none'} 
+                  onValueChange={(value) => form.setValue('document_field', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Chọn lĩnh vực" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">-- Không chọn --</SelectItem>
+                    {documentFields.map((field) => (
+                      <SelectItem key={field.id} value={field.name}>
+                        {field.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Issuing Agency */}
+              <div className="space-y-2">
+                <Label>Cơ quan ban hành</Label>
+                <Select 
+                  value={form.watch('issuing_agency') || 'none'} 
+                  onValueChange={(value) => form.setValue('issuing_agency', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Chọn cơ quan ban hành" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">-- Không chọn --</SelectItem>
+                    {issuingAgencies.map((agency) => (
+                      <SelectItem key={agency.id} value={agency.name}>
+                        {agency.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Issuing Level */}
+              <div className="space-y-2">
+                <Label>Cấp ban hành</Label>
+                <Select 
+                  value={form.watch('issuing_level') || 'none'} 
+                  onValueChange={(value) => form.setValue('issuing_level', value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Chọn cấp ban hành" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">-- Không chọn --</SelectItem>
+                    {issuingLevels.map((level) => (
+                      <SelectItem key={level.id} value={level.name}>
+                        {level.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Document Number */}
+              <div className="space-y-2">
+                <Label htmlFor="document_number">Số văn bản</Label>
+                <Input
+                  id="document_number"
+                  {...form.register('document_number')}
+                  placeholder="Nhập số văn bản..."
+                />
+              </div>
             </div>
 
             {/* Issued Date */}

@@ -127,7 +127,7 @@ const mobileMenuData: MobileMenuItem[] = [
   {
     id: "cam-nang-dau-tu",
     title: "Cẩm nang đầu tư",
-    url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/"
+    url: "/cam-nang-dau-tu"
   },
   {
     id: "van-ban",

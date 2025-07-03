@@ -1,9 +1,9 @@
 // src/components/hero/LogoSearchBar.tsx
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
-import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/utils/translations";
+import SearchBar from "@/components/SearchBar";
 
 const LogoSearchBar: React.FC = () => {
   const { theme } = useTheme();
@@ -43,23 +43,10 @@ const LogoSearchBar: React.FC = () => {
           />
         </a>
         
-        <div className="flex-1 max-w-lg mx-auto relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className={`h-5 w-5 ${theme === "dark" ? "text-dseza-dark-secondary-text" : "text-dseza-light-secondary-text"}`} />
-          </div>
-          <input
-            type="text"
+        <div className="flex-1 max-w-lg mx-auto">
+          <SearchBar 
             placeholder={t('logoSearchBar.searchPlaceholder')}
-            className={cn(
-              "w-full py-3 pl-10 pr-4 rounded-lg transition-all duration-300 outline-none",
-              inputSpecificBg, 
-              inputSpecificBorder, 
-              "border", 
-              textColor,
-              placeholderColor,
-              focusBorderColor,
-              focusShadow
-            )}
+            className="w-full"
           />
         </div>
         

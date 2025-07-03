@@ -309,7 +309,7 @@ export const getNavigationMenuItems = (): MenuItem[] => {
     {
       title: "nav.investmentGuide",
       translatable: true,
-      url: "https://dseza.danang.gov.vn/danh-sach-tin-tuc/cam-nang-dau-tu/",
+      url: "/cam-nang-dau-tu",
     },
     {
       title: "nav.documents",
@@ -380,8 +380,11 @@ export const getNavigationMenuItems = (): MenuItem[] => {
               <div className="mt-4 p-4 border rounded-lg">
                 <h5 className="font-semibold mb-2">{t('menuSpecial.quickDocSearchTitle')}</h5>
                 <input
+                  id="quick-doc-search"
+                  name="quickDocSearch"
                   type="text"
                   placeholder={t('menuSpecial.quickDocSearchPlaceholder')}
+                  autoComplete="off"
                   className="w-full px-3 py-2 border rounded mt-2 mb-2 dark:bg-dseza-dark-secondary dark:border-dseza-dark-hover"
                 />
                 <button className="w-full bg-dseza-light-primary dark:bg-dseza-dark-primary text-white py-2 rounded text-sm font-medium">
