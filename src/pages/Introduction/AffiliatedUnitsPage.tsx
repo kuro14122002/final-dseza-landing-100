@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Eye, FileText, Phone, Mail, Globe, Download, Share2, Printer } from 'lucide-react';
 
-export const AffiliatedUnitsPage = () => {
+const AffiliatedUnitsPage = () => {
   const handleDownload = () => {
     // Logic tải xuống - có thể tải PDF hoặc Word
     console.log('Downloading document...');
@@ -34,7 +34,7 @@ export const AffiliatedUnitsPage = () => {
 
   return (
     <PublicLayout showHeroBackground={false}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 mt-24 lg:mt-32">
         <Breadcrumb className="mb-6">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -278,4 +278,6 @@ export const AffiliatedUnitsPage = () => {
       </div>
     </PublicLayout>
   );
-}; 
+};
+
+export default AffiliatedUnitsPage; 

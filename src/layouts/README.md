@@ -6,7 +6,7 @@
 
 ## Features
 
-- ✅ **Toggle Hero Background**: Show/hide hero section with background
+- ✅ **Toggle Hero Background**: Hide hero section with background
 - ✅ **Custom Header/Footer**: Replace default components with custom ones
 - ✅ **Auto Header Padding**: Automatically adds padding when hero background is disabled
 - ✅ **Responsive Design**: Works on all screen sizes

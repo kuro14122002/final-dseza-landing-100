@@ -3,8 +3,57 @@ import { Search, X, Loader2 } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useTranslation } from "@/utils/translations";
 import { cn } from "@/lib/utils";
-import { performSearch, getSearchSuggestions, SearchResult } from "@/services/searchService";
 import { useNavigate } from "react-router-dom";
+
+// Mock types and functions để thay thế searchService
+interface SearchResult {
+  id: string;
+  title: string;
+  excerpt: string;
+  url: string;
+  type: string;
+  publishedAt?: string;
+}
+
+const mockSearchResults: SearchResult[] = [
+  {
+    id: "1",
+    title: "Khu công nghệ cao Đà Nẵng",
+    excerpt: "Thông tin về khu công nghệ cao hiện đại tại Đà Nẵng với nhiều tiện ích.",
+    url: "/news/khu-cong-nghe-cao-da-nang",
+    type: "news",
+    publishedAt: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    title: "Chính sách đầu tư mới",
+    excerpt: "Các chính sách ưu đãi đầu tư mới nhất cho doanh nghiệp.",
+    url: "/news/chinh-sach-dau-tu-moi",
+    type: "news",
+    publishedAt: new Date().toISOString(),
+  },
+];
+
+const performSearch = async (query: string, type: string, page: number, limit: number) => {
+  await new Promise(resolve => setTimeout(resolve, 300));
+  return {
+    results: mockSearchResults.filter(item => 
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.excerpt.toLowerCase().includes(query.toLowerCase())
+    ),
+    totalResults: mockSearchResults.length,
+    totalPages: 1,
+    currentPage: page,
+  };
+};
+
+const getSearchSuggestions = async (query: string) => {
+  await new Promise(resolve => setTimeout(resolve, 200));
+  return mockSearchResults
+    .filter(item => item.title.toLowerCase().includes(query.toLowerCase()))
+    .map(item => item.title)
+    .slice(0, 5);
+};
 
 interface SearchBarProps {
   className?: string;

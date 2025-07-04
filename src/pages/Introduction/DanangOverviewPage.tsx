@@ -34,7 +34,7 @@ const DanangOverviewPage = () => {
 
   return (
     <PublicLayout showHeroBackground={false}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 mt-24 lg:mt-32">
         <Breadcrumb className="mb-6">
           <BreadcrumbList>
             <BreadcrumbItem>

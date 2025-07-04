@@ -1,9 +1,9 @@
 import {
   require_react
-} from "./chunk-2CLD7BNN.js";
+} from "./chunk-TWJRYSII.js";
 import {
   __toESM
-} from "./chunk-WOOG5QLI.js";
+} from "./chunk-DC5AMYBS.js";
 
 // node_modules/embla-carousel-react/esm/embla-carousel-react.esm.js
 var import_react = __toESM(require_react());

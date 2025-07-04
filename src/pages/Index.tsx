@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import HeroSection from "@/components/hero/HeroSection";
+import PublicLayout from "@/layouts/PublicLayout";
 import QuickAccessButtons from "@/components/QuickAccessButtons";
 import FeaturedEvents from "@/components/FeaturedEvents";
 import NewsSection from "@/components/NewsSection";
@@ -8,8 +8,6 @@ import InvestmentInformation from "@/components/InvestmentInformation";
 import LocationSection from "@/components/LocationSection";
 import ResourcesSection from "@/components/ResourcesSection";
 import BusinessesAndPartners from "@/components/BusinessesAndPartners";
-import Footer from "@/components/Footer";
-import SEOHead from "@/components/SEO/SEOHead";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileQuickLinksCarousel from "@/components/mobile/MobileQuickLinksCarousel";
 import MobileFeaturedEvents from "@/components/mobile/MobileFeaturedEvents";
@@ -17,12 +15,122 @@ import MobileNewsSection from "@/components/mobile/MobileNewsSection";
 import MobileFunctionalZonesCarousel from "@/components/mobile/MobileFunctionalZonesCarousel";
 import MobileInvestmentInformation from "@/components/mobile/MobileInvestmentInformation";
 import { NewsArticle, NewsCategory } from "@/types/news";
-import { 
-  fetchNewsCategories, 
-  fetchFeaturedArticle, 
-  fetchRegularNews, 
-  fetchNewsArticles 
-} from "@/services/newsService";
+
+// Mock functions để thay thế newsService
+const mockCategories: NewsCategory[] = [
+  { 
+    id: "all", 
+    name: "Tất cả", 
+    slug: "all", 
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  { 
+    id: "1", 
+    name: "Tin tức", 
+    slug: "tin-tuc", 
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  { 
+    id: "2", 
+    name: "Thông báo", 
+    slug: "thong-bao", 
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  { 
+    id: "3", 
+    name: "Hoạt động", 
+    slug: "hoat-dong", 
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+const mockFeaturedArticle: NewsArticle = {
+  id: "1",
+  title: "Đà Nẵng tăng cường thu hút đầu tư vào các khu công nghiệp",
+  content: "Thành phố Đà Nẵng đang tập trung thu hút đầu tư vào các khu công nghiệp để phát triển kinh tế địa phương.",
+  excerpt: "Đà Nẵng tăng cường các chính sách ưu đãi để thu hút đầu tư vào khu công nghiệp.",
+  slug: "da-nang-tang-cuong-thu-hut-dau-tu",
+  category: mockCategories[1],
+  publishDate: new Date().toISOString(),
+  author: "Ban Biên Tập",
+  tags: "đầu tư, khu công nghiệp, Đà Nẵng",
+  status: "published",
+  isFeatured: true,
+  imageUrl: "/media/khucongngiecao.jpg",
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  readingTime: "3 phút",
+};
+
+const mockRegularNews: NewsArticle[] = [
+  {
+    id: "2",
+    title: "Khai trương khu công nghệ cao mới tại Đà Nẵng",
+    content: "Khu công nghệ cao mới với nhiều tiện ích hiện đại đã chính thức khai trương.",
+    excerpt: "Khu công nghệ cao mới mang đến nhiều cơ hội việc làm và đầu tư.",
+    slug: "khai-truong-khu-cong-nghe-cao-moi",
+    category: mockCategories[1],
+    publishDate: new Date().toISOString(),
+    author: "Ban Biên Tập",
+    tags: "công nghệ cao, khai trương",
+    status: "published",
+    isFeatured: false,
+    imageUrl: "/media/khucongnghecao.jpg",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    readingTime: "2 phút",
+  },
+  {
+    id: "3",
+    title: "Hội thảo đầu tư và phát triển bền vững",
+    content: "Hội thảo về các chiến lược đầu tư và phát triển bền vững trong khu vực.",
+    excerpt: "Các chuyên gia chia sẻ kinh nghiệm về đầu tư bền vững.",
+    slug: "hoi-thao-dau-tu-phat-trien-ben-vung",
+    category: mockCategories[3],
+    publishDate: new Date().toISOString(),
+    author: "Ban Biên Tập",
+    tags: "hội thảo, đầu tư, bền vững",
+    status: "published",
+    isFeatured: false,
+    imageUrl: "/media/khucongnghiep.jpg",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    readingTime: "4 phút",
+  },
+];
+
+const fetchNewsCategories = async (): Promise<NewsCategory[]> => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return mockCategories;
+};
+
+const fetchFeaturedArticle = async (): Promise<NewsArticle | null> => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return mockFeaturedArticle;
+};
+
+const fetchRegularNews = async (categoryId?: string, limit?: number): Promise<NewsArticle[]> => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return mockRegularNews.slice(0, limit || 10);
+};
+
+const fetchNewsArticles = async (categoryId?: string, page?: number, limit?: number) => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return {
+    articles: mockRegularNews.slice(0, limit || 10),
+    totalArticles: mockRegularNews.length,
+    totalPages: 1,
+    currentPage: page || 1,
+  };
+};
 
 const Index: React.FC = () => {
   const isMobile = useIsMobile();
@@ -134,20 +242,14 @@ const Index: React.FC = () => {
   }, [loadInitialData]);
   
   return (
-    <main className="min-h-screen">
-      {/* SEO Head for homepage */}
-      <SEOHead
-        type="website"
-        organizationName="DSEZA - Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng"
-        organizationUrl="https://dseza.danang.gov.vn"
-        organizationLogo="https://dseza.danang.gov.vn/media/lightlogo3.png"
-        organizationAddress="Đà Nẵng, Việt Nam"
-        organizationPhone="0236.3847.707"
-        organizationEmail="info@dseza.danang.gov.vn"
-      />
-      {/* Hero Section */}
-      <HeroSection />
-      
+    <PublicLayout 
+      showHeroBackground={true}
+      seoProps={{
+        title: "DSEZA - Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng",
+        description: "Trang chủ chính thức của Ban Quản lý Khu công nghệ cao và các Khu công nghiệp Đà Nẵng",
+        keywords: "DSEZA, khu công nghệ cao, khu công nghiệp, Đà Nẵng, đầu tư, phát triển kinh tế",
+      }}
+    >
       {/* Content Sections */}
       <div className="bg-background">
         {/* Quick Access Buttons - show desktop or mobile version based on viewport */}
@@ -195,10 +297,7 @@ const Index: React.FC = () => {
         {/* Businesses and Partners Section */}
         <BusinessesAndPartners />
       </div>
-      
-      {/* Footer */}
-      <Footer />
-    </main>
+    </PublicLayout>
   );
 };
 
